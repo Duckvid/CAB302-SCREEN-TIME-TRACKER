@@ -5,4 +5,9 @@ module org.screen_time_tracker.screen_time_tracker {
 
     opens org.screen_time_tracker.screen_time_tracker to javafx.fxml;
     exports org.screen_time_tracker.screen_time_tracker;
+
+    exports org.screen_time_tracker.screen_time_tracker.Controller;
+    opens org.screen_time_tracker.screen_time_tracker.Controller to javafx.fxml;
+
+
 }
