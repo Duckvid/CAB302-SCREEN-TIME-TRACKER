@@ -38,6 +38,20 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- JNA dependency -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.8.0</version> <!-- or whatever the latest version is -->
+        </dependency>
+
+        <!-- JNA Platform dependency -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.8.0</version> <!-- or whatever the latest version is -->
+        </dependency>
+
     </dependencies>
 
     <build>
