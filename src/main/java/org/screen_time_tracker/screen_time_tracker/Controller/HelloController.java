@@ -21,6 +21,7 @@ public class HelloController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("current_Session-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), HelloApplication.WIDTH, HelloApplication.HEIGHT);
         scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/current_Session_style.css").toExternalForm());
+        stage.setResizable(false);
         stage.setScene(scene);
 
     }
