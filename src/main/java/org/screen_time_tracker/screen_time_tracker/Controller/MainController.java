@@ -14,7 +14,7 @@ import java.util.Map;
 public class MainController {
 
     @FXML
-    private Button SubmitButton;
+    private Button Login;
 
     @FXML
     public void initialize(){
@@ -41,17 +41,14 @@ public class MainController {
         thread.setDaemon(true);
         thread.start();
     }
-
-
     @FXML
-    protected void OnSubmitButtonClick() throws IOException{
-        Stage stage = (Stage) SubmitButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("current_Session-view.fxml"));
+    protected void OnLoginButtonClick() throws IOException{
+        Stage stage = (Stage) Login.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/current_Session_style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Login_Styles.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
-
     }
 
 
