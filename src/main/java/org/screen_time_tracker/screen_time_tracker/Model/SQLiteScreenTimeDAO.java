@@ -5,6 +5,9 @@ import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.sql.Connection;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SQLiteScreenTimeDAO implements IUsersDetails {
 
     private Connection connection;
@@ -92,7 +95,51 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
     }
 
     @Override
-    public void Login(User email, User password) {
+    public List<User> getAllUsers(){
+        List<User> users = new ArrayList<>();
+
+        try{
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM Users";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while(resultSet.next()){
+                int UserID = resultSet.getInt("Userid");
+                String Name = resultSet.getString("Name");
+                String Phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+
+                User user = new User(Name, email, password, Phone);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+    @Override
+    public User Login(String email, String password) {
+        String query = "SELECT * FROM Users where email = ? AND password = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            if(resultSet.next()){
+                // user found with matching credentials
+                String Name = resultSet.getString("Name");
+                String Phone = resultSet.getString("phone");
+                String userEmail = resultSet.getString("email");
+                String userPassword = resultSet.getString("password");
+
+                return new User(Name, userEmail, userPassword, Phone);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
 
     }
 }

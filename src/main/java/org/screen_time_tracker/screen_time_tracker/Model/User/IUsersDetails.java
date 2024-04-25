@@ -1,5 +1,7 @@
 package org.screen_time_tracker.screen_time_tracker.Model.User;
 
+import java.util.List;
+
 // this class is responsible for declaring some method signatures used to alter the users account in some way
 // for allowing users to register, and for allowing users to login
 public interface IUsersDetails {
@@ -34,6 +36,12 @@ public interface IUsersDetails {
      * @param email: The email used to sign in
      * @param password: The password used to sign in
      */
-    public void Login(User email, User password);
+    public User Login(String email, String password);
+
+    /**
+     * returns all the users contained within the users table
+     */
+
+    public List<User> getAllUsers();
 
 }
