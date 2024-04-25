@@ -12,6 +12,7 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
     public SQLiteScreenTimeDAO(){
         connection = SqliteConnection.getInstance();
         createUsersTable();
+        //createScreenTimeTable();
     }
 
     /**
@@ -23,7 +24,9 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
         try {
             Statement statement = connection.createStatement();
             String query = "CREATE TABLE IF NOT EXISTS Users ("
-                    + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "Userid INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "Name VARCHAR NOT NULL,"
+                    + "phone VARCHAR NOT NULL,"
                     + "password VARCHAR NOT NULL,"
                     + "email VARCHAR NOT NULL"
                     + ")";
@@ -36,8 +39,7 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
     /**
      * This method is responsible for creating the Users table to store account info
      * It uses a simple SQL query to define a table with a userID, email_Address and password
-     */
-    private void createScreenTimeTable() {
+     *//*private void createScreenTimeTable() {
         // Create table if not exists
         try {
             Statement statement = connection.createStatement();
@@ -50,7 +52,8 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
+
 
     @Override
     public void UpdatePassword(User currentPassword) {

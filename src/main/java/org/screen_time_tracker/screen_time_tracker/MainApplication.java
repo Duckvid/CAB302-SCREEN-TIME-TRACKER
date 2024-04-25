@@ -16,8 +16,9 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
-        scene.getStylesheets().add(getClass().getResource("current_Session_style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Main_style.css").toExternalForm());
         stage.setTitle(TITLE);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

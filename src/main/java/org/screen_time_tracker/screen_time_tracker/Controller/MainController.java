@@ -48,7 +48,7 @@ public class MainController {
         Stage stage = (Stage) SubmitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("current_Session-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/current_Session_style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/current_Session_style.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
 

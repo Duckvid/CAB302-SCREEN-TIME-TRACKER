@@ -6,8 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="1000.0" prefWidth="1000.0" stylesheets="@current_Session_style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.Current_Session_Controller">
-   <AnchorPane prefHeight="1000.0" prefWidth="1000.0" stylesheets="@current_Session_style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/current_Session_style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.Current_Session_Controller">
+   <AnchorPane prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/current_Session_style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
 
       <BorderPane prefHeight="1000.0" prefWidth="200.0" styleClass="border-left" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
          <left>
@@ -15,7 +15,7 @@
 
                <ImageView fitHeight="100" fitWidth="200" preserveRatio="true">
                   <image>
-                     <Image url="@temp_logo.png" />
+                     <Image url="@images/temp_logo.png" />
                   </image>
                </ImageView>
 
