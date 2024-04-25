@@ -15,11 +15,10 @@
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                      <Button fx:id="Login" styleClass="loginbtn" text="Login" BorderPane.alignment="CENTER">
+                      <Button onAction="#OnLoginButtonClick" fx:id="Login" styleClass="loginbtn" text="Login" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Button>
-                      <Button fx:id="SubmitButton" onAction="#OnSubmitButtonClick" text="Submit" BorderPane.alignment="CENTER" />
                   </VBox>
               </StackPane>
           </right>
@@ -97,7 +96,7 @@
                            <Font size="16.0" />
                         </font></TextField>
                         </HBox>
-                        <Button styleClass="signup-button" stylesheets="@styles/Main_style.css" text="Sign Up">
+                        <Button onAction="#HandleSignUpAction" fx:id="signupbtn" styleClass="signup-button" stylesheets="@styles/Main_style.css" text="Sign Up">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Button>

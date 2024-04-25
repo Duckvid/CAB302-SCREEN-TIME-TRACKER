@@ -1,0 +1,48 @@
+.HaveanAccount{
+    -fx-background-color: #7ED1FF;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10; /* Ensure the border itself also has rounded corners. */
+    -fx-padding: 0 0 200 0;
+}
+
+.Signupbtn{
+    -fx-pref-width: 439;
+    -fx-pref-height: 79;
+    -fx-background-color: #AAE0FF;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10; /* Ensure the border itself also has rounded corners. */
+}
+
+.textacc{
+    -fx-padding: 0 0 30 30;
+}
+
+.newhere-label{
+    -fx-padding: 0 0 30 0;
+}
+
+.header-label{
+    -fx-padding: 30 0 0 0 ;
+}
+
+.CodingMess-label{
+    -fx-text-fill: #0B7DBD;
+}
+
+.input-field{
+    -fx-pref-width: 400;
+    -fx-pref-height: 45;
+    -fx-border-radius: 10; /* Ensure the border itself also has rounded corners. */
+}
+
+.login-button{
+    -fx-background-color: #7ED1FF;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10; /* Ensure the border itself also has rounded corners. */
+    -fx-pref-width: 300;
+    -fx-pref-height: 35;
+}
+
+.outerinputcontainer{
+    -fx-padding: 0 0 350 0;
+}

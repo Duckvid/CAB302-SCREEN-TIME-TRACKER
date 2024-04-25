@@ -72,7 +72,23 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
 
     @Override
     public void RegisterAccount(User user) {
+        String sql = "INSERT INTO Users (Name, phone, password, email) VALUES (?, ?, ?, ?)";
 
+        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1, user.getName());
+            pstmt.setString(2, user.getPhonenumber());
+            pstmt.setString(3, user.getPassword());
+            pstmt.setString(4, user.getEmail());
+            pstmt.executeUpdate();
+            // Set the id of the new contact
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                user.setUserid(generatedKeys.getInt(1));
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
