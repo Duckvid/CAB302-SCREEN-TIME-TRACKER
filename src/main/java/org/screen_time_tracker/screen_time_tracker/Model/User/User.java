@@ -8,10 +8,41 @@ public class User {
     private boolean HasAccount = false;
     private String Email;
     private String Password;
+    private String Name;
+    private String Phonenumber;
+    private int Userid;
 
-    public User(){
 
+    public User(String name, String email, String password, String phonenumber){
+        Name = name;
+        Email = email;
+        Phonenumber = phonenumber;
+        Password = password;
     }
+    public String getName() {
+        return Name;
+    }
+
+    public int getUserid() {
+        return Userid;
+    }
+
+    public void setUserid(int userid) {
+        Userid = userid;
+    }
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getPhonenumber() {
+        return Phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        Phonenumber = phonenumber;
+    }
+
+
     public String getPassword() {
         return Password;
     }

@@ -96,7 +96,7 @@
                            <Font size="16.0" />
                         </font></TextField>
                         </HBox>
-                        <Button styleClass="signup-button" stylesheets="@styles/Main_style.css" text="Sign Up">
+                        <Button onAction="#HandleSignUpAction" fx:id="signupbtn" styleClass="signup-button" stylesheets="@styles/Main_style.css" text="Sign Up">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Button>
