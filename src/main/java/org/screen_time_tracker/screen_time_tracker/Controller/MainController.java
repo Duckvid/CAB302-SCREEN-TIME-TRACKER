@@ -6,10 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
-import org.screen_time_tracker.screen_time_tracker.Model.WindowInfo;
+import org.screen_time_tracker.screen_time_tracker.Model.CurrentSession.WindowInfo;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.io.IOException;
 import java.util.Map;
 

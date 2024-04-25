@@ -1,4 +1,4 @@
-package org.screen_time_tracker.screen_time_tracker.Model;
+package org.screen_time_tracker.screen_time_tracker.Model.CurrentSession;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HWND;
