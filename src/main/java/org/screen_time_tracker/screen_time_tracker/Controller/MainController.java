@@ -27,16 +27,18 @@ public class MainController {
     private void startBackgroundWindowInfo() {
         Thread thread = new Thread(() -> {
             WindowInfo widowinfo = new WindowInfo();
-            while(true){
-                Map<String, Long> windowTimes = widowinfo.getWindowTimeMap();
-                windowTimes.forEach((title, time) -> System.out.println(title + ": " + time + "ms" ));
-                try{
-                    Thread.sleep(100);
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                    break;
+            try {
+                while (!Thread.interrupted()) {
+                    Map<String, Long> windowTimes = widowinfo.getWindowTimeMap();
+                    windowTimes.forEach((title, time) -> System.out.println(title + ": " + (time / 1000) + "s " + "Current Date and time is: " + widowinfo.CurrentDateTime()));
+                    Thread.sleep(1000);
                 }
             }
+                catch (InterruptedException e){
+                    Thread.currentThread().interrupt();
+
+                }
+
         });
         thread.setDaemon(true);
         thread.start();
