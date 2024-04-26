@@ -23,7 +23,7 @@
                   <font>
                      <Font name="System Bold" size="14.0" />
                   </font></Button>
-               <Button styleClass="nav-button" text="Current Session">
+               <Button fx:id="CurrentSessionPage" onAction="#OnCurrentSessionBtnClick" styleClass="nav-button" text="Current Session">
                   <font>
                      <Font name="System Bold" size="14.0" />
                   </font></Button>
@@ -31,7 +31,7 @@
                   <font>
                      <Font name="System Bold" size="14.0" />
                   </font></Button>
-               <Button styleClass="nav-button" text="Recommended">
+               <Button fx:id="Recommendationspage" onAction="#OnRecommendationsPageClick" styleClass="nav-button" text="Recommended">
                   <font>
                      <Font name="System Bold" size="14.0" />
                   </font></Button>
@@ -39,7 +39,7 @@
                   <font>
                      <Font name="System Bold" size="14.0" />
                   </font></Button>
-               <Button styleClass="nav-button" text="Timers">
+               <Button fx:id="TimersPage" onAction="#OnTimersButtonClick" styleClass="nav-button" text="Timers">
                   <font>
                      <Font name="System Bold" size="14.0" />
                   </font></Button>
@@ -47,7 +47,7 @@
                   <font>
                      <Font name="System Bold" size="14.0" />
                   </font></Button>
-               <Button styleClass="nav-button" text="Settings">
+               <Button fx:id="settingsPage" onAction="#OnSettingsButtonClick" styleClass="nav-button" text="Settings">
                   <font>
                      <Font name="System Bold" size="14.0" />
                   </font></Button>

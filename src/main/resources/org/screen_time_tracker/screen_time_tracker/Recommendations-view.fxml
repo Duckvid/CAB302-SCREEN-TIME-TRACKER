@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Recommendations.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.Recommendations_controller">
+    <AnchorPane prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Recommendations.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+        <BorderPane prefHeight="1000.0" prefWidth="200.0" styleClass="border-left" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+            <left>
+                <VBox spacing="10" styleClass="nav-bar">
+
+                    <ImageView fitHeight="100" fitWidth="200" preserveRatio="true">
+                        <image>
+                            <Image url="@images/temp_logo.png" />
+                        </image>
+                    </ImageView>
+                    <Button styleClass="nav-button" text="Home">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="CurrentSessionPage" onAction="#OnCurrentSessionBtnClick" styleClass="nav-button" text="Current Session">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button styleClass="nav-button" text="Old Sessions">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="Recommendationspage" onAction="#OnRecommendationsPageClick" styleClass="nav-button" text="Recommended">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button styleClass="nav-button" text="Goals">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="TimersPage" onAction="#OnTimersButtonClick" styleClass="nav-button" text="Timers">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button styleClass="nav-button" text="Your Data">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="settingsPage" onAction="#OnSettingsButtonClick" styleClass="nav-button" text="Settings">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                </VBox>
+            </left>
+
+        </BorderPane>
+
+        <HBox prefHeight="200.0" prefWidth="1000.0" styleClass="innerbox" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <BorderPane prefHeight="200.0" prefWidth="800.0" styleClass="border-top">
+                <center>
+                    <Label alignment="CENTER" prefHeight="74.0" prefWidth="502.0" text="Recommendations" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                        <font>
+                            <Font name="System Bold" size="51.0" />
+                        </font></Label>
+                </center></BorderPane>
+        </HBox>
+
+
+        <BorderPane layoutX="571.0" layoutY="287.0" prefHeight="645.0" prefWidth="400.0" styleClass="border-radius">
+            <top>
+                <VBox prefHeight="645.0" prefWidth="335.0" BorderPane.alignment="CENTER">
+                    <Label styleClass="info-text" text="Recommended Break times:" />
+                    <Label styleClass="info-text" text="Recommended End:" />
+                    <Label styleClass="info-text" text="Recommended Complete difficult task time:" />
+                </VBox>
+            </top>
+        </BorderPane>
+
+        <BorderPane layoutX="219.0" layoutY="287.0" prefHeight="645.0" prefWidth="320.0" styleClass="border-radius">
+            <top>
+                <VBox prefHeight="645.0" prefWidth="335.0" BorderPane.alignment="CENTER">
+                    <Label styleClass="info-text" text="Your Start Time:" />
+                    <Label styleClass="info-text" text="Your median start time:" />
+                    <Label styleClass="info-text" text="Your median end time:" />
+                    <Label styleClass="info-text" text="Most Activity Detected:" />
+                    <Label styleClass="info-text" text="Least Activity Detected:" />
+                    <Label styleClass="info-text" text="Median most activity:" />
+                    <Label styleClass="info-text" text="Least most activity:" />
+
+                </VBox>
+            </top>
+        </BorderPane>
+
+
+
+    </AnchorPane>
+
+
+
+
+
+</VBox>

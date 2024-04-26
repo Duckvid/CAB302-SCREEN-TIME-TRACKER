@@ -10,7 +10,24 @@ import org.screen_time_tracker.screen_time_tracker.MainApplication;
 
 import java.io.IOException;
 
-public class Current_Session_Controller {
+public class Settings_Controller {
+
+    @FXML
+    private Button btnAccountInfo;
+
+    @FXML
+    private Button btnSecurity;
+
+    @FXML
+    private Button btnNotifications;
+
+    @FXML
+    private Button btnPermissions;
+
+    @FXML
+    private Button btnAppearance;
+
+    private Button activeButton = null;
 
     @FXML
     private Button settingsPage;
@@ -60,4 +77,36 @@ public class Current_Session_Controller {
         stage.setScene(scene);
 
     }
+
+    public void handleAccountInfo(ActionEvent actionEvent) throws IOException  {
+        Onclickofanybtn(btnAccountInfo);
+    }
+
+    public void handleSecurity(ActionEvent actionEvent) throws IOException {
+        Onclickofanybtn(btnSecurity);
+    }
+
+    public void handleNotifications(ActionEvent actionEvent) throws IOException  {
+        Onclickofanybtn(btnNotifications);
+    }
+
+    public void handlePermissions(ActionEvent actionEvent) throws IOException {
+        Onclickofanybtn(btnPermissions);
+    }
+
+    public void handleAppearance(ActionEvent actionEvent) throws IOException {
+        Onclickofanybtn(btnAppearance);
+    }
+
+
+    @FXML
+    protected void Onclickofanybtn(Button button) throws IOException{
+        if(activeButton != null){
+            activeButton.getStyleClass().remove("button-active");
+        }
+        button.getStyleClass().add("button-active");
+        activeButton = button;
+    }
+
+
 }

@@ -1,0 +1,64 @@
+.root{
+    -fx-background-color: white;
+}
+
+.border-top{
+    -fx-background-color: #83bcdd;
+     -fx-pref-height: 150.0; /* Adjust the height here if needed */
+}
+
+.innerbox {
+    -fx-padding: 0 0 0 0; /* Remove padding to let border-top extend to the top */
+    -fx-border-radius: 20;
+}
+
+.border-left{
+    -fx-background-color: #0B7DBD;
+
+}
+
+
+.side-panel {
+    -fx-padding: 0; /* Make sure there is no padding */
+}
+
+.nav-bar{
+-fx-padding: 41 0 0 0;
+-fx-background-color: #0B7DBD;
+-fx-alignment: TOP_CENTER;
+}
+
+
+.nav-button{
+    -fx-background-color: #0B7DBD;
+    -fx-text-fill: white;
+    -fx-pref-width: 200.0;
+    -fx-min-height: 50.0;
+    -fx-border-color: transparent transparent white transparent; /* Bottom border is white, others are transparent */
+    -fx-border-width: 0 0 1 0; /* Only bottom border */
+    -fx-background-insets: 0, 0, 1, 0; /* Prevent the background color from covering the border */
+    -fx-border-insets: 0, 0, 1, 0; /* Border position */
+    -fx-padding: 10; /* Adjust padding as needed */
+}
+
+
+.border-radius{
+    -fx-background-color: #CEEDFF;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5; /* Ensure the border itself also has rounded corners. */
+}
+
+.barchartContainer{
+    -fx-background-color: #CEEDFF;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5; /* Ensure the border itself also has rounded corners. */
+}
+
+.info-text{
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-padding: 20;
+    -fx-alignment: top-left;
+    -fx-spacing: 5;
+
+}

@@ -1,6 +1,5 @@
 package org.screen_time_tracker.screen_time_tracker.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,8 +9,7 @@ import org.screen_time_tracker.screen_time_tracker.MainApplication;
 
 import java.io.IOException;
 
-public class Current_Session_Controller {
-
+public class Timers_Controller {
     @FXML
     private Button settingsPage;
 
