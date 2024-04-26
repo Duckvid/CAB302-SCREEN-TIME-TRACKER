@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 // this class will contain fields, properties and methods specifically related to the user
-public class User {
+public class User{
 
     // this field is used to check if the user has created an account before
     // this will be useful when it comes to loggin in
@@ -70,14 +70,6 @@ public class User {
         HasAccount = hasAccount;
     }
 
-
-    /**
-     * This method verify the users email making sure it contains a @ symbol a .com/.au or similar to verify the details are valid
-     * @param email: The email to be verified
-     */
-    public boolean IsEmailCorrect(String email){
-        return true;
-    }
 
 
 

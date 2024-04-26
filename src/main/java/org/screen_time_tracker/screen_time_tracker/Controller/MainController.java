@@ -63,54 +63,7 @@ public class MainController {
             thread.start();
         }
 
-        /**
-         * This method is used to verify the users Password to make sure its the correct length
-         * minimum length of 8 characters
-         * contains 1 special character
-         * contains 1 captical
-         * contains at least one number
-         * @param Password: The password to be verified
-         */
-        private boolean IsPasswordCorrect(String Password){
-            // check the lenth of the password
 
-            // using regex to check for special character
-            String specialChars = "[!$#.]";
-
-            // using regex to check for numbers
-            String nums = "[0-9]";
-
-            // using regex to check for capitcal letter
-            String Caps = "[A-Z]";
-
-            if(Password.length() < 8) {return false;}
-
-            if (!Password.matches(".*" + specialChars + ".*")) {return false;}
-
-            if (!Password.matches(".*" + nums + ".*")) {return false;}
-
-            if (!Password.matches(".*" + Caps + ".*")) {return false;}
-
-            return true; // password meets all requirments
-
-        }
-
-
-    /**
-     * This method verify the users email making sure it contains a @ symbol a .com/.au or similar to verify the details are valid
-     * @param email: The email to be verified
-     */
-    public boolean IsEmailCorrect(String email){
-
-        // check that the email has an '@' symbol
-        // check that the email has some .prefix as in .com .au .org etc
-
-        String regex = "^(.+)@(.+)$";
-
-        if(!email.matches(".*" + regex + ".*")){return false;}
-
-        return true;
-    }
 
 
     @FXML
@@ -119,7 +72,7 @@ public class MainController {
             String email = EmailField.getText();
             String Password = PasswordField.getText();
             String Phonenumber = PhoneField.getText();
-
+            SQLiteScreenTimeDAO dao = new SQLiteScreenTimeDAO();
             // this is some simple input validation to ensure that the input fields cannot be null
             // This will output a simple alert type popup to notify users to fix their input
             if(name.isEmpty() || email.isEmpty() || Password.isEmpty() || Phonenumber.isEmpty()){
@@ -131,7 +84,7 @@ public class MainController {
             }
 
             // this condition validates to make sure the password is correct and contains the neccessary characters
-            else if(!IsPasswordCorrect(Password)){
+            else if(!dao.IsPasswordCorrect(Password)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Validation Error");
                 alert.setHeaderText("Input validation Error");
@@ -139,7 +92,7 @@ public class MainController {
                 alert.showAndWait();
             }
 
-            else if(!IsEmailCorrect(email)){
+            else if(!dao.IsEmailCorrect(email)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Validation Error");
                 alert.setHeaderText("Input validation Error");
@@ -156,7 +109,6 @@ public class MainController {
             else{
 
                 User newUser = new User(name, email, Password, Phonenumber);
-                SQLiteScreenTimeDAO dao = new SQLiteScreenTimeDAO();
                 dao.RegisterAccount(newUser);
 
                 // navigate to the home page once implmented but for now goto currentSession page

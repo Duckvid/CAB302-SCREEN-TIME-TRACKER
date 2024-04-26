@@ -12,17 +12,21 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
 
     private Connection connection;
 
-    public SQLiteScreenTimeDAO(){
-        connection = SqliteConnection.getInstance();
+    public SQLiteScreenTimeDAO(Connection connection){
+        this.connection = connection;
         createUsersTable();
         //createScreenTimeTable();
+    }
+
+    public SQLiteScreenTimeDAO(){
+        this(SqliteConnection.getInstance());
     }
 
     /**
      * This method is responsible for creating the Users table to store account info
      * It uses a simple SQL query to define a table with a userID, email_Address and password
      */
-    private void createUsersTable() {
+    public void createUsersTable() {
         // Create table if not exists
         try {
             Statement statement = connection.createStatement();
@@ -133,6 +137,42 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
             e.printStackTrace();
         }
         return users;
+    }
+
+    @Override
+    public boolean IsPasswordCorrect(String Password) {
+        // check the lenth of the password
+
+        // using regex to check for special character
+        String specialChars = "[!$#.]";
+
+        // using regex to check for numbers
+        String nums = "[0-9]";
+
+        // using regex to check for capitcal letter
+        String Caps = "[A-Z]";
+
+        if(Password.length() < 8) {return false;}
+
+        if (!Password.matches(".*" + specialChars + ".*")) {return false;}
+
+        if (!Password.matches(".*" + nums + ".*")) {return false;}
+
+        if (!Password.matches(".*" + Caps + ".*")) {return false;}
+
+        return true; // password meets all requirments
+    }
+
+    @Override
+    public boolean IsEmailCorrect(String email) {
+        // check that the email has an '@' symbol
+        // check that the email has some .prefix as in .com .au .org etc
+
+        String regex = "^(.+)@(.+)$";
+
+        if(!email.matches(regex)){return false;}
+
+        return true;
     }
 
     // This method is used to verify the users login credentials .
