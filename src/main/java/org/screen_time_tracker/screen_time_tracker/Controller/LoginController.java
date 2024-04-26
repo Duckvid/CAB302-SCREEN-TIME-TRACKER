@@ -42,7 +42,7 @@ public class LoginController {
         String email = EmailField.getText();
         String password = PasswordField.getText();
 
-        // this is some simple input validation to ensure that the input fields cannot be null
+        // This is some simple input validation to ensure that the input fields cannot be null
         // This will output a simple alert type popup to notify users to fix their input
         if(email.isEmpty() || password.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -55,7 +55,7 @@ public class LoginController {
 
             SQLiteScreenTimeDAO dao = new SQLiteScreenTimeDAO();
             User user = dao.Login(email, password);
-            // user is found, navigate to home page once implmented but for now go to currentsession page
+            // user is found, navigate to Home page once implemented but for now go to current session page
             Stage stage = (Stage) Loginbtn.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("current_Session-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
