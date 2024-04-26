@@ -163,13 +163,5 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
 
     }
 
-    @Override
-    public boolean IsEmailCorrect(String email){
-        return true;
-    }
 
-    @Override
-    public boolean IsPasswordCorrect(String Password){
-        return true;
-    }
 }

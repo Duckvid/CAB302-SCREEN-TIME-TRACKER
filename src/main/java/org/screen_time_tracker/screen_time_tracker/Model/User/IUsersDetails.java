@@ -44,22 +44,6 @@ public interface IUsersDetails {
 
     public List<User> getAllUsers();
 
-    /**
-     * This method verify the users email making sure it contains a @ symbol a .com/.au or similar to verify the details are valid
-     * @param email: The email to be verified
-     */
-    public boolean IsEmailCorrect(String email);
 
-
-    /**
-     * This method is used to verify the users Password to make sure its the correct length
-     * minimum length of 8 characters
-     * contains 1 special character
-     * contains 1 captical
-     * contains at least one number
-     * @param Password: The password to be verified
-     */
-
-    public boolean IsPasswordCorrect(String Password);
 
 }

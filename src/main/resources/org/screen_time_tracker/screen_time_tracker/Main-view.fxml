@@ -76,7 +76,7 @@
                         </HBox>
 
                         <HBox alignment="CENTER" spacing="10">
-                            <TextField fx:id="EmailField" prefWidth="200" promptText="Email: " styleClass="input-field">
+                            <TextField fx:id="EmailField" prefWidth="200" promptText="exampleemail@gmail.com " styleClass="input-field">
                         <font>
                            <Font size="16.0" />
                         </font></TextField>

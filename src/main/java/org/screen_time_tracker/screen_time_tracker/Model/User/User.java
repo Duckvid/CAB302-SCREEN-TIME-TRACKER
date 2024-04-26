@@ -1,5 +1,9 @@
 package org.screen_time_tracker.screen_time_tracker.Model.User;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 // this class will contain fields, properties and methods specifically related to the user
 public class User {
 
@@ -65,6 +69,16 @@ public class User {
     public void setHasAccount(boolean hasAccount) {
         HasAccount = hasAccount;
     }
+
+
+    /**
+     * This method verify the users email making sure it contains a @ symbol a .com/.au or similar to verify the details are valid
+     * @param email: The email to be verified
+     */
+    public boolean IsEmailCorrect(String email){
+        return true;
+    }
+
 
 
 }
