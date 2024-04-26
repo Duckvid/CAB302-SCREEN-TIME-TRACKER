@@ -1,5 +1,7 @@
 package org.screen_time_tracker.screen_time_tracker.Model.User;
 
+import java.util.List;
+
 // this class is responsible for declaring some method signatures used to alter the users account in some way
 // for allowing users to register, and for allowing users to login
 public interface IUsersDetails {
@@ -8,13 +10,13 @@ public interface IUsersDetails {
      * @param currentPassword to update
      */
 
-    public void UpdatePassword(User currentPassword);
+    public void UpdatePassword(String currentPassword);
 
     /**
      * Updates the users email associated with their account
      * @param currentEmail to update
      */
-    public void UpdateEmail(User currentEmail);
+    public void UpdateEmail(String currentEmail);
 
     /**
      * Delete the users account
@@ -34,6 +36,30 @@ public interface IUsersDetails {
      * @param email: The email used to sign in
      * @param password: The password used to sign in
      */
-    public void Login(User email, User password);
+    public User Login(String email, String password);
+
+    /**
+     * returns all the users contained within the users table
+     */
+
+    public List<User> getAllUsers();
+
+    /**
+     * This method verify the users email making sure it contains a @ symbol a .com/.au or similar to verify the details are valid
+     * @param email: The email to be verified
+     */
+    public boolean IsEmailCorrect(String email);
+
+
+    /**
+     * This method is used to verify the users Password to make sure its the correct length
+     * minimum length of 8 characters
+     * contains 1 special character
+     * contains 1 captical
+     * contains at least one number
+     * @param Password: The password to be verified
+     */
+
+    public boolean IsPasswordCorrect(String Password);
 
 }

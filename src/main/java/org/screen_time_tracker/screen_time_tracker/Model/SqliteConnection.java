@@ -5,6 +5,9 @@ import java.sql.SQLException;
 public class SqliteConnection {
     private static Connection instance = null;
 
+
+    // This is establishing a connection to the database and creating an instance of this connection
+    // If there is no database by that name it will create a new one
     private SqliteConnection(){
         String url = "jdbc:sqlite:ScreenTimeTracker.db";
         try {

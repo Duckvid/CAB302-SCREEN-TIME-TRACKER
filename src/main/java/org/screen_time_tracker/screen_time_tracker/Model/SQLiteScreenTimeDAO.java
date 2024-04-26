@@ -5,6 +5,9 @@ import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.sql.Connection;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SQLiteScreenTimeDAO implements IUsersDetails {
 
     private Connection connection;
@@ -54,22 +57,35 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
         }
     }*/
 
+    // this is just a useful method for testing
+    public void ClearUsersTable() throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE * FROM Users");
+        statement.executeUpdate();
+    }
 
     @Override
-    public void UpdatePassword(User currentPassword) {
+    public void UpdatePassword(String currentPassword) {
 
     }
 
     @Override
-    public void UpdateEmail(User currentEmail) {
+    public void UpdateEmail(String currentEmail) {
 
     }
 
+    // Although not used yet this can be used on the settings page to simply remove the users details as this is also one of our should have user storys
     @Override
     public void DeleteAccount(User account) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM Users WHERE Userid = ?");
+            statement.setInt(1, account.getUserid());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    // This method handles adding persistency to the application as user data is inserted into the database
     @Override
     public void RegisterAccount(User user) {
         String sql = "INSERT INTO Users (Name, phone, password, email) VALUES (?, ?, ?, ?)";
@@ -91,8 +107,69 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
         }
     }
 
+    // This method is not being used yet but become useful at some point it simply returns all the users data
+    // Could use this to potentially visualize to the user where their screen time data stacks up against other users
+    // As in do they follow the trend of screen time usage or are they an outlier
     @Override
-    public void Login(User email, User password) {
+    public List<User> getAllUsers(){
+        List<User> users = new ArrayList<>();
 
+        try{
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM Users";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while(resultSet.next()){
+                int UserID = resultSet.getInt("Userid");
+                String Name = resultSet.getString("Name");
+                String Phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+
+                User user = new User(Name, email, password, Phone);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    // This method is used to verify the users login credentials .
+    // As seen by the sql query it first checks if the users email and password exist in the data table then return the user
+    // with those credentials this is used in the login controller page
+    @Override
+    public User Login(String email, String password) {
+        String query = "SELECT * FROM Users where email = ? AND password = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            if(resultSet.next()){
+                // user found with matching credentials
+                String Name = resultSet.getString("Name");
+                String Phone = resultSet.getString("phone");
+                String userEmail = resultSet.getString("email");
+                String userPassword = resultSet.getString("password");
+
+                return new User(Name, userEmail, userPassword, Phone);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    @Override
+    public boolean IsEmailCorrect(String email){
+        return true;
+    }
+
+    @Override
+    public boolean IsPasswordCorrect(String Password){
+        return true;
     }
 }

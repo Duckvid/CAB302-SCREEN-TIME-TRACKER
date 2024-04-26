@@ -95,7 +95,7 @@
                                     <Font size="16.0" />
                                 </font></TextField>
                         </HBox>
-                        <Button styleClass="login-button"  text="Login">
+                        <Button onAction="#HandleLoginAction" fx:id="Loginbtn" styleClass="login-button"  text="Login">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font></Button>
