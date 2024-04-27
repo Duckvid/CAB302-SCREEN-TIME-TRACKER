@@ -9,12 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
-import org.screen_time_tracker.screen_time_tracker.Model.CurrentSession.WindowInfo;
-import org.screen_time_tracker.screen_time_tracker.Model.SQLiteScreenTimeDAO;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQlite_Screen_Time_data;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_time_tracking_feature;
+import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.sql.SQLException;
 import java.util.Map;
 
 public class MainController {
@@ -44,23 +44,64 @@ public class MainController {
 
         /* This is a function which is responsible for actually controlling how frequently the screen time data is collected */
         private void startBackgroundWindowInfo() {
-            Thread thread = new Thread(() -> {
-                WindowInfo widowinfo = new WindowInfo();
+            Thread screenTimethread = new Thread(() -> {
+                Screen_time_tracking_feature widowinfo = new Screen_time_tracking_feature();
+                //SQLiteUserDAO dao = new SQLiteUserDAO();
+                SQlite_Screen_Time_data screenTimeData;
                 try {
+                     screenTimeData = new SQlite_Screen_Time_data();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // start the session and begin to record start time
+                String Start_Time = widowinfo.CurrentDateTime();
+                screenTimeData.InsertScreenTimeData(Start_Time);
+                int Screen_Time_ID = 0;
+                try {
+                    Screen_Time_ID = screenTimeData.getLastInsertedID();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                long sessionStart = 0;
+                try {
+                    sessionStart = System.currentTimeMillis();
                     while (!Thread.interrupted()) {
                         Map<String, Long> windowTimes = widowinfo.getWindowTimeMap();
-                        //windowTimes.forEach((title, time) -> System.out.println(title + ": " + (time / 1000) + "s " + "Current Date and time is: " + widowinfo.CurrentDateTime()));
+                        long sessionEnd = System.currentTimeMillis(); // Update Session end time on each cycle
+                        int duration = (int) ((sessionEnd - sessionStart) / 1000); // duration in seconds
+
+                        // update the db with the current duration
+                        screenTimeData.UpdateScreenTimeData(Screen_Time_ID, duration);
+
                         Thread.sleep(1000);
                     }
-                }
-                    catch (InterruptedException e){
-                        Thread.currentThread().interrupt();
+                } catch (InterruptedException e) {
+                    long sessionEnd = System.currentTimeMillis();
+                    int finalDuration = (int) ((sessionEnd - sessionStart) / 1000);
+                    String endTime = widowinfo.CurrentDateTime();
 
-                    }
+                    // update end time and finalize duration
+                    screenTimeData.finalizeScreenTimeData(Screen_Time_ID, endTime, finalDuration);
+
+                    Thread.currentThread().interrupt();
+
+                }
 
             });
-            thread.setDaemon(true);
-            thread.start();
+
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                screenTimethread.interrupt();
+                try{
+                    screenTimethread.join();
+                }
+                catch(InterruptedException e){
+                    Thread.currentThread().interrupt();
+                }
+            }));
+
+            screenTimethread.start();
         }
 
 
@@ -72,7 +113,7 @@ public class MainController {
             String email = EmailField.getText();
             String Password = PasswordField.getText();
             String Phonenumber = PhoneField.getText();
-            SQLiteScreenTimeDAO dao = new SQLiteScreenTimeDAO();
+            SQLiteUserDAO dao = new SQLiteUserDAO();
             // this is some simple input validation to ensure that the input fields cannot be null
             // This will output a simple alert type popup to notify users to fix their input
             if(name.isEmpty() || email.isEmpty() || Password.isEmpty() || Phonenumber.isEmpty()){

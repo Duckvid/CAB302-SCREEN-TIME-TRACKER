@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
-import org.screen_time_tracker.screen_time_tracker.Model.SQLiteScreenTimeDAO;
+import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class LoginController {
         }
         else {
 
-            SQLiteScreenTimeDAO dao = new SQLiteScreenTimeDAO();
+            SQLiteUserDAO dao = new SQLiteUserDAO();
             User user = dao.Login(email, password);
             // user is found, navigate to home page once implmented but for now go to currentsession page
             Stage stage = (Stage) Loginbtn.getScene().getWindow();

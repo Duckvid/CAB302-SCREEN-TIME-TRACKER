@@ -18,5 +18,7 @@ module org.screen_time_tracker.screen_time_tracker {
     // If your tests use reflection (e.g., Mockito, JUnit), you need to open the Model package to unnamed module
     exports org.screen_time_tracker.screen_time_tracker.Model.User;
     opens org.screen_time_tracker.screen_time_tracker.Model to javafx.fxml, org.junit.jupiter.api;
+    exports org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
+    opens org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature to javafx.fxml, org.junit.jupiter.api;
 
 }

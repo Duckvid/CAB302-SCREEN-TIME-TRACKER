@@ -1,15 +1,13 @@
-package org.screen_time_tracker.screen_time_tracker.Model.CurrentSession;
+package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
 
-import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HWND;
-import com.sun.jna.platform.win32.WinUser;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.User32;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class WindowInfo {
+public class Screen_time_tracking_feature {
     private Map<String, Long> windowTimeMap = new HashMap<>();
 
     private Map<String, Long> lastActiveTimeMap = new HashMap<>();
@@ -25,7 +23,7 @@ public class WindowInfo {
         try {
             Calendar calendar = Calendar.getInstance();
             Date CurrentDate = calendar.getTime();
-            SimpleDateFormat currentTime12hr = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");
+            SimpleDateFormat currentTime12hr = new SimpleDateFormat("hh:mm a");
             NewTimeString = currentTime12hr.format(CurrentDate);
             
         }catch(Exception e){

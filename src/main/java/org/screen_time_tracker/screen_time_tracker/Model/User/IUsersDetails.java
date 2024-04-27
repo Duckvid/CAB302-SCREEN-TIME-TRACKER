@@ -5,18 +5,6 @@ import java.util.List;
 // this class is responsible for declaring some method signatures used to alter the users account in some way
 // for allowing users to register, and for allowing users to login
 public interface IUsersDetails {
-    /**
-     * Updates the users password
-     * @param currentPassword to update
-     */
-
-    public void UpdatePassword(String currentPassword);
-
-    /**
-     * Updates the users email associated with their account
-     * @param currentEmail to update
-     */
-    public void UpdateEmail(String currentEmail);
 
     /**
      * Delete the users account

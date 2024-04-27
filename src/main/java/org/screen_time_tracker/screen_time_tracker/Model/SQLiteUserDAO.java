@@ -8,17 +8,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLiteScreenTimeDAO implements IUsersDetails {
+public class SQLiteUserDAO implements IUsersDetails {
+
 
     private Connection connection;
 
-    public SQLiteScreenTimeDAO(Connection connection){
+    public SQLiteUserDAO(Connection connection){
         this.connection = connection;
-        createUsersTable();
-        //createScreenTimeTable();
+        createUsers_And_Screen_Time_Data_Table();
     }
 
-    public SQLiteScreenTimeDAO(){
+    public SQLiteUserDAO(){
         this(SqliteConnection.getInstance());
     }
 
@@ -26,7 +26,12 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
      * This method is responsible for creating the Users table to store account info
      * It uses a simple SQL query to define a table with a userID, email_Address and password
      */
-    public void createUsersTable() {
+
+    /**
+     * This method is also  responsible for creating the Users table to store account info
+     * It uses a simple SQL query to define a table with a userID, email_Address and password
+     */
+    public void createUsers_And_Screen_Time_Data_Table() {
         // Create table if not exists
         try {
             Statement statement = connection.createStatement();
@@ -37,44 +42,25 @@ public class SQLiteScreenTimeDAO implements IUsersDetails {
                     + "password VARCHAR NOT NULL,"
                     + "email VARCHAR NOT NULL"
                     + ")";
+            String Query = "CREATE TABLE IF NOT EXISTS ScreenTimeData ("
+                    + "ScreenTimeID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "Start_Time VARCHAR NOT NULL,"
+                    + "End_Time VARCHAR NOT NULL,"
+                    + "Duration INTEGER NOT NULL"
+                    + ")";
+            statement.execute(Query);
             statement.execute(query);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * This method is responsible for creating the Users table to store account info
-     * It uses a simple SQL query to define a table with a userID, email_Address and password
-     *//*private void createScreenTimeTable() {
-        // Create table if not exists
-        try {
-            Statement statement = connection.createStatement();
-            String query = "CREATE TABLE IF NOT EXISTS Users ("
-                    + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + "password VARCHAR NOT NULL,"
-                    + "email VARCHAR NOT NULL"
-                    + ")";
-            statement.execute(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
     // this is just a useful method for testing
     public void ClearUsersTable() throws SQLException {
         PreparedStatement statement = connection.prepareStatement("DELETE * FROM Users");
         statement.executeUpdate();
-    }
-
-    @Override
-    public void UpdatePassword(String currentPassword) {
-
-    }
-
-    @Override
-    public void UpdateEmail(String currentEmail) {
-
     }
 
     // Although not used yet this can be used on the settings page to simply remove the users details as this is also one of our should have user storys

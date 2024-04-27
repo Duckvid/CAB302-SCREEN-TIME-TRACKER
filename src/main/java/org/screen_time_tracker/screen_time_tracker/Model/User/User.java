@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ *
+ */
 // this class will contain fields, properties and methods specifically related to the user
 public class User{
 
@@ -50,17 +53,30 @@ public class User{
     public String getPassword() {
         return Password;
     }
+
+    /**
+     * Updates the users password
+     * @param password to update
+     */
     public void setPassword(String password) {
         Password = password;
     }
+
+
 
     public String getEmail() {
         return Email;
     }
 
+
+    /**
+     * Updates the users email associated with their account
+     * @param email to update
+     */
     public void setEmail(String email) {
         Email = email;
     }
+
 
     public boolean isHasAccount() {
         return HasAccount;
