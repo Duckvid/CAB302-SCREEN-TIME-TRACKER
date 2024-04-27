@@ -46,3 +46,16 @@
 .outerinputcontainer{
     -fx-padding: 0 0 350 0;
 }
+
+.forgotpassword{
+    -fx-background-color: #f3f3f3;
+}
+
+.button-active{
+    -fx-opacity: 0;
+}
+
+.overlapping{
+    -fx-background-color: black;
+    -fx-opacity: 1;
+}

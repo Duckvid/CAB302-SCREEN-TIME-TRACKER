@@ -1,18 +1,19 @@
 package org.screen_time_tracker.screen_time_tracker.Controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class LoginController {
     @FXML
@@ -26,6 +27,50 @@ public class LoginController {
 
     @FXML
     private TextField PasswordField;
+
+    private Button activeButton = null;
+
+    @FXML
+    private Button forgotPasswordbtn;
+
+    @FXML
+    protected void OnForgotPasswordbtnClick() throws IOException{
+
+        Dialog<String> dialog = new Dialog<>();
+
+        dialog.setTitle("Retrieve Password");
+
+        // set the button types
+        ButtonType submitbuttontype = new ButtonType("Submit", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(submitbuttontype, ButtonType.CANCEL);
+
+        VBox vbox = new VBox();
+        vbox.setSpacing(10);
+
+        TextField textField = new TextField();
+        textField.setPromptText("Email/Phone number");
+
+        vbox.getChildren().add(new Label("Please enter your email or phone number:"));
+        vbox.getChildren().add(textField);
+
+        dialog.getDialogPane().setContent(vbox);
+
+        Platform.runLater(textField::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if(dialogButton == submitbuttontype){
+                return textField.getText();
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(emailOrPhone -> {
+            // handle the retrieval of the password here
+        });
+    }
+
 
     @FXML
     protected void OnSignupButtonClick() throws IOException {

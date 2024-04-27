@@ -66,11 +66,11 @@
         </HBox>
 
         <HBox alignment="TOP_CENTER" layoutX="219.0" layoutY="261.0" prefHeight="637.0" prefWidth="275.0" styleClass="barchartContainer">
-            <BorderPane prefHeight="1000.0" prefWidth="200.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+            <BorderPane prefHeight="637.0" prefWidth="276.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
             <center>
-                    <VBox fx:id="navigation" alignment="TOP_CENTER" fillWidth="true" spacing="10" styleClass="body-bar" BorderPane.alignment="CENTER">
+                    <VBox fx:id="navigation" alignment="TOP_CENTER" fillWidth="true" prefHeight="632.0" prefWidth="216.0" spacing="10" styleClass="body-bar" BorderPane.alignment="CENTER">
                         <!-- Navigation Buttons -->
-                        <Button fx:id="btnAccountInfo" onAction="#handleAccountInfo" styleClass="body-button" text="Account info">
+                        <Button fx:id="btnAccountInfo" onAction="#handleAccountInfo" prefHeight="87.0" prefWidth="209.0" styleClass="body-button" text="Account info">
                      <font>
                         <Font size="18.0" />
                      </font></Button>
