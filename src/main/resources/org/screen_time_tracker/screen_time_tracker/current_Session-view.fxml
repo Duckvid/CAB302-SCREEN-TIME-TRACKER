@@ -19,10 +19,10 @@
                   </image>
                </ImageView>
 
-               <Button styleClass="nav-button" text="Home">
-                  <font>
-                     <Font name="System Bold" size="14.0" />
-                  </font></Button>
+               <Button fx:id="Homebtn" onAction="#OnHomebtnClick" styleClass="nav-button" text="Home">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
                <Button fx:id="CurrentSessionPage" onAction="#OnCurrentSessionBtnClick" styleClass="nav-button" text="Current Session">
                   <font>
                      <Font name="System Bold" size="14.0" />

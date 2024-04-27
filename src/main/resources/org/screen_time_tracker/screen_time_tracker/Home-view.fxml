@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Home_style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.Home_Controller">
+    <AnchorPane prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Home_style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+        <BorderPane prefHeight="1000.0" prefWidth="200.0" styleClass="border-left" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+            <left>
+                <VBox spacing="10" styleClass="nav-bar">
+
+                    <ImageView fitHeight="100" fitWidth="200" preserveRatio="true">
+                        <image>
+                            <Image url="@images/temp_logo.png" />
+                        </image>
+                    </ImageView>
+
+                    <Button fx:id="Homebtn" onAction="#OnHomebtnClick" styleClass="nav-button" text="Home">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="CurrentSessionPage" onAction="#OnCurrentSessionBtnClick" styleClass="nav-button" text="Current Session">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button styleClass="nav-button" text="Old Sessions">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="Recommendationspage" onAction="#OnRecommendationsPageClick" styleClass="nav-button" text="Recommended">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button styleClass="nav-button" text="Goals">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="TimersPage" onAction="#OnTimersButtonClick" styleClass="nav-button" text="Timers">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button styleClass="nav-button" text="Your Data">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="settingsPage" onAction="#OnSettingsButtonClick" styleClass="nav-button" text="Settings">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                </VBox>
+            </left>
+
+        </BorderPane>
+
+        <HBox prefHeight="200.0" prefWidth="1000.0" styleClass="innerbox" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <BorderPane prefHeight="200.0" prefWidth="800.0" styleClass="border-top">
+                <center>
+                    <Label alignment="CENTER" prefHeight="74.0" prefWidth="722.0" text="Good to see you [User name goes here]!" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                        <font>
+                            <Font name="System Bold" size="51.0" />
+                        </font></Label>
+                </center></BorderPane>
+        </HBox>
+
+
+        <HBox layoutX="219.0" layoutY="234.0" prefHeight="724.0" prefWidth="399.0" styleClass="barchartContainer" alignment="CENTER">
+            <children>
+                <StackedBarChart prefHeight="698.0" prefWidth="374.0">
+                    <xAxis>
+                        <CategoryAxis prefHeight="49.0" prefWidth="316.0" side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT" />
+                    </yAxis>
+                </StackedBarChart>
+            </children>
+        </HBox>
+
+      <BorderPane layoutX="641.0" layoutY="234.0" prefHeight="283.0" prefWidth="341.0" styleClass="insights">
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Button fx:id="insightbtn" onAction="#OnInsightBtnClick"  mnemonicParsing="false" text="Take a look -&gt;" textFill="#0b7dbd" underline="true" styleClass="takelookbtn" alignment="CENTER" />
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Label prefHeight="42.0" prefWidth="161.0" text="Insights">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+               </children></HBox>
+         </top>
+         <center>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Label prefHeight="85.0" prefWidth="343.0" text="See graphs and in depth insights on your analysed data" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </center></BorderPane>
+
+        <BorderPane layoutX="641.0" layoutY="570.0" prefHeight="272.0" prefWidth="341.0" styleClass="Recommendations">
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Button fx:id="recommendationsbtn"  onAction="#OnRecommendationsbtnClick" mnemonicParsing="false" text="Take a look -&gt;" textAlignment="CENTER" textFill="#0b7dbd" underline="true"  styleClass="takelookbtn" alignment="CENTER"/>
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Label text="Recommendations">
+                     <font>
+                        <Font size="36.0" />
+                     </font></Label>
+               </children></HBox>
+         </top>
+         <center>
+            <HBox prefHeight="159.0" prefWidth="323.0" alignment="CENTER">
+               <children>
+                  <Label text="See what we recommend you on what to do based off your infomation" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </center></BorderPane>
+
+
+    </AnchorPane>
+
+
+
+
+
+</VBox>

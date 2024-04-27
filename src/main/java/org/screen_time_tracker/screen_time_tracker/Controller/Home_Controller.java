@@ -1,6 +1,5 @@
 package org.screen_time_tracker.screen_time_tracker.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,25 +9,7 @@ import org.screen_time_tracker.screen_time_tracker.MainApplication;
 
 import java.io.IOException;
 
-public class Settings_Controller {
-
-    @FXML
-    private Button btnAccountInfo;
-
-    @FXML
-    private Button btnSecurity;
-
-    @FXML
-    private Button btnNotifications;
-
-    @FXML
-    private Button btnPermissions;
-
-    @FXML
-    private Button btnAppearance;
-
-    private Button activeButton = null;
-
+public class Home_Controller {
     @FXML
     private Button settingsPage;
 
@@ -38,6 +19,12 @@ public class Settings_Controller {
     @FXML Button TimersPage;
 
     @FXML Button CurrentSessionPage;
+
+    @FXML
+    private Button insightbtn;
+
+    @FXML
+    private Button recommendationsbtn;
 
     @FXML
     private Button Homebtn;
@@ -50,6 +37,25 @@ public class Settings_Controller {
         stage.setResizable(false);
         stage.setScene(scene);
     }
+    public void OnRecommendationsbtnClick() throws IOException {
+        Stage stage = (Stage) recommendationsbtn.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Recommendations-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Recommendations.css").toExternalForm());
+        stage.setResizable(false);
+        stage.setScene(scene);
+    }
+
+    public void OnInsightBtnClick() throws IOException {
+        Stage stage = (Stage) insightbtn.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("current_Session-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/current_Session_style.css").toExternalForm());
+        stage.setResizable(false);
+        stage.setScene(scene);
+
+    }
+
     @FXML
     protected void OnSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsPage.getScene().getWindow();
@@ -88,36 +94,4 @@ public class Settings_Controller {
         stage.setScene(scene);
 
     }
-
-    public void handleAccountInfo(ActionEvent actionEvent) throws IOException  {
-        Onclickofanybtn(btnAccountInfo);
-    }
-
-    public void handleSecurity(ActionEvent actionEvent) throws IOException {
-        Onclickofanybtn(btnSecurity);
-    }
-
-    public void handleNotifications(ActionEvent actionEvent) throws IOException  {
-        Onclickofanybtn(btnNotifications);
-    }
-
-    public void handlePermissions(ActionEvent actionEvent) throws IOException {
-        Onclickofanybtn(btnPermissions);
-    }
-
-    public void handleAppearance(ActionEvent actionEvent) throws IOException {
-        Onclickofanybtn(btnAppearance);
-    }
-
-
-    @FXML
-    protected void Onclickofanybtn(Button button) throws IOException{
-        if(activeButton != null){
-            activeButton.getStyleClass().remove("button-active");
-        }
-        button.getStyleClass().add("button-active");
-        activeButton = button;
-    }
-
-
 }

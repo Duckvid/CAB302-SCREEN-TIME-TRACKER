@@ -63,14 +63,18 @@
 
 }
 
-.body-button{
-    -fx-pref-width: 275.0;
+.insights{
     -fx-background-color: #CEEDFF;
-    -fx-padding: 10 0 50 0;
-
+    -fx-background-radius: 5;
+    -fx-border-radius: 5; /* Ensure the border itself also has rounded corners. */
 }
 
-.button-active{
-    -fx-background-color: #AAE0FF;
-    -fx-pref-width: 275.0;
+.Recommendations{
+    -fx-background-color: #CEEDFF;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5; /* Ensure the border itself also has rounded corners. */
+}
+
+.takelookbtn{
+    -fx-background-color: #CEEDFF;
 }

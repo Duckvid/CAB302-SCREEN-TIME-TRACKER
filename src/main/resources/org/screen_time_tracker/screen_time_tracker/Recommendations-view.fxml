@@ -17,7 +17,7 @@
                             <Image url="@images/temp_logo.png" />
                         </image>
                     </ImageView>
-                    <Button styleClass="nav-button" text="Home">
+                    <Button fx:id="Homebtn" onAction="#OnHomebtnClick" styleClass="nav-button" text="Home">
                         <font>
                             <Font name="System Bold" size="14.0" />
                         </font></Button>

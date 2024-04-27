@@ -21,6 +21,18 @@ public class Timers_Controller {
     @FXML Button CurrentSessionPage;
 
     @FXML
+    private Button Homebtn;
+
+    public void OnHomebtnClick() throws IOException {
+        Stage stage = (Stage) Homebtn.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
+        stage.setResizable(false);
+        stage.setScene(scene);
+    }
+
+    @FXML
     protected void OnSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsPage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Settings.fxml"));

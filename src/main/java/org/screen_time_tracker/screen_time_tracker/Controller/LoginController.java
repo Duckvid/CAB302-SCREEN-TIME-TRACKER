@@ -41,6 +41,7 @@ public class LoginController {
     private void HandleLoginAction(ActionEvent event) throws IOException{
         String email = EmailField.getText();
         String password = PasswordField.getText();
+        SQLiteUserDAO dao = new SQLiteUserDAO();
 
         // this is some simple input validation to ensure that the input fields cannot be null
         // This will output a simple alert type popup to notify users to fix their input
@@ -51,15 +52,32 @@ public class LoginController {
             alert.setContentText("Please enter all fields None of the fields can be empty");
             alert.showAndWait();
         }
+
+        // this condition validates to make sure the password is correct and contains the neccessary characters
+        else if(!dao.IsPasswordCorrect(password)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Validation Error");
+            alert.setHeaderText("Input validation Error");
+            alert.setContentText("Please make sure that your password contains 8 character, 1 special character, 1 number and 1 capitcal letter.");
+            alert.showAndWait();
+        }
+
+        else if(!dao.IsEmailCorrect(email)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Validation Error");
+            alert.setHeaderText("Input validation Error");
+            alert.setContentText("Please make sure that your email is in the correct form.");
+            alert.showAndWait();
+        }
         else {
 
-            SQLiteUserDAO dao = new SQLiteUserDAO();
+            dao = new SQLiteUserDAO();
             User user = dao.Login(email, password);
             // user is found, navigate to home page once implmented but for now go to currentsession page
             Stage stage = (Stage) Loginbtn.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("current_Session-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-            scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/current_Session_style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
             stage.setResizable(false);
             stage.setScene(scene);
         }

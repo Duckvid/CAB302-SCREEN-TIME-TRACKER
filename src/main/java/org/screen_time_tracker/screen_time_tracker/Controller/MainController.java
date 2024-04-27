@@ -37,6 +37,7 @@ public class MainController {
         @FXML
         private Button Login;
 
+
         @FXML
         public void initialize(){
             startBackgroundWindowInfo();
@@ -154,9 +155,9 @@ public class MainController {
 
                 // navigate to the home page once implmented but for now goto currentSession page
                 Stage stage = (Stage) signupbtn.getScene().getWindow();
-                FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("current_Session-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-                scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/current_Session_style.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
                 stage.setResizable(false);
                 stage.setScene(scene);
 
