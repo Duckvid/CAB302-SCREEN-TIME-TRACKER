@@ -23,23 +23,33 @@
 }
 
 .nav-bar{
--fx-padding: 41 0 0 0;
+-fx-padding: 90 0 0 0;
 -fx-background-color: #0B7DBD;
 -fx-alignment: TOP_CENTER;
+
 }
 
+.logo{
+    -fx-margin-top: -20px;
+}
 
-.nav-button{
-    -fx-background-color: #0B7DBD;
+.nav-button {
+    -fx-background-color: #0B7DBD;  /* Adjust the color as needed */
     -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
     -fx-pref-width: 200.0;
     -fx-min-height: 50.0;
-    -fx-border-color: transparent transparent white transparent; /* Bottom border is white, others are transparent */
-    -fx-border-width: 0 0 1 0; /* Only bottom border */
-    -fx-background-insets: 0, 0, 1, 0; /* Prevent the background color from covering the border */
-    -fx-border-insets: 0, 0, 1, 0; /* Border position */
-    -fx-padding: 10; /* Adjust padding as needed */
 }
+.nav-button:hover {
+    -fx-background-color: #5599cc; /* Lighter blue for hover effect */
+    -fx-cursor: hand; /* Changes cursor to hand when hovering */
+}
+
 
 
 .border-radius{

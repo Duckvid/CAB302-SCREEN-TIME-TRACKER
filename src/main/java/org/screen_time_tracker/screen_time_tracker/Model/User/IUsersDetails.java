@@ -49,5 +49,11 @@ public interface IUsersDetails {
     public boolean IsEmailCorrect(String email);
 
 
+    /**
+     *
+     * @param user
+     * @returns true if the user exists in the db
+     */
+    public boolean UserExists(User user);
 
 }

@@ -67,6 +67,7 @@ class tests {
     @Test
     void TestLoginMethod() {
 
+
         dao.Login(user.getEmail(), user.getPassword());
 
         // verify that the user has been logged in with existing details

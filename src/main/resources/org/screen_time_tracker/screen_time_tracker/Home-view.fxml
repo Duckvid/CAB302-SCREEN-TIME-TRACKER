@@ -13,10 +13,8 @@
             <left>
                 <VBox spacing="10" styleClass="nav-bar">
 
-                    <ImageView fitHeight="100" fitWidth="200" preserveRatio="true">
-                        <image>
-                            <Image url="@images/temp_logo.png" />
-                        </image>
+                    <ImageView fx:id="imgview" fitHeight="100" fitWidth="200" preserveRatio="true" styleClass="logo">
+                        <Image url="@images/temp_logo.png"/>
                     </ImageView>
 
                     <Button fx:id="Homebtn" onAction="#OnHomebtnClick" styleClass="nav-button" text="Home">

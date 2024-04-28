@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 
@@ -27,6 +28,14 @@ public class Current_Session_Controller {
 
     @FXML
     private Button Contactbtn;
+
+    @FXML
+    private ImageView imgview;
+
+    @FXML
+    public void initialize() {
+        imgview.setTranslateY(-70); // This will move the logo 10 pixels up
+    }
 
     public void OnHomebtnClick() throws IOException {
         Stage stage = (Stage) Homebtn.getScene().getWindow();
