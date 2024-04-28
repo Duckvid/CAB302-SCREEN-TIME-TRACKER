@@ -42,6 +42,9 @@ public class Settings_Controller {
     @FXML
     private Button Homebtn;
 
+    @FXML
+    private Button Contactbtn;
+
     public void OnHomebtnClick() throws IOException {
         Stage stage = (Stage) Homebtn.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
@@ -87,6 +90,15 @@ public class Settings_Controller {
         stage.setResizable(false);
         stage.setScene(scene);
 
+    }
+
+    public void OnContactBtnClick() throws IOException {
+        Stage stage = (Stage) Contactbtn.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Contact-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Contact_style.css").toExternalForm());
+        stage.setResizable(false);
+        stage.setScene(scene);
     }
 
     public void handleAccountInfo(ActionEvent actionEvent) throws IOException  {
