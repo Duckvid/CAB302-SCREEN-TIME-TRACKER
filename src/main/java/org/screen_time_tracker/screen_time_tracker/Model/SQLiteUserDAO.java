@@ -131,7 +131,7 @@ public class SQLiteUserDAO implements IUsersDetails {
         // check the lenth of the password
 
         // using regex to check for special character
-        String specialChars = "[!$#.]";
+        String specialChars = "[^A-Za-z0-9]";
 
         // using regex to check for numbers
         String nums = "[0-9]";
@@ -217,4 +217,14 @@ public class SQLiteUserDAO implements IUsersDetails {
     }
 
 
+// Name can not start with any special character
+    public boolean IsNameValid(String name) {
+        if(name.matches(".*"+"^[^A-Za-z0-9]"+".*")){return false;}
+        return true;
+    }
+
+    public boolean IsNumberValid(String Phonenumber){
+        if(Phonenumber.matches(".*"+"[A-Za-z]|[^A-Za-z0-9]"+".*")){return false;}
+        return true;
+    }
 }

@@ -141,7 +141,20 @@ public class MainController {
                 alert.setContentText("Please make sure that your email is in the correct form.");
                 alert.showAndWait();
             }
-
+            else if(!dao.IsNameValid(name)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Validation Error");
+                alert.setHeaderText("Input validation Error");
+                alert.setContentText("Please make sure that your name is in the correct form.");
+                alert.showAndWait();
+            }
+            else if(!dao.IsNumberValid(Phonenumber)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Validation Error");
+                alert.setHeaderText("Input validation Error");
+                alert.setContentText("Please make sure that your phonenumber is in the correct form.");
+                alert.showAndWait();
+            }
 
 
             // If their input is not null then a new user is created with the input data and sent to the database
