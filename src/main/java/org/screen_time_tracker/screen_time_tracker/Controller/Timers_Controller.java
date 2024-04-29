@@ -271,4 +271,3 @@ public class Timers_Controller {
     public void HandleLoginAction(ActionEvent actionEvent) {
     }
 }
-
