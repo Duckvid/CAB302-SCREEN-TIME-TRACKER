@@ -37,6 +37,8 @@ public class MainController {
         @FXML
         private Button Login;
 
+        @FXML
+        private Button Facebook;
 
 
 
@@ -183,6 +185,15 @@ public class MainController {
         protected void OnLoginButtonClick() throws IOException{
             Stage stage = (Stage) Login.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Login-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+            scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Login_Styles.css").toExternalForm());
+            stage.setResizable(false);
+            stage.setScene(scene);
+        }
+        @FXML
+        protected void OnFacebookButton() throws IOException{
+            Stage stage = (Stage) Facebook.getScene().getWindow();
+            FXMLLoader fxmlLoader=new FXMLLoader(MainApplication.class.getResource("Facebook.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
             scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Login_Styles.css").toExternalForm());
             stage.setResizable(false);

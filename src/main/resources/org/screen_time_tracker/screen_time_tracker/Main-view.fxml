@@ -41,7 +41,7 @@
                                     <Font name="System Bold" size="28.0" />
                                 </font>
                             </Label>
-
+                        </HBox>
 
                         <Label fx:id="welcomeLabel" styleClass="header-label" text="Welcome!">
                             <font>
@@ -56,7 +56,7 @@
                                     <Image url="@images/google.jpg" />
                                 </image>
                             </ImageView>
-                            <Button text="Sign up with Google"   ></Button>
+                            <Button text="Sign up with Google" fx:id="Google" styleClass="signup-button" stylesheets="@styles/Main_style.css"></Button>
 
                         </VBox>
                         <VBox alignment="CENTER" spacing="20">
@@ -65,7 +65,7 @@
                                     <Image url="@images/facebook.jpg" />
                                 </image>
                             </ImageView>
-                            <Button text="Sign up with Facebook"  ></Button>
+                            <Button onAction="#OnFacebookButton" text="Sign up with Facebook" fx:id="Facebook" styleClass="signup-button" stylesheets="@styles/Main_style.css"></Button>
                         </VBox>
 
                     </HBox>
