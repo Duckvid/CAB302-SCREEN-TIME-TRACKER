@@ -33,6 +33,8 @@ public class LoginController {
     @FXML
     private Button forgotPasswordbtn;
 
+
+
     @FXML
     protected void OnForgotPasswordbtnClick() throws IOException{
 
@@ -88,7 +90,7 @@ public class LoginController {
         String password = PasswordField.getText();
         SQLiteUserDAO dao = new SQLiteUserDAO();
 
-        // this is some simple input validation to ensure that the input fields cannot be null
+        /*// this is some simple input validation to ensure that the input fields cannot be null
         // This will output a simple alert type popup to notify users to fix their input
         if(email.isEmpty() || password.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -113,19 +115,43 @@ public class LoginController {
             alert.setHeaderText("Input validation Error");
             alert.setContentText("Please make sure that your email is in the correct form.");
             alert.showAndWait();
+        }*/
+
+        if((!dao.IsEmailCorrect(email) || !dao.IsPasswordCorrect(password) || email.isEmpty() || password.isEmpty())){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Validation Error");
+            alert.setHeaderText("Input validation Error");
+            alert.setContentText("Please make sure that your email and password is in the correct form and exists.");
+            alert.showAndWait();
         }
         else {
 
             dao = new SQLiteUserDAO();
             User user = dao.Login(email, password);
-            // user is found, navigate to home page once implmented but for now go to currentsession page
-            Stage stage = (Stage) Loginbtn.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-            scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
-            stage.setResizable(false);
-            stage.setScene(scene);
+
+            if(dao.UserExists(user)){
+                // user is found, navigate to home page once implmented but for now go to currentsession page
+                Stage stage = (Stage) Loginbtn.getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+                scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
+                stage.setResizable(false);
+                stage.setScene(scene);
+            }
+
+            else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Validation Error");
+                alert.setHeaderText("Input validation Error");
+                alert.setContentText("User does not exist with those credentials try again.");
+                alert.showAndWait();
+
+            }
+
+
+
         }
+
 
     }
 

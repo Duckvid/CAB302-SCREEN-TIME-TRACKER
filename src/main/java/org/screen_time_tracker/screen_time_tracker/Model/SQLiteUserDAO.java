@@ -1,5 +1,6 @@
 package org.screen_time_tracker.screen_time_tracker.Model;
 
+import javafx.scene.control.Alert;
 import org.screen_time_tracker.screen_time_tracker.Model.User.IUsersDetails;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
@@ -187,6 +188,32 @@ public class SQLiteUserDAO implements IUsersDetails {
         }
         return null;
 
+    }
+
+    @Override
+    public boolean UserExists(User user){
+        String query = "SELECT * FROM Users where email = ? AND password = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)){
+            if(user == null ) return false;
+
+            else{
+                pstmt.setString(1, user.getEmail());
+                pstmt.setString(2, user.getPassword());
+                ResultSet resultSet = pstmt.executeQuery();
+
+                // user found with matching credentials
+                return resultSet.next();
+            }
+
+        }
+        catch(SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Validation Error");
+            alert.setHeaderText("Input validation Error");
+            alert.setContentText("User does not exist with those credentials try again.");
+            alert.showAndWait();
+        }
+        return false;
     }
 
 
