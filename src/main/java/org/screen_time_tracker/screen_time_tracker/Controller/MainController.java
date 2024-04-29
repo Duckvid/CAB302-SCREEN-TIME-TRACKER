@@ -42,6 +42,8 @@ public class MainController {
 
          @FXML private Button Google;
 
+         @FXML private Button backbtn;
+
         @FXML
         public void initialize(){
             startBackgroundWindowInfo();
@@ -208,5 +210,14 @@ public class MainController {
             stage.setResizable(false);
             stage.setScene(scene);
         }
+        @FXML
+        protected void OnBack() throws IOException{
+            Stage stage = (Stage) backbtn.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Main-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+            scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Main_style.css").toExternalForm());
+            stage.setResizable(false);
+            stage.setScene(scene);
 
+        }
 }

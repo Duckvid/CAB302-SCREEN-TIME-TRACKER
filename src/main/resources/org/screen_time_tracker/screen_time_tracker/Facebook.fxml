@@ -11,8 +11,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 
-<VBox alignment="CENTER" spacing="2.0">
+<VBox alignment="CENTER" spacing="2.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.MainController">
     <TextField text="Email"/>
     <TextField text="Password"/>
     <Button text="login"/>
+    <Button fx:id="backbtn" text="Back" onAction="#OnBack"></Button>
 </VBox>
