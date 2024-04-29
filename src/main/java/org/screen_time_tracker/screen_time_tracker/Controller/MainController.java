@@ -38,6 +38,8 @@ public class MainController {
         private Button Login;
 
 
+
+
         @FXML
         public void initialize(){
             startBackgroundWindowInfo();
@@ -186,6 +188,5 @@ public class MainController {
             stage.setResizable(false);
             stage.setScene(scene);
         }
-
 
 }
