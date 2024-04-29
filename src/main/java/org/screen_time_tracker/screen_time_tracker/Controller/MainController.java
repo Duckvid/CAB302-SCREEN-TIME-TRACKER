@@ -40,7 +40,7 @@ public class MainController {
         @FXML
         private Button Facebook;
 
-
+         @FXML private Button Google;
 
         @FXML
         public void initialize(){
@@ -194,6 +194,15 @@ public class MainController {
         protected void OnFacebookButton() throws IOException{
             Stage stage = (Stage) Facebook.getScene().getWindow();
             FXMLLoader fxmlLoader=new FXMLLoader(MainApplication.class.getResource("Facebook.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+            scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Login_Styles.css").toExternalForm());
+            stage.setResizable(false);
+            stage.setScene(scene);
+        }
+        @FXML
+        protected void OnGoogleButton() throws IOException{
+            Stage stage = (Stage) Google.getScene().getWindow();
+            FXMLLoader fxmlLoader=new FXMLLoader(MainApplication.class.getResource("Google.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
             scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Login_Styles.css").toExternalForm());
             stage.setResizable(false);

@@ -14,5 +14,5 @@
 <VBox alignment="CENTER" spacing="2.0">
     <TextField text="Email"/>
     <TextField text="Password"/>
-    <Button text="login"/>
+    <Button text="login"></Button>
 </VBox>
