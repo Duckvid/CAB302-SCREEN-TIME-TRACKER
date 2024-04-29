@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Contact_style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.ContactController">
+    <AnchorPane prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Contact_style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+        <BorderPane prefHeight="1000.0" prefWidth="200.0" styleClass="border-left" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+            <left>
+                <VBox spacing="10" styleClass="nav-bar">
+
+                    <ImageView fx:id="imgview" fitHeight="100" fitWidth="200" preserveRatio="true" styleClass="logo">
+                        <Image url="@images/temp_logo.png"/>
+                    </ImageView>
+
+                    <Button fx:id="Homebtn" onAction="#OnHomebtnClick" styleClass="nav-button" text="Home">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="CurrentSessionPage" onAction="#OnCurrentSessionBtnClick" styleClass="nav-button" text="Current Session">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button styleClass="nav-button" text="Old Sessions">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="Recommendationspage" onAction="#OnRecommendationsPageClick" styleClass="nav-button" text="Recommended">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button styleClass="nav-button" text="Goals">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="TimersPage" onAction="#OnTimersButtonClick" styleClass="nav-button" text="Timers">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button styleClass="nav-button" text="Your Data">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="settingsPage" onAction="#OnSettingsButtonClick" styleClass="nav-button" text="Settings">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="ContactPage" onAction="#OnContactBtnClick" styleClass="nav-button" text="Contact">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                </VBox>
+            </left>
+
+        </BorderPane>
+
+        
+
+
+    </AnchorPane>
+
+
+
+
+
+</VBox>
