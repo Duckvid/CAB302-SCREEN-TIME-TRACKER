@@ -174,7 +174,7 @@ public class MainController {
 
                 // navigate to the home page once implmented but for now goto currentSession page
                 Stage stage = (Stage) signupbtn.getScene().getWindow();
-                FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Login-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
                 scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
                 stage.setResizable(false);
