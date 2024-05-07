@@ -23,6 +23,12 @@ public interface IScreenTime {
 
     public void Most_Activity_Detected();
 
+    public void RecommendedBreak();
+
+    public void Least_Activity_Detected();
+
+    public void Recommended_end();
+
 
 
 }

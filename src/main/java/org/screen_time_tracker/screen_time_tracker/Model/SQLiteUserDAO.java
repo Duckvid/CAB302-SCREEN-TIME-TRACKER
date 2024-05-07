@@ -2,6 +2,7 @@ package org.screen_time_tracker.screen_time_tracker.Model;
 
 import javafx.scene.control.Alert;
 import org.screen_time_tracker.screen_time_tracker.Model.User.IUsersDetails;
+import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.sql.Connection;
@@ -41,16 +42,20 @@ public class SQLiteUserDAO implements IUsersDetails {
                     + "Name VARCHAR NOT NULL,"
                     + "phone VARCHAR NOT NULL,"
                     + "password VARCHAR NOT NULL,"
-                    + "email VARCHAR NOT NULL"
+                    + "email VARCHAR NOT NULL,"
+                    + "IsLoggedIn BOOLEAN DEFAULT 0"
                     + ")";
             String Query = "CREATE TABLE IF NOT EXISTS ScreenTimeData ("
                     + "ScreenTimeID INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + "Start_Time VARCHAR NOT NULL,"
                     + "End_Time VARCHAR NOT NULL,"
-                    + "Duration INTEGER NOT NULL"
+                    + "Duration INTEGER NOT NULL,"
+                    + "Date_Of_Track VARCHAR NOT NULL,"
+                    + "UserID INT NOT NULL"
                     + ")";
-            statement.execute(Query);
             statement.execute(query);
+            statement.execute(Query);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,13 +116,13 @@ public class SQLiteUserDAO implements IUsersDetails {
             ResultSet resultSet = statement.executeQuery(query);
 
             while(resultSet.next()){
-                int UserID = resultSet.getInt("Userid");
                 String Name = resultSet.getString("Name");
                 String Phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
 
                 User user = new User(Name, email, password, Phone);
+                users.add(user);
             }
         }
         catch (Exception e) {
@@ -175,12 +180,23 @@ public class SQLiteUserDAO implements IUsersDetails {
 
             if(resultSet.next()){
                 // user found with matching credentials
+                int userID = resultSet.getInt("Userid");
                 String Name = resultSet.getString("Name");
                 String Phone = resultSet.getString("phone");
                 String userEmail = resultSet.getString("email");
                 String userPassword = resultSet.getString("password");
+                User user = new User(Name, userEmail, userPassword, Phone);
+                user.setUserid(userID);
 
-                return new User(Name, userEmail, userPassword, Phone);
+
+                String updateQuery = "UPDATE Users SET IsLoggedIn = 1 WHERE Userid = ?";
+
+                // update login status
+                try(PreparedStatement updatepstmt = connection.prepareStatement(updateQuery)){
+                    updatepstmt.setInt(1, userID);
+                    updatepstmt.executeUpdate();
+                }
+                return user;
             }
         }
         catch(SQLException e){
@@ -190,34 +206,52 @@ public class SQLiteUserDAO implements IUsersDetails {
 
     }
 
+
+    // a method to check if the user is currently logged in or not
     @Override
     public boolean UserExists(User user){
-        String query = "SELECT * FROM Users where email = ? AND password = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(query)){
-            if(user == null ) return false;
+        if (user == null) return false;
+        return IsUserLoggedIn(user.getEmail(), user.getPassword());
+    }
 
-            else{
-                pstmt.setString(1, user.getEmail());
-                pstmt.setString(2, user.getPassword());
-                ResultSet resultSet = pstmt.executeQuery();
+    // Simplify the login check
+    public boolean IsUserLoggedIn(String email, String password){
+        String query = "SELECT IsLoggedIn FROM Users WHERE email = ? AND password = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+            ResultSet resultSet = pstmt.executeQuery();
+            return resultSet.next() && resultSet.getBoolean("IsLoggedIn");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public void Logout() {
+        User currentUser = Session_Manager.getCurrentUser();
+        if (currentUser != null) {
+            int userId = currentUser.getUserid();
+            String updateQuery = "UPDATE Users SET IsLoggedIn = 0 WHERE Userid = ?";
 
-                // user found with matching credentials
-                return resultSet.next();
+            try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
+                pstmt.setInt(1, userId);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Logout Error");
+                alert.setHeaderText("Error Logging Out");
+                alert.setContentText("An error occurred while trying to log out. Please try again.");
+                alert.showAndWait();
+            } finally {
+                // Ensure the current user is removed from the session regardless of whether the database update succeeds or fails
+                Session_Manager.setCurrentUser(null);
             }
-
         }
-        catch(SQLException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Validation Error");
-            alert.setHeaderText("Input validation Error");
-            alert.setContentText("User does not exist with those credentials try again.");
-            alert.showAndWait();
-        }
-        return false;
     }
 
 
-// Name can not start with any special character
+    // Name can not start with any special character
     public boolean IsNameValid(String name) {
         if(name.matches(".*"+"^[^A-Za-z0-9]"+".*")){return false;}
         return true;

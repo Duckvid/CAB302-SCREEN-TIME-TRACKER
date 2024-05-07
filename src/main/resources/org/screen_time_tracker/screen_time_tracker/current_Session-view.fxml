@@ -53,6 +53,10 @@
                         <font>
                             <Font name="System Bold" size="14.0" />
                         </font></Button>
+               <Button fx:id="Logoutbtn" onAction="#OnLogoutBtnClick" styleClass="nav-button" text="Logout">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font></Button>
             </VBox>
          </left>
 
@@ -76,7 +80,7 @@
                <Label styleClass="info-text" text="Recommended Break:" />
                <Label styleClass="info-text" text="Recommended End:" />
                <Label styleClass="info-text" text="Most Activity Detected:"/>
-               <Label styleClass="info-text" text="Activity Detected:"/>
+               <Label styleClass="info-text" text="Least Activity Detected:"/>
                <Label styleClass="info-text" text="Comparison to previous:"/>
 
             </VBox>

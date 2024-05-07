@@ -18,7 +18,7 @@ public class User{
     private String Name;
     private String Phonenumber;
     private int Userid;
-
+    private  boolean IsLoggedIn = false;
 
     public User(String name, String email, String password, String phonenumber){
         Name = name;
@@ -87,6 +87,13 @@ public class User{
     }
 
 
+    public boolean isLoggedIn() {
+        return IsLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        IsLoggedIn = loggedIn;
+    }
 
 
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
+import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 
 import java.io.IOException;
 
@@ -31,6 +32,10 @@ public class Recommendations_controller {
     private ImageView imgview;
 
     @FXML
+    private Button Logoutbtn;
+
+
+    @FXML
     public void initialize() {
         imgview.setTranslateY(-70); // This will move the logo 10 pixels up
     }
@@ -42,6 +47,19 @@ public class Recommendations_controller {
         scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
+    }
+
+    @FXML
+    protected void OnLogoutBtnClick() throws IOException{
+        SQLiteUserDAO sqLiteUserDAO = new SQLiteUserDAO();
+        sqLiteUserDAO.Logout();
+        Stage stage = (Stage) Logoutbtn.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Login-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Login_Styles.css").toExternalForm());
+        stage.setResizable(false);
+        stage.setScene(scene);
+
     }
 
     @FXML
