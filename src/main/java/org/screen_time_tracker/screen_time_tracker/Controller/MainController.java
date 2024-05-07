@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import  javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
@@ -47,6 +50,12 @@ public class MainController {
          @FXML private Button Google;
 
          @FXML private Button backbtn;
+
+         @FXML private CheckBox checkbtn;
+    public void onAgreeCheckBoxClick() {
+        boolean accepted = checkbtn.isSelected();
+        signupbtn.setDisable(!accepted);
+    }
 
     @FXML
         private void HandleSignUpAction(ActionEvent event) throws IOException {
@@ -153,5 +162,73 @@ public class MainController {
             stage.setResizable(false);
             stage.setScene(scene);
 
+        }
+        @FXML
+        private void SignUpwithWebsite(ActionEvent event ) throws IOException{
+            String name = NameField.getText();
+            String email = EmailField.getText();
+            String Password = PasswordField.getText();
+            String Phonenumber = PhoneField.getText();
+            SQLiteUserDAO dao = new SQLiteUserDAO();
+            // this is some simple input validation to ensure that the input fields cannot be null
+            // This will output a simple alert type popup to notify users to fix their input
+            if(name.isEmpty() || email.isEmpty() || Password.isEmpty() || Phonenumber.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Validation Error");
+                alert.setHeaderText("Input validation Error");
+                alert.setContentText("Please enter all fields None of the fields can be empty");
+                alert.showAndWait();
+            }
+
+            // this condition validates to make sure the password is correct and contains the neccessary characters
+            else if(!dao.IsPasswordCorrect(Password)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Validation Error");
+                alert.setHeaderText("Input validation Error");
+                alert.setContentText("Please make sure that your password contains 8 character, 1 special character, 1 number and 1 capitcal letter.");
+                alert.showAndWait();
+            }
+
+            else if(!dao.IsEmailCorrect(email)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Validation Error");
+                alert.setHeaderText("Input validation Error");
+                alert.setContentText("Please make sure that your email is in the correct form.");
+                alert.showAndWait();
+            }
+            else if(!dao.IsNameValid(name)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Validation Error");
+                alert.setHeaderText("Input validation Error");
+                alert.setContentText("Please make sure that your name is in the correct form.");
+                alert.showAndWait();
+            }
+            else if(!dao.IsNumberValid(Phonenumber)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Validation Error");
+                alert.setHeaderText("Input validation Error");
+                alert.setContentText("Please make sure that your phonenumber is in the correct form.");
+                alert.showAndWait();
+            }
+
+
+            // If their input is not null then a new user is created with the input data and sent to the database
+            // The user is then redirected to ideally the homepage but that has not been created yet so for now will just be
+            // redirected to the current session page
+
+            else{
+
+                User newUser = new User(name, email, Password, Phonenumber);
+                dao.RegisterAccount(newUser);
+
+                // navigate to the home page once implmented but for now goto currentSession page
+                Stage stage = (Stage) signupbtn.getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Login-view.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+                scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
+                stage.setResizable(false);
+                stage.setScene(scene);
+
+            }
         }
 }

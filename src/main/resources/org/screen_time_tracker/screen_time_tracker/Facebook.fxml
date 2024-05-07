@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
 
-<VBox alignment="CENTER" spacing="2.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.MainController">
-    <TextField text="Email"/>
-    <TextField text="Password"/>
-    <Button text="login"/>
-    <Button fx:id="backbtn" text="Back" onAction="#OnBack"></Button>
+<VBox alignment="CENTER" prefHeight="845.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.MainController">
+   <TilePane prefHeight="23.0" prefWidth="1000.0">
+      <children>
+         <Hyperlink text="https://Facebook.com/SignUp" textFill="#161515" />
+      </children>
+   </TilePane>
+   <TabPane prefHeight="850.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
+     <tabs>
+       <Tab text="Facebook">
+         <content>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="906.0" prefWidth="1000.0">
+                  <children>
+                      <VBox alignment="CENTER" layoutX="333.0" layoutY="250.0" spacing="10">
+                      <TextField fx:id="EmailField" layoutX="420.0" layoutY="340.0" prefHeight="25.0" prefWidth="205.0" promptText="exampleemail@gmail.com " styleClass="input-field" />
+                      <TextField fx:id="PhoneField" layoutX="420.0" layoutY="204.0" prefWidth="200" promptText="Phone Number: " styleClass="input-field" />
+                      <TextField fx:id="PasswordField" layoutX="420.0" layoutY="270.0" prefHeight="25.0" prefWidth="201.0" promptText="Password: " styleClass="input-field" />
+                      <TextField fx:id="NameField" layoutX="420.0" layoutY="141.0" prefWidth="200" promptText="Name: " styleClass="input-field" />
+                      </VBox>
+                      <Button onAction="#SignUpwithWebsite" fx:id="signupbtn" layoutX="463.0" layoutY="468.0" text="Sign up" />
+                      <Button  fx:id="backbtn" layoutX="565.0" layoutY="468.0" onAction="#OnBack" text="Back" />
+                     <ImageView fitHeight="200.0" fitWidth="168.0" layoutX="454.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@images/OIP.jpeg" />
+                      </image>
+                     </ImageView>
+
+                  </children>
+               </AnchorPane>
+         </content>
+       </Tab>
+     </tabs>
+   </TabPane>
 </VBox>

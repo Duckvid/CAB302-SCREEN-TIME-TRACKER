@@ -4,13 +4,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 
 import java.io.IOException;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.*;
 public class Recommendations_controller {
     @FXML
     private Button settingsPage;
@@ -35,9 +38,14 @@ public class Recommendations_controller {
     private Button Logoutbtn;
 
 
+    private Label start_time;
+
     @FXML
     public void initialize() {
-        imgview.setTranslateY(-70); // This will move the logo 10 pixels up
+        imgview.setTranslateY(-70);
+
+        // This will move the logo 10 pixels up
+        //start_time.setText("Your Start Time: "+getStartTime());;
     }
 
     public void OnHomebtnClick() throws IOException {
@@ -108,5 +116,26 @@ public class Recommendations_controller {
         scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Contact_style.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
+
     }
+
+   /* public String getStartTime() {
+        String starttime = null;
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM ScreenTimeData";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+
+                starttime = resultSet.getString("Start_Time");
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return starttime;
+    }*/
+
 }
