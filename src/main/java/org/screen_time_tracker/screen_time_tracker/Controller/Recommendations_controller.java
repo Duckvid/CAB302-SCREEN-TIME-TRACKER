@@ -4,11 +4,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Recommendations_controller {
     @FXML
@@ -31,8 +37,21 @@ public class Recommendations_controller {
     private ImageView imgview;
 
     @FXML
+    private Label start_time;
+
+    @FXML
+    private Label medianstarttimes;
+
+    @FXML
+    private Label medianendtimes;
+    @FXML
     public void initialize() {
-        imgview.setTranslateY(-70); // This will move the logo 10 pixels up
+        imgview.setTranslateY(-70);
+
+        // This will move the logo 10 pixels up
+        start_time.setText("Your Start Time: "+getStartTime());;
+        medianstarttimes.setText("Your median start time: "+getmedianStartTime());
+        medianendtimes.setText("Your median end time: "+ getmedianEndTime());
     }
 
     public void OnHomebtnClick() throws IOException {
@@ -91,4 +110,80 @@ public class Recommendations_controller {
         stage.setResizable(false);
         stage.setScene(scene);
     }
+
+    public String getStartTime() {
+        String starttime = null;
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM ScreenTimeData";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+
+                starttime = resultSet.getString("Start_Time");
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return starttime;
+    }
+    public String getmedianStartTime() {
+        ArrayList<String> medianstarttimes= new ArrayList<String>();
+        String median_start_time = null;
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM ScreenTimeData";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+
+                medianstarttimes.add(resultSet.getString("Start_Time"));
+
+
+            }
+            Collections.sort(medianstarttimes);
+            if(medianstarttimes.size()%2==0){
+                median_start_time= medianstarttimes.get(((medianstarttimes.size()/2)+((medianstarttimes.size()/2)-1))/2);
+            }
+            else {
+                median_start_time= medianstarttimes.get((medianstarttimes.size()/2)-1);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return median_start_time;
+    }
+    public String getmedianEndTime() {
+        ArrayList<String> medianendtimes= new ArrayList<String>();
+        String median_end_time = null;
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM ScreenTimeData";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+
+                medianendtimes.add(resultSet.getString("End_Time"));
+
+
+            }
+            Collections.sort(medianendtimes);
+            if(medianendtimes.size()%2==0){
+                median_end_time= medianendtimes.get(((medianendtimes.size()/2)+((medianendtimes.size()/2)-1))/2);
+            }
+            else {
+                median_end_time= medianendtimes.get((medianendtimes.size()/2)-1);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return median_end_time;
+}
+      public String MostActivitydetected(){
+
+      }
 }
