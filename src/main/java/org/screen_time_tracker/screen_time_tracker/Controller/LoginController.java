@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
-import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQlite_Screen_Time_data;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQliteScreen_Timedata;
 import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_time_tracking_feature;
 import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
@@ -45,9 +45,9 @@ public class LoginController {
         Thread screenTimethread = new Thread(() -> {
             Screen_time_tracking_feature widowinfo = new Screen_time_tracking_feature();
             //SQLiteUserDAO dao = new SQLiteUserDAO();
-            SQlite_Screen_Time_data screenTimeData;
+            SQliteScreen_Timedata screenTimeData;
             try {
-                screenTimeData = new SQlite_Screen_Time_data();
+                screenTimeData = new SQliteScreen_Timedata();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

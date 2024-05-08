@@ -7,22 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import  javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
-import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQlite_Screen_Time_data;
-import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_Time_fields;
-import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_time_tracking_feature;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class MainController {
 

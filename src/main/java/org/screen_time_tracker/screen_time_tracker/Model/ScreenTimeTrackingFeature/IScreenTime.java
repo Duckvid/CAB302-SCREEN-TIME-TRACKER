@@ -1,6 +1,7 @@
 package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
 import org.screen_time_tracker.screen_time_tracker.Model.User.IUsersDetails;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -21,13 +22,17 @@ public interface IScreenTime {
      */
     public void Calculate_Median_End_time();
 
-    public void Most_Activity_Detected();
+    public int Most_Activity_Detected_Duration() throws SQLException;
 
-    public void RecommendedBreak();
+    public String Most_Activity_Detected_StartTime() throws SQLException;
 
-    public void Least_Activity_Detected();
+    public String Most_Activity_Detected_EndTime() throws SQLException;
 
-    public void Recommended_end();
+    public int Least_Activity_Detected() throws SQLException;
+
+    public String Least_Activity_Detected_StartTime() throws SQLException;
+
+    public String Least_Activity_Detected_EndTime() throws SQLException;
 
 
 
