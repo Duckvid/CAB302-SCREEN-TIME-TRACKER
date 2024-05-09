@@ -174,15 +174,39 @@ public class Current_Session_Controller {
 
     public void appendComparison() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
-
+        int UserID = currentUser.getUserid();
         if(currentUser != null){
+
             SQliteScreen_Timedata sQliteScreenTimeData = new SQliteScreen_Timedata();
 
-            Screen_Time_fields screenTimeFields = sQliteScreenTimeData.ReturnScreenTimeFields(currentUser.getUserid());
+            Screen_Time_fields CurrentscreenTimeFields = sQliteScreenTimeData.ReturnScreenTimeFields(currentUser.getUserid());
 
-            if(screenTimeFields != null){
+            Screen_Time_fields previousScreenTimeFields = sQliteScreenTimeData.ReturnScreenTimeFieldsPrevious(UserID);
+
+            if(CurrentscreenTimeFields != null){
+                int currentSessionDuration = CurrentscreenTimeFields.getDuration();
+
+                int previousSessionDuration = previousScreenTimeFields.getDuration();
+
+
+                double PercentageOfDifference = (double) (currentSessionDuration - previousSessionDuration) /previousSessionDuration * 100;
+
+                int PercentageOfDifferenceInt = (int) Math.round(PercentageOfDifference);
+
                 String currentText = ComparisonText.getText();
-                ComparisonText.setText(currentText + " " + screenTimeFields.getStart_time());
+
+                if(currentSessionDuration < previousSessionDuration){
+
+                    ComparisonText.setText(currentText + "\n" + "You have been" + PercentageOfDifferenceInt + "%" + " less active this \n session compared to your \n last session." );
+                }
+
+                else{
+
+                    ComparisonText.setText(currentText + "\n" + "You have been" + PercentageOfDifferenceInt + "%" + " more active this \n session compared to your \n last session." );
+
+                }
+
+
             }
 
         }
