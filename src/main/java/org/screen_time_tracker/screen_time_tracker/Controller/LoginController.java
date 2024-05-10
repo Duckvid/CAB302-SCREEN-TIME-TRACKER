@@ -8,9 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQliteScreen_Timedata;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_Time_fields;
 import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_time_tracking_feature;
 import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
@@ -18,9 +20,7 @@ import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class LoginController {
     @FXML
@@ -64,7 +64,7 @@ public class LoginController {
             // get the current user somehow
             if(Session_Manager.isUserLoggedIn()){
                 int UserID = Session_Manager.getCurrentUser().getUserid();
-                screenTimeData.InsertScreenTimeData(Start_Time, strDate, UserID);
+                screenTimeData.InsertScreenTimeData(Start_Time, strDate, UserID, "initial");
             }
 
             int Screen_Time_ID = 0;
@@ -81,10 +81,10 @@ public class LoginController {
                     Map<String, Long> windowTimes = widowinfo.getWindowTimeMap();
                     long sessionEnd = System.currentTimeMillis(); // Update Session end time on each cycle
                     int duration = (int) ((sessionEnd - sessionStart) / 1000); // duration in seconds
+                    String currentwindow = widowinfo.getActiveWindowTitle();
 
                     // update the db with the current duration
-                    screenTimeData.UpdateScreenTimeData(Screen_Time_ID, duration);
-
+                    screenTimeData.UpdateScreenTimeData(Screen_Time_ID, duration, currentwindow);
                     Thread.sleep(1000);
                 }
             } catch (InterruptedException e) {
@@ -113,7 +113,6 @@ public class LoginController {
 
         screenTimethread.start();
     }
-
 
 
     @FXML

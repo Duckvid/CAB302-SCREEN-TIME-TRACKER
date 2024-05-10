@@ -3,6 +3,7 @@ package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeat
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.User32;
+import javafx.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -70,12 +71,11 @@ public class Screen_time_tracking_feature {
         return NewTimeString;
     }
 
-    // this method is responsible for tracking the users screen time accross the different windows.
     // it will keep track of what window is currently in use, as well as how long that window is being used for
     public Map<String, Long> getWindowTimeMap(){
         String currentWindowTitle = getActiveWindowTitle();
         long currentTime = System.currentTimeMillis();
-        
+
         if(currentWindowTitle != null && !currentWindowTitle.isEmpty()){
             if(LastActiveWindowTitle == null || LastActiveWindowTitle.equals(currentWindowTitle)) {
                 if(LastActiveWindowTitle != null){
@@ -91,6 +91,19 @@ public class Screen_time_tracking_feature {
             LastTimeChecked = currentTime;
         }
         return new HashMap<>(windowTimeMap);
+    }
+
+    private String categorizeWindowTitle(String windowTitle) {
+        String titleLower = windowTitle.toLowerCase();
+        if (titleLower.contains("word") || titleLower.contains("excel")) {
+            return "Work";
+        } else if (titleLower.contains("facebook") || titleLower.contains("whatsapp")) {
+            return "Social";
+        } else if (titleLower.contains("chrome") || titleLower.contains("firefox")) {
+            return "Browsing";  // Adding a new category for web browsing
+        } else {
+            return "Other";
+        }
     }
 
     private void updateWindowTime(String windowTitle, long timeSpent) {

@@ -3,24 +3,33 @@ package org.screen_time_tracker.screen_time_tracker.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQliteScreen_Timedata;
 import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_Time_fields;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_time_tracking_feature;
 import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 public class Current_Session_Controller {
 
@@ -62,6 +71,30 @@ public class Current_Session_Controller {
     private Label LeastActivityText;
     @FXML
     private Label ComparisonText;
+
+    @FXML
+    private HBox barChartContainer;
+
+
+    private void PopulateBarChart() throws SQLException {
+        SQliteScreen_Timedata sQliteScreenTimedata = new SQliteScreen_Timedata();
+        StackedBarChart<String, Number> chart = new StackedBarChart<>(new CategoryAxis(), new NumberAxis());
+
+        java.util.Date currentDate = new Date();
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+        String strDate = formatDate.format(currentDate);
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        Map<String, Integer> windowDurations = sQliteScreenTimedata.FetchWindowDurations(strDate);
+        for (Map.Entry<String, Integer> entry : windowDurations.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
+
+        chart.getData().add(series);
+        barChartContainer.getChildren().clear();
+        barChartContainer.getChildren().add(chart);
+    }
+
 
     public void appendStartTIme() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
@@ -222,7 +255,11 @@ public class Current_Session_Controller {
         appendMostActivity();
         appendRecommendedBreakTIme();
         appendComparison();
+        PopulateBarChart();
 
+     /*   Screen_time_tracking_feature screenTimeTrackingFeature = new Screen_time_tracking_feature();
+        screenTimeTrackingFeature.testActiveWindowTitle();
+*/
 
     }
 

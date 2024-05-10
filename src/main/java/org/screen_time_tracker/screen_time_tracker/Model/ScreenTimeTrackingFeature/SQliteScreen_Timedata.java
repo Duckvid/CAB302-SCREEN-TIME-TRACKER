@@ -1,13 +1,14 @@
 package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
 
 
+import javafx.scene.chart.XYChart;
 import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
 
 public class SQliteScreen_Timedata implements IScreenTime{
     private final Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
@@ -20,19 +21,33 @@ public class SQliteScreen_Timedata implements IScreenTime{
     // this is a method to insert screen time data to the screen timetable
 
     // it stores data for only the user logged in which is useful for later methods
-    public void InsertScreenTimeData(String startTime, String Date, int UserID){
-        String query = "INSERT INTO ScreenTimeData (Start_Time, End_Time, Duration, Date_Of_Track, Userid) VALUES (?, '', 0, ?, ?)";
+    public void InsertScreenTimeData(String startTime, String Date, int UserID, String windowTitle){
+        String query = "INSERT INTO ScreenTimeData (Start_Time, End_Time, Duration, Date_Of_Track, Userid, WindowTitle) VALUES (?, '', 0, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)){
 
             pstmt.setString(1, startTime);
             pstmt.setString(2, Date);
             pstmt.setInt(3, UserID);
+            pstmt.setString(4, windowTitle);
             pstmt.executeUpdate();
         }
         //catch any exceptions or errors in the insertion process
         catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public Map<String, Integer> FetchWindowDurations(String date) throws SQLException {
+        Map<String, Integer> durations = new HashMap<>();
+        String query = "SELECT WindowTitle, SUM(Duration) AS TotalDuration FROM ScreenTimeData WHERE Date_Of_Track = ? GROUP BY WindowTitle";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, date);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                durations.put(rs.getString("WindowTitle"), rs.getInt("TotalDuration"));
+            }
+        }
+        return durations;
     }
 
     // this method returns a screen time fields object
@@ -91,11 +106,12 @@ public class SQliteScreen_Timedata implements IScreenTime{
 
     }
 
-    public void UpdateScreenTimeData(int screenTimeID, int duration){
-        String query = "UPDATE ScreenTimeData SET Duration = ? WHERE ScreenTimeID = ?";
+    public void UpdateScreenTimeData(int screenTimeID, int duration, String screentitle){
+        String query = "UPDATE ScreenTimeData SET Duration = ?, WindowTitle = ? WHERE ScreenTimeID = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)){
             pstmt.setInt(1, duration);
-            pstmt.setInt(2, screenTimeID);
+            pstmt.setString(2, screentitle);
+            pstmt.setInt(3, screenTimeID);
             pstmt.executeUpdate();
         }
         //catch any exceptions or errors in the insertion process

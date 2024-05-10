@@ -51,7 +51,8 @@ public class SQLiteUserDAO implements IUsersDetails {
                     + "End_Time VARCHAR NOT NULL,"
                     + "Duration INTEGER NOT NULL,"
                     + "Date_Of_Track VARCHAR NOT NULL,"
-                    + "UserID INT NOT NULL"
+                    + "UserID INT NOT NULL,"
+                    + "WindowTitle VARCHAR NOT NULL"
                     + ")";
             statement.execute(query);
             statement.execute(Query);
