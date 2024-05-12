@@ -86,11 +86,8 @@ public class Recommendations_controller {
     private Label Median_start_time;
 
 
-    /**
-     * This method is used to update the median times fields in the UI
-     * @throws SQLException if an SQL error occurs during data retrieval
-     */
-    @FXML
+
+
     public void updateMedianTimes() throws SQLException {
         SQliteScreen_Timedata data = new SQliteScreen_Timedata();
         int userId = Session_Manager.getCurrentUser().getUserid();
@@ -100,7 +97,9 @@ public class Recommendations_controller {
 
         Median_start_time.setText("Your median start time: " + medianStart);
         median_End_time.setText("Your median end time: " + medianEnd);
+
     }
+
 
 
     /**
@@ -299,11 +298,6 @@ public class Recommendations_controller {
         stage.setScene(scene);
     }
 
-    /**
-     * Handles navigation to the home page events. This method is called when the Home button is clicked
-     * and is responsible for navigation the user to the home page
-     * @throws IOException if an I/O error occurs when loading the settings page view
-     */
     @FXML
     protected void OnSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsPage.getScene().getWindow();
@@ -373,6 +367,7 @@ public class Recommendations_controller {
         scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Contact_style.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
+
     }
 
    /* public String getStartTime() {

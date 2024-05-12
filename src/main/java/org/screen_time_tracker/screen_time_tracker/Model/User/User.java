@@ -20,7 +20,6 @@ public class User{
     private int Userid;
     private  boolean IsLoggedIn = false;
 
-
     /**
      * Constructor used to create an object instance of a user
      * @param name the current users name
@@ -120,37 +119,7 @@ public class User{
         Email = email;
     }
 
-    /**
-     *
-     * @return true if a user has an account
-     */
-    public boolean isHasAccount() {
-        return HasAccount;
-    }
 
-    /**
-     *
-     * @param hasAccount boolean variable used to determine if the user has an account
-     */
-    public void setHasAccount(boolean hasAccount) {
-        HasAccount = hasAccount;
-    }
-
-    /**
-     *
-     * @return true if a user is logged in or not
-     */
-    public boolean isLoggedIn() {
-        return IsLoggedIn;
-    }
-
-    /**
-     *
-     * @param loggedIn boolean variable used to determine if the user is logged in
-     */
-    public void setLoggedIn(boolean loggedIn) {
-        IsLoggedIn = loggedIn;
-    }
 
 
 }

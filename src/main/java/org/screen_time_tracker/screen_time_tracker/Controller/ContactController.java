@@ -49,7 +49,6 @@ public class ContactController {
     @FXML
     private Button SendMessagebtn;
 
-
     /**
      * Initializes the controller. This method is automatically called
      * after the FXML fields have been populated and is used to set up the initial
@@ -79,26 +78,22 @@ public class ContactController {
 
     }
 
-    /**
-     * Handles navigation to the home page events. This method is called when the Home button is clicked
-     * and is responsible for navigation the user to the home page
-     * @throws IOException if an I/O error occurs when loading the Home page view
-     */
-    @FXML
-    public void OnHomebtnClick() throws IOException {
-        Stage stage = (Stage) Homebtn.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
-        stage.setResizable(false);
-        stage.setScene(scene);
-    }
 
     /**
      * Handles navigation to the home page events. This method is called when the Home button is clicked
      * and is responsible for navigation the user to the home page
      * @throws IOException if an I/O error occurs when loading the settings page view
      */
+    @FXML
+    public void OnHomebtnClick() throws IOException {
+            Stage stage = (Stage) Homebtn.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+            scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
+            stage.setResizable(false);
+            stage.setScene(scene);
+        }
+
     @FXML
     protected void OnSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsPage.getScene().getWindow();
@@ -109,11 +104,15 @@ public class ContactController {
         stage.setScene(scene);
     }
 
+
     /**
      * Handles navigation to the recommendation page events. This method is called when the recommendation button is clicked
      * and is responsible for navigation the user to the recommendation page
      * @throws IOException if an I/O error occurs when loading the Recommendations page view
      */
+
+
+
     @FXML
     public void OnRecommendationsPageClick() throws IOException {
         Stage stage = (Stage) Recommendationspage.getScene().getWindow();
@@ -124,11 +123,13 @@ public class ContactController {
         stage.setScene(scene);
     }
 
+
     /**
      * Handles navigation to the Timers page events. This method is called when the Timers button is clicked
      * and is responsible for navigation of the user to the Timeers page
      * @throws IOException if an I/O error occurs when loading the Timers page view
      */
+
     @FXML
     public void OnTimersButtonClick() throws IOException {
         Stage stage = (Stage) TimersPage.getScene().getWindow();
@@ -139,11 +140,13 @@ public class ContactController {
         stage.setScene(scene);
     }
 
+
     /**
      * Handles navigation to the current session page events. This method is called when the current session button is clicked
      * and is responsible for navigation of the user to the current session page
      * @throws IOException if an I/O error occurs when loading the current session page view
      */
+
     @FXML
     public void OnCurrentSessionBtnClick() throws IOException {
         Stage stage = (Stage) CurrentSessionPage.getScene().getWindow();
@@ -155,11 +158,13 @@ public class ContactController {
 
     }
 
+
     /**
      * Handles navigation to the contact page events. This method is called when the contact button is clicked
      * and is responsible for navigation of the user to the contacts page
      * @throws IOException if an I/O error occurs when loading the Contact page view
      */
+
     @FXML
     public void OnContactBtnClick() throws IOException {
         Stage stage = (Stage) Contactbtn.getScene().getWindow();

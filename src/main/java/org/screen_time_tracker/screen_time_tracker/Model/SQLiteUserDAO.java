@@ -223,6 +223,7 @@ public class SQLiteUserDAO implements IUsersDetails {
 
     // Simplify the login check
 
+
     /**
      *
      * @param email of the current user to check if they are logged in

@@ -36,32 +36,37 @@ public interface IScreenTime {
     /**
      *
      * @return This method returns the end time in simple string Date format which correlates to the users  least activity detected for the current day
-     * @throws SQLException if there a database access error
+     * @throws SQLException
      */
     public String Least_Activity_Detected_EndTime() throws SQLException;
 
 
     /**
      *
-     * @param startTime of the screentime session
-     * @param Date Date of the screen time session
-     * @param UserID User ID associated with the screen time session
-     * @param windowTitle Title of the active window associated window during the screen time session
+     * @param startTime
+     * @param Date
+     * @param UserID
+     * @param windowTitle
      * This method will simply insert the current screen time data into the db table
      */
     public void InsertScreenTimeData(String startTime, String Date, int UserID, String windowTitle);
 
     /**
-     * Fetches durations of active windows grouped by start time for a specific data
-     * @param date The date for which window durations are fetched
+     *
+     * @param date
      * @return This method returns a map of window durations such that it contains the durations in seconds corresponding to the active window
-     * @throws SQLException if there a database access error
+     * @throws SQLException
+>>>>>>> TimerPage
      */
     public Map<String, Map<String, Integer>> FetchWindowDurations(String date) throws SQLException;
 
     /**
      *
+<<<<<<< HEAD
      * @param userId The ID of the current user
+=======
+     * @param userId
+>>>>>>> TimerPage
      * @return This method is used to return a new screen_time_fields object which contains the current screen time data for a particular user
      */
     public Screen_Time_fields ReturnScreenTimeFields(int userId);
@@ -69,25 +74,41 @@ public interface IScreenTime {
 
     /**
      *
+<<<<<<< HEAD
      * @param userId The ID of the current user
+=======
+     * @param userId
+>>>>>>> TimerPage
      * @return This method is used to return a new screen_time_fields object which contains the previous screen time data for a particular user
      */
     public Screen_Time_fields ReturnScreenTimeFieldsPrevious(int userId);
 
     /**
      *
+<<<<<<< HEAD
      * @param screenTimeID The ID of the current screen time session
      * @param duration The duration of the current screen time session
      * @param screentitle The title of the currently active window
+=======
+     * @param screenTimeID
+     * @param duration
+     * @param screentitle
+>>>>>>> TimerPage
      * This method as the names suggests updates the screen time data currently stored in the table with the new screen time data as determine by the fields
      */
     public void UpdateScreenTimeData(int screenTimeID, int duration, String screentitle);
 
     /**
      *
+<<<<<<< HEAD
      * @param screenTimeID The ID of the current screen time session
      * @param endTime The end time of the current screen time session
      * @param Duration The duration of the screen time session
+=======
+     * @param screenTimeID
+     * @param endTime
+     * @param Duration
+>>>>>>> TimerPage
      * This method is only called once the user has logged out of the application and thus the screen time tracking session has been concluded in which this method inserts the last obtained screen time data into the table
      */
     public void finalizeScreenTimeData(int screenTimeID, String endTime, int Duration);
@@ -95,15 +116,26 @@ public interface IScreenTime {
     /**
      *
      * @return This method simply returns the last inserted screen_time_ID to be used later in conjunction with another methdo
+<<<<<<< HEAD
      * @throws SQLException if there a database access error
+=======
+     * @throws SQLException
+>>>>>>> TimerPage
      */
     public int getLastInsertedID() throws SQLException;
 
     /**
      *
+<<<<<<< HEAD
      * @param currentDate The current date
      * @param userID The ID of the current user
      * @return This method simply returns a list of Screen_Time_fields objects for a partiuclar user for a current day
+=======
+     * @param currentDate
+     * @param userID
+     * @return This method simply returns a list of Screen_Time_fields objects for a partiuclar user for a current day
+     * @return This is used to determine which session out the many that the user may have started throughout the day contains the most active duration, least active etc.
+>>>>>>> TimerPage
      */
     public List<Screen_Time_fields> getallscreentimeforoneday(String currentDate, int userID);
 }

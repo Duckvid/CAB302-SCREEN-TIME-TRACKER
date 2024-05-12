@@ -3,62 +3,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
+<?import javafx.scene.text.Font?>
 <VBox prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Timers_Style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.Timers_Controller">
-    <AnchorPane prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Timers_Style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
-
-        <BorderPane prefHeight="1000.0" prefWidth="200.0" styleClass="border-left" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+    <AnchorPane prefHeight="1000.0" prefWidth="1000.0">
+        <BorderPane prefHeight="1000.0" prefWidth="200.0" styleClass="border-left">
             <left>
                 <VBox spacing="10" styleClass="nav-bar">
 
                     <ImageView fx:id="imgview" fitHeight="100" fitWidth="200" preserveRatio="true" styleClass="logo">
-                        <Image url="@images/temp_logo.png"/>
+                        <Image url="@images/temp_logo.png" />
                     </ImageView>
 
-                    <Button fx:id="Homebtn" onAction="#OnHomebtnClick" styleClass="nav-button" text="Home">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
-                    <Button fx:id="CurrentSessionPage" onAction="#OnCurrentSessionBtnClick" styleClass="nav-button" text="Current Session">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
-                    <Button styleClass="nav-button" text="Old Sessions">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
-                    <Button fx:id="Recommendationspage" onAction="#OnRecommendationsPageClick" styleClass="nav-button" text="Recommended">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
-                    <Button styleClass="nav-button" text="Goals">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
-                    <Button fx:id="TimersPage" onAction="#OnTimersButtonClick" styleClass="nav-button" text="Timers">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
-                    <Button styleClass="nav-button" text="Your Data">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
-                    <Button fx:id="settingsPage" onAction="#OnSettingsButtonClick" styleClass="nav-button" text="Settings">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
-                    <Button fx:id="Contactbtn" onAction="#OnContactBtnClick" styleClass="nav-button" text="Contact">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
-                    <Button fx:id="Logoutbtn" onAction="#OnLogoutBtnClick" styleClass="nav-button" text="Logout">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font></Button>
+                    <Button fx:id="homeBtn" onAction="#OnHomebtnClick" styleClass="nav-button" text="Home" />
+                    <Button fx:id="CurrentSessionPage" onAction="#OnCurrentSessionBtnClick" styleClass="nav-button" text="Current Session" />
+                    <Button styleClass="nav-button" text="Old Sessions" />
+                    <Button fx:id="Recommendationspage" onAction="#OnRecommendationsPageClick" styleClass="nav-button" text="Recommended" />
+                    <Button styleClass="nav-button" text="Goals" />
+                    <Button fx:id="TimersPage" onAction="#OnTimersButtonClick" styleClass="nav-button" text="Timers" />
+                    <Button styleClass="nav-button" text="Your Data" />
+                    <Button fx:id="settingsPage" onAction="#OnSettingsButtonClick" styleClass="nav-button" text="Settings" />
+                    <Button fx:id="Contactbtn" onAction="#OnContactBtnClick" styleClass="nav-button" text="Contact" />
+                    <Button fx:id="Logoutbtn" onAction="#OnLogoutBtnClick" styleClass="nav-button" text="Logout" />
                 </VBox>
             </left>
-
         </BorderPane>
 
         <HBox prefHeight="200.0" prefWidth="1000.0" styleClass="innerbox" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
@@ -71,30 +39,34 @@
                 </center></BorderPane>
         </HBox>
 
-
-        <BorderPane layoutX="571.0" layoutY="287.0" prefHeight="645.0" prefWidth="400.0" styleClass="border-radius">
+        <BorderPane layoutX="610.0" layoutY="220.0" prefHeight="645.0" prefWidth="370.0" styleClass="border-radius">
             <top>
-                <VBox prefHeight="645.0" prefWidth="335.0" BorderPane.alignment="CENTER">
-
+                <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Label prefHeight="42.0" prefWidth="250.0" text="Add Recommended Timers / Alarms:" textAlignment="CENTER" />
                 </VBox>
             </top>
+            <center>
+                <VBox prefHeight="645.0" prefWidth="335.0">
+                    <Label fx:id="Recommendationbreaktext" styleClass="info-text" text="Recommended Break times:" />
+                    <Label fx:id="RecommendedEnd" styleClass="info-text" text="Recommended End:" />
+                    <Label styleClass="info-text" text="Recommended Complete difficult task time:" />
+                </VBox>
+            </center>
         </BorderPane>
 
-        <BorderPane layoutX="219.0" layoutY="287.0" prefHeight="645.0" prefWidth="320.0" styleClass="border-radius">
+        <BorderPane layoutX="219.0" layoutY="220.0" prefHeight="645.0" prefWidth="370.0" styleClass="border-radius">
             <top>
-                <VBox prefHeight="645.0" prefWidth="335.0" BorderPane.alignment="CENTER">
-
-
+                <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Label fx:id="yourTimersLabel" prefHeight="42.0" prefWidth="161.0" text="Your Timers:" textAlignment="CENTER" />
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button onAction="#showAddTimerPopup" styleClass="add-timer-button" text="Add Timer +" />
+                        <Button onAction="#showAddAlarmPopup" styleClass="add-timer-button" text="Add Alarm +" />
+                    </HBox>
                 </VBox>
             </top>
+            <center>
+                <VBox fx:id="yourTimersBox" alignment="CENTER" prefHeight="645.0" prefWidth="335.0" />
+            </center>
         </BorderPane>
-
-
-
     </AnchorPane>
-
-
-
-
-
 </VBox>

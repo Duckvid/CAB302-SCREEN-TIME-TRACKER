@@ -116,6 +116,7 @@ public class LoginController {
 
         screenTimethread.start();
     }
+
     /**
      * Handles the event triggered by clicking the 'Forgot Password' button.
      * This method will prompt the user to enter their email or phone number to recover their password.

@@ -13,6 +13,7 @@ public class Screen_Time_fields {
     /** The end time of a screen time session in a standard time format. */
     private String End_time;
 
+
     /** The duration of a screen time session in minutes. */
     private int Duration;
 
@@ -40,12 +41,32 @@ public class Screen_Time_fields {
      * @param duration The total duration of screen usage.
      * @param dateOfTrack The date when the screen time was tracked.
      */
+
     public Screen_Time_fields(int screenTimeID, String start_time, String end_time, int duration, String dateOfTrack){
         ScreenTimeID = screenTimeID;
         Start_time = start_time;
         End_time = end_time;
         Duration = duration;
         DateOfTrack = dateOfTrack;
+
+    }
+
+    public String getDateOfTrack() {
+        return DateOfTrack;
+    }
+
+    public void setDateOfTrack(String dateOfTrack) {
+        DateOfTrack = dateOfTrack;
+    }
+
+
+    public int getScreenTimeID() {
+        return ScreenTimeID;
+    }
+
+    public void setScreenTimeID(int screenTimeID) {
+        ScreenTimeID = screenTimeID;
+
     }
     /** @return the session's duration. */
     public int getDuration() {

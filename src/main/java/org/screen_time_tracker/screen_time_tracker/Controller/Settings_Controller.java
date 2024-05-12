@@ -101,11 +101,6 @@ public class Settings_Controller {
         stage.setScene(scene);
     }
 
-    /**
-     * Handles navigation to the home page events. This method is called when the Home button is clicked
-     * and is responsible for navigation the user to the home page
-     * @throws IOException if an I/O error occurs when loading the settings page view
-     */
     @FXML
     protected void OnSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsPage.getScene().getWindow();

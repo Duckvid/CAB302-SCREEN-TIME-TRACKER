@@ -74,7 +74,11 @@ public interface IUsersDetails {
 
     /**
      *
+<<<<<<< HEAD
      * @param name of the current user
+=======
+     * @param name
+>>>>>>> TimerPage
      * @return This method returns true if the provided name is valid as according to the requirements in the code
      */
 
@@ -82,7 +86,11 @@ public interface IUsersDetails {
 
     /**
      *
+<<<<<<< HEAD
      * @param Phonenumber of the current user
+=======
+     * @param Phonenumber
+>>>>>>> TimerPage
      * @return return This method returns true if the provided phonenumber is valid as according to the requirements in the code
      */
 

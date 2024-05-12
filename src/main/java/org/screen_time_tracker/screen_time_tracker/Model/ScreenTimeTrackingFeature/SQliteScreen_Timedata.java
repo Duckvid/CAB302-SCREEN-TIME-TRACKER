@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Date;
 
+
 /**
  * This class handles dtabase operations related to screen time data
  * Implementing methods defined in the IScreenTime interface
@@ -22,12 +23,7 @@ import java.util.Date;
 public class SQliteScreen_Timedata implements IScreenTime{
     private final Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
 
-    /**
-     * Constructs a new SQliteScreen_Timedata instance,
-     * establishing a connection to the SQLite database.
-     *
-     * @throws SQLException if a database connection error occurs.
-     */
+
     public SQliteScreen_Timedata() throws SQLException {
 
     }
@@ -78,12 +74,14 @@ public class SQliteScreen_Timedata implements IScreenTime{
         return durationsByHour;
     }
 
+
     /**
      * Converts a 12-hour formatted time string to 24-hour format.
      *
      * @param twelveHourTime The time string in 12-hour format (e.g., "02:00 PM").
      * @return The converted time string in 24-hour format (e.g., "14:00").
      */
+
     public static String convertTo24HourFormat(String twelveHourTime) {
         // Define the 12-hour format
         SimpleDateFormat twelveHourFormat = new SimpleDateFormat("hh:mm a");
@@ -127,6 +125,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
         return null;
 
     }
+
     /**
      * Calculates the median time from a list of time strings.
      *
@@ -140,9 +139,8 @@ public class SQliteScreen_Timedata implements IScreenTime{
             return times.get(middle);
         } else {
             // Assuming time format is HH:mm and we need to average two times
-            // Assuming time format is hh:mm a and we need to average two times
-            LocalTime time1 = LocalTime.parse(times.get(middle - 1), DateTimeFormatter.ofPattern("hh:mm a"));
-            LocalTime time2 = LocalTime.parse(times.get(middle), DateTimeFormatter.ofPattern("hh:mm a"));
+            LocalTime time1 = LocalTime.parse(times.get(middle - 1), DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime time2 = LocalTime.parse(times.get(middle), DateTimeFormatter.ofPattern("HH:mm"));
             long seconds = (time1.toSecondOfDay() + time2.toSecondOfDay()) / 2;
             return LocalTime.ofSecondOfDay(seconds).toString();
         }
@@ -155,6 +153,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
      * @return The median start time as a string.
      * @throws SQLException if a database access error occurs.
      */
+
     public String getMedianStartTime(int userId) throws SQLException {
         List<String> startTimes = new ArrayList<>();
         String query = "SELECT Start_Time FROM ScreenTimeData WHERE UserID = ?";
@@ -168,6 +167,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
         return calculateMedianTime(startTimes);
     }
 
+
     /**
      * Retrieves the median end time for a specific user.
      *
@@ -175,6 +175,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
      * @return The median end time as a string.
      * @throws SQLException if a database access error occurs.
      */
+
     public String getMedianEndTime(int userId) throws SQLException {
         List<String> endTimes = new ArrayList<>();
         String query = "SELECT End_Time FROM ScreenTimeData WHERE UserID = ?";
@@ -295,6 +296,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
         return screenTimeFields;
 
     }
+
 
 
     @Override

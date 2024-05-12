@@ -84,6 +84,7 @@ public class Current_Session_Controller {
      * called to append the current session data to the bar chart to reflect and visualize current session data
      * @throws SQLException if an SQL error occurs during data retrieval
      */
+
     private void PopulateBarChart() throws SQLException {
         SQliteScreen_Timedata sQliteScreenTimedata = new SQliteScreen_Timedata();
         StackedBarChart<String, Number> chart = new StackedBarChart<>(new CategoryAxis(), new NumberAxis());
@@ -126,6 +127,7 @@ public class Current_Session_Controller {
      *
      * @throws SQLException if an SQL error occurs during data retrieval
      */
+
     public void appendStartTIme() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
 
@@ -143,12 +145,14 @@ public class Current_Session_Controller {
 
     }
 
+
     /**
      * Called to append the end time of the current session to the UI.
      * This method retrieves the end time from the session data and updates the UI accordingly.
      *
      * @throws SQLException if an SQL error occurs during data retrieval
      */
+
     public void appendEndTIme() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
 
@@ -182,6 +186,7 @@ public class Current_Session_Controller {
      *
      * @throws SQLException if an SQL error occurs during data retrieval
      */
+
 
     public void appendRecommendedBreakTIme() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
@@ -217,6 +222,7 @@ public class Current_Session_Controller {
      * @throws SQLException if an SQL error occurs during data retrieval
      */
 
+
     public void appendMostActivity() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
 
@@ -235,6 +241,7 @@ public class Current_Session_Controller {
         }
 
     }
+
 
     /**
      * Called to append the least activity of the current session to the UI.
@@ -268,6 +275,7 @@ public class Current_Session_Controller {
      *
      * @throws SQLException if an SQL error occurs during data retrieval
      */
+
 
     public void appendComparison() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
@@ -310,6 +318,7 @@ public class Current_Session_Controller {
 
     }
 
+
     /**
      * Initializes the controller. This method sets up necessary state and UI components
      * for the current session view.
@@ -328,10 +337,6 @@ public class Current_Session_Controller {
         appendComparison();
         PopulateBarChart();
 
-     /*   Screen_time_tracking_feature screenTimeTrackingFeature = new Screen_time_tracking_feature();
-        screenTimeTrackingFeature.testActiveWindowTitle();
-*/
-
     }
 
     /**
@@ -340,6 +345,7 @@ public class Current_Session_Controller {
      *
      * @throws IOException if an I/O error occurs when loading the login view
      */
+
     @FXML
     protected void OnLogoutBtnClick() throws IOException{
         SQLiteUserDAO sqLiteUserDAO = new SQLiteUserDAO();
@@ -352,6 +358,7 @@ public class Current_Session_Controller {
         stage.setScene(scene);
 
     }
+
 
     /**
      * Handles navigation to the home page events. This method is called when the Home button is clicked

@@ -22,10 +22,15 @@ public class MainController {
 
     private TextField NameField;
 
-
     @FXML
 
     private TextField EmailField;
+
+        @FXML
+        private Button Facebook;
+
+
+         @FXML private Button Google;
 
 
     @FXML
@@ -48,14 +53,6 @@ public class MainController {
     private Button Login;
 
 
-    @FXML
-
-    private Button Facebook;
-
-
-    @FXML
-    private Button Google;
-
 
     @FXML
     private Button backbtn;
@@ -68,6 +65,9 @@ public class MainController {
     /**
      * Handles checkbox actions to enable or disable functionality based on user agreement.
      */
+
+
+
     public void onAgreeCheckBoxClick() {
         boolean accepted = checkbtn.isSelected();
         signupbtn.setDisable(!accepted);
@@ -156,6 +156,7 @@ public class MainController {
             stage.setResizable(false);
             stage.setScene(scene);
         }
+
         /**
          * Initiates login through Facebook.
          *
@@ -172,11 +173,13 @@ public class MainController {
             stage.setScene(scene);
         }
 
+
     /**
      * Initiates login through Google.
      *
      * @throws IOException if the Google login process encounters I/O errors.
      */
+
         @FXML
         protected void OnGoogleButton() throws IOException{
             Stage stage = (Stage) Google.getScene().getWindow();
@@ -187,11 +190,13 @@ public class MainController {
             stage.setScene(scene);
         }
 
+
     /**
      * Processes the back navigation within the application.
      *
      * @throws IOException if navigation fails due to I/O errors.
      */
+
         @FXML
         protected void OnBack() throws IOException{
             Stage stage = (Stage) backbtn.getScene().getWindow();

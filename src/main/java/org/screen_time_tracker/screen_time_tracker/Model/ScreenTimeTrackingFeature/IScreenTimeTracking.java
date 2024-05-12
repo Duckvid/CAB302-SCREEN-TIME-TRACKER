@@ -6,6 +6,7 @@ import java.util.Map;
  * Interface for the Screen time data that handles
  * The CRUD operations for the Screen_time_tracking_feature class with the database
  */
+
 public interface IScreenTimeTracking {
 
     /**
@@ -28,9 +29,15 @@ public interface IScreenTimeTracking {
     public Map<String, Long> getWindowTimeMap();
 
     /**
+<<<<<<< HEAD
      * Updates the currently active window
      * @param windowTitle The title of the currently active window
      * @param timeSpent The duration of the time spent at the current window
+=======
+     *
+     * @param windowTitle
+     * @param timeSpent
+>>>>>>> TimerPage
      *
      */
 
