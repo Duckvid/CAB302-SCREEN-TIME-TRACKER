@@ -8,6 +8,8 @@ import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Date;
 
@@ -105,6 +107,50 @@ public class SQliteScreen_Timedata implements IScreenTime{
 
         return null;
 
+    }
+
+    public String calculateMedianTime(List<String> times) {
+        // Sort times to find the median
+        Collections.sort(times);
+        int middle = times.size() / 2;
+
+        // Formatter that matches your time format including AM/PM
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+        if (times.size() % 2 == 1) {
+            return LocalTime.parse(times.get(middle), formatter).toString();
+        } else {
+            LocalTime time1 = LocalTime.parse(times.get(middle - 1), formatter);
+            LocalTime time2 = LocalTime.parse(times.get(middle), formatter);
+            long seconds = (time1.toSecondOfDay() + time2.toSecondOfDay()) / 2;
+            return LocalTime.ofSecondOfDay(seconds).toString();
+        }
+    }
+
+    public String getMedianStartTime(int userId) throws SQLException {
+        List<String> startTimes = new ArrayList<>();
+        String query = "SELECT Start_Time FROM ScreenTimeData WHERE UserID = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                startTimes.add(resultSet.getString("Start_Time"));
+            }
+        }
+        return calculateMedianTime(startTimes);
+    }
+
+    public String getMedianEndTime(int userId) throws SQLException {
+        List<String> endTimes = new ArrayList<>();
+        String query = "SELECT End_Time FROM ScreenTimeData WHERE UserID = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                endTimes.add(resultSet.getString("End_Time"));
+            }
+        }
+        return calculateMedianTime(endTimes);
     }
 
     // this method returns a screen time fields object

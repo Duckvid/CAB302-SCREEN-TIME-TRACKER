@@ -75,8 +75,8 @@
         <BorderPane layoutX="571.0" layoutY="287.0" prefHeight="645.0" prefWidth="400.0" styleClass="border-radius">
             <top>
                 <VBox prefHeight="645.0" prefWidth="335.0" BorderPane.alignment="CENTER">
-                    <Label styleClass="info-text" text="Recommended Break times:" />
-                    <Label styleClass="info-text" text="Recommended End:" />
+                    <Label fx:id="Recommendationbreaktext" styleClass="info-text" text="Recommended Break times:" />
+                    <Label fx:id="RecommendedEnd" styleClass="info-text" text="Recommended End:" />
                     <Label styleClass="info-text" text="Recommended Complete difficult task time:" />
                 </VBox>
             </top>
@@ -85,13 +85,13 @@
         <BorderPane layoutX="219.0" layoutY="287.0" prefHeight="645.0" prefWidth="320.0" styleClass="border-radius">
             <top>
                 <VBox prefHeight="645.0" prefWidth="335.0" BorderPane.alignment="CENTER">
-                    <Label fx:id="start_time" styleClass="info-text" text="Your Start Time:" />
-                    <Label styleClass="info-text" text="Your median start time:" />
-                    <Label styleClass="info-text" text="Your median end time:" />
-                    <Label styleClass="info-text" text="Most Activity Detected:" />
-                    <Label styleClass="info-text" text="Least Activity Detected:" />
-                    <Label styleClass="info-text" text="Median most activity:" />
-                    <Label styleClass="info-text" text="Least most activity:" />
+                    <Label fx:id="starttime" styleClass="info-text" text="Your Start Time:" />
+                    <Label fx:id="Median_start_time" styleClass="info-text" text="Your median start time:" />
+                    <Label fx:id="median_End_time" styleClass="info-text" text="Your median end time:" />
+                    <Label fx:id="MostActivityText" styleClass="info-text" text="Most Activity Detected:" />
+                    <Label fx:id="LeastActivityText" styleClass="info-text" text="Least Activity Detected:" />
+                    <Label fx:id="medianMostActivity" styleClass="info-text" text="Median most activity:" />
+                    <Label fx:id="Median_Least_activity" styleClass="info-text" text="Median Least activity:" />
 
                 </VBox>
             </top>
