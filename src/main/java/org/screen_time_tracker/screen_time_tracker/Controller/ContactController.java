@@ -54,6 +54,8 @@ public class ContactController {
         stage.setScene(scene);
 
     }
+
+    @FXML
     public void OnHomebtnClick() throws IOException {
             Stage stage = (Stage) Homebtn.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
@@ -74,6 +76,7 @@ public class ContactController {
     }
 
 
+    @FXML
     public void OnRecommendationsPageClick() throws IOException {
         Stage stage = (Stage) Recommendationspage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Recommendations-view.fxml"));
@@ -82,7 +85,7 @@ public class ContactController {
         stage.setResizable(false);
         stage.setScene(scene);
     }
-
+    @FXML
     public void OnTimersButtonClick() throws IOException {
         Stage stage = (Stage) TimersPage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Timers-view.fxml"));
@@ -91,7 +94,7 @@ public class ContactController {
         stage.setResizable(false);
         stage.setScene(scene);
     }
-
+    @FXML
     public void OnCurrentSessionBtnClick() throws IOException {
         Stage stage = (Stage) CurrentSessionPage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("current_Session-view.fxml"));
@@ -101,7 +104,7 @@ public class ContactController {
         stage.setScene(scene);
 
     }
-
+    @FXML
     public void OnContactBtnClick() throws IOException {
         Stage stage = (Stage) Contactbtn.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Contact-view.fxml"));

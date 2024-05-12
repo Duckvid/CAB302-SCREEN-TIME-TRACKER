@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Screen_time_tracking_feature {
+public class Screen_time_tracking_feature implements IScreenTimeTracking {
 
     private boolean ISwindows;
 
@@ -28,6 +28,7 @@ public class Screen_time_tracking_feature {
     private Long LastTimeChecked = System.currentTimeMillis();
 
 
+    @Override
     public String getActiveWindowTitle(){
         if(isMac){
             try{
@@ -54,6 +55,8 @@ public class Screen_time_tracking_feature {
     }
 
     // method to retrieve the current date and time using the Calendar class
+
+    @Override
     public String CurrentDateTime(){
         String NewTimeString = null;
 
@@ -72,6 +75,7 @@ public class Screen_time_tracking_feature {
     }
 
     // it will keep track of what window is currently in use, as well as how long that window is being used for
+    @Override
     public Map<String, Long> getWindowTimeMap(){
         String currentWindowTitle = getActiveWindowTitle();
         long currentTime = System.currentTimeMillis();
@@ -93,20 +97,8 @@ public class Screen_time_tracking_feature {
         return new HashMap<>(windowTimeMap);
     }
 
-    private String categorizeWindowTitle(String windowTitle) {
-        String titleLower = windowTitle.toLowerCase();
-        if (titleLower.contains("word") || titleLower.contains("excel")) {
-            return "Work";
-        } else if (titleLower.contains("facebook") || titleLower.contains("whatsapp")) {
-            return "Social";
-        } else if (titleLower.contains("chrome") || titleLower.contains("firefox")) {
-            return "Browsing";  // Adding a new category for web browsing
-        } else {
-            return "Other";
-        }
-    }
-
-    private void updateWindowTime(String windowTitle, long timeSpent) {
+    @Override
+    public void updateWindowTime(String windowTitle, long timeSpent) {
         Long totalSpent = windowTimeMap.getOrDefault(windowTitle, 0L) + timeSpent;
         windowTimeMap.put(windowTitle, totalSpent);
         lastActiveTimeMap.put(windowTitle, timeSpent); // track the last active time

@@ -33,6 +33,8 @@ public class SQLiteUserDAO implements IUsersDetails {
      * This method is also  responsible for creating the Users table to store account info
      * It uses a simple SQL query to define a table with a userID, email_Address and password
      */
+
+    @Override
     public void createUsers_And_Screen_Time_Data_Table() {
         // Create table if not exists
         try {
@@ -63,12 +65,6 @@ public class SQLiteUserDAO implements IUsersDetails {
         }
     }
 
-
-    // this is just a useful method for testing
-    public void ClearUsersTable() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE * FROM Users");
-        statement.executeUpdate();
-    }
 
     // Although not used yet this can be used on the settings page to simply remove the users details as this is also one of our should have user storys
     @Override
@@ -228,6 +224,8 @@ public class SQLiteUserDAO implements IUsersDetails {
             return false;
         }
     }
+
+    @Override
     public void Logout() {
         User currentUser = Session_Manager.getCurrentUser();
         if (currentUser != null) {
@@ -252,12 +250,16 @@ public class SQLiteUserDAO implements IUsersDetails {
     }
 
 
+
     // Name can not start with any special character
+
+    @Override
     public boolean IsNameValid(String name) {
         if(name.matches(".*"+"^[^A-Za-z0-9]"+".*")){return false;}
         return true;
     }
 
+    @Override
     public boolean IsNumberValid(String Phonenumber){
         if(Phonenumber.matches(".*"+"[A-Za-z]|[^A-Za-z0-9]"+".*")){return false;}
         return true;

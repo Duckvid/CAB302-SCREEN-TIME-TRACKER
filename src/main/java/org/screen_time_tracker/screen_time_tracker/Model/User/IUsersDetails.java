@@ -2,8 +2,10 @@ package org.screen_time_tracker.screen_time_tracker.Model.User;
 
 import java.util.List;
 
-// this class is responsible for declaring some method signatures used to alter the users account in some way
-// for allowing users to register, and for allowing users to login
+/**
+ * This interface is responsible for defining the methods associated with the user
+ * Particularly around CRUD operations involving the user
+ */
 public interface IUsersDetails {
 
     /**
@@ -55,5 +57,31 @@ public interface IUsersDetails {
      * @returns true if the user exists in the db
      */
     public boolean UserExists(User user);
+
+    /**
+     * This method is responsible for creating the users and Screen_Time_Data_Table in the db
+     */
+    public void createUsers_And_Screen_Time_Data_Table();
+
+    /**
+     * This method is responsible for allowing the users to logout of their account thereby stopping the current screen time tracking session
+     */
+    public void Logout();
+
+    /**
+     *
+     * @param name
+     * @return This method returns true if the provided name is valid as according to the requirements in the code
+     */
+
+    public boolean IsNameValid(String name);
+
+    /**
+     *
+     * @param Phonenumber
+     * @return return This method returns true if the provided phonenumber is valid as according to the requirements in the code
+     */
+
+    public boolean IsNumberValid(String Phonenumber);
 
 }

@@ -28,6 +28,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -84,16 +85,33 @@ public class Current_Session_Controller {
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = formatDate.format(currentDate);
 
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        Map<String, Integer> windowDurations = sQliteScreenTimedata.FetchWindowDurations(strDate);
-        for (Map.Entry<String, Integer> entry : windowDurations.entrySet()) {
-            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        // Initialize the seriesMap to store series by window titles
+        Map<String, XYChart.Series<String, Number>> seriesMap = new HashMap<>();
+
+        // Fetch data grouped by hours and window titles
+        Map<String, Map<String, Integer>> timeMap = sQliteScreenTimedata.FetchWindowDurations(strDate);
+
+        // Prepare data for the chart
+        for (Map.Entry<String, Map<String, Integer>> hourEntry : timeMap.entrySet()) {
+            String hour = hourEntry.getKey();
+            Map<String, Integer> windowDurations = hourEntry.getValue();
+            for (Map.Entry<String, Integer> durationEntry : windowDurations.entrySet()) {
+                String windowTitle = durationEntry.getKey();
+                Integer duration = durationEntry.getValue();
+
+                // Create or retrieve the series for this window title
+                XYChart.Series<String, Number> series = seriesMap.computeIfAbsent(windowTitle, k -> new XYChart.Series<>());
+                series.setName(windowTitle); // Set the name of series to window title for legend
+                series.getData().add(new XYChart.Data<>(hour, duration));
+            }
         }
 
-        chart.getData().add(series);
+        // Add all series to the chart
+        chart.getData().addAll(seriesMap.values());
         barChartContainer.getChildren().clear();
         barChartContainer.getChildren().add(chart);
     }
+
 
 
     public void appendStartTIme() throws SQLException {
