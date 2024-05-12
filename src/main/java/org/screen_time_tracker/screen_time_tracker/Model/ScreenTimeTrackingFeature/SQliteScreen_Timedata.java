@@ -140,8 +140,9 @@ public class SQliteScreen_Timedata implements IScreenTime{
             return times.get(middle);
         } else {
             // Assuming time format is HH:mm and we need to average two times
-            LocalTime time1 = LocalTime.parse(times.get(middle - 1), DateTimeFormatter.ofPattern("HH:mm"));
-            LocalTime time2 = LocalTime.parse(times.get(middle), DateTimeFormatter.ofPattern("HH:mm"));
+            // Assuming time format is hh:mm a and we need to average two times
+            LocalTime time1 = LocalTime.parse(times.get(middle - 1), DateTimeFormatter.ofPattern("hh:mm a"));
+            LocalTime time2 = LocalTime.parse(times.get(middle), DateTimeFormatter.ofPattern("hh:mm a"));
             long seconds = (time1.toSecondOfDay() + time2.toSecondOfDay()) / 2;
             return LocalTime.ofSecondOfDay(seconds).toString();
         }
