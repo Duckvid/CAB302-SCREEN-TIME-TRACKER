@@ -6,7 +6,10 @@ import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 
 import javax.xml.transform.Result;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Date;
 
@@ -21,6 +24,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
     // this is a method to insert screen time data to the screen timetable
 
     // it stores data for only the user logged in which is useful for later methods
+    @Override
     public void InsertScreenTimeData(String startTime, String Date, int UserID, String windowTitle){
         String query = "INSERT INTO ScreenTimeData (Start_Time, End_Time, Duration, Date_Of_Track, Userid, WindowTitle) VALUES (?, '', 0, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)){
@@ -37,22 +41,49 @@ public class SQliteScreen_Timedata implements IScreenTime{
         }
     }
 
-    public Map<String, Integer> FetchWindowDurations(String date) throws SQLException {
-        Map<String, Integer> durations = new HashMap<>();
-        String query = "SELECT WindowTitle, SUM(Duration) AS TotalDuration FROM ScreenTimeData WHERE Date_Of_Track = ? GROUP BY WindowTitle";
+    @Override
+    public Map<String, Map<String, Integer>> FetchWindowDurations(String date) throws SQLException {
+        Map<String, Map<String, Integer>> durationsByHour = new HashMap<>();
+        String query = "SELECT Start_Time, WindowTitle, SUM(Duration) AS TotalDuration " +
+                "FROM ScreenTimeData WHERE Date_Of_Track = ? " +
+                "GROUP BY Start_Time, WindowTitle";
+
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, date);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                durations.put(rs.getString("WindowTitle"), rs.getInt("TotalDuration"));
+                String startTime = rs.getString("Start_Time");
+                String windowTitle = rs.getString("WindowTitle");
+                int totalDuration = rs.getInt("TotalDuration");
+
+                String hour = convertTo24HourFormat(startTime).substring(0, 2) + ":00"; // Convert and extract hour
+
+                Map<String, Integer> hourMap = durationsByHour.computeIfAbsent(hour, k -> new HashMap<>());
+                hourMap.put(windowTitle, totalDuration);
             }
         }
-        return durations;
+        return durationsByHour;
+    }
+
+    public static String convertTo24HourFormat(String twelveHourTime) {
+        // Define the 12-hour format
+        SimpleDateFormat twelveHourFormat = new SimpleDateFormat("hh:mm a");
+        // Define the 24-hour format
+        SimpleDateFormat twentyFourHourFormat = new SimpleDateFormat("HH:mm");
+
+        try {
+            // Parse the 12-hour format and format it to 24-hour format
+            return twentyFourHourFormat.format(twelveHourFormat.parse(twelveHourTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null; // Return null if there's a parsing error
+        }
     }
 
     // this method returns a screen time fields object
     // it only returns the most recently added object this useful to only obtain the most current session data
     // rather than the earliest
+    @Override
     public Screen_Time_fields ReturnScreenTimeFields(int userId){
 
         String query = "SELECT * FROM ScreenTimeData WHERE Userid = ? ORDER BY ScreenTimeID DESC LIMIT 1";
@@ -78,9 +109,54 @@ public class SQliteScreen_Timedata implements IScreenTime{
 
     }
 
+    public String calculateMedianTime(List<String> times) {
+        // Sort times to find the median
+        Collections.sort(times);
+        int middle = times.size() / 2;
+
+        // Formatter that matches your time format including AM/PM
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+        if (times.size() % 2 == 1) {
+            return LocalTime.parse(times.get(middle), formatter).toString();
+        } else {
+            LocalTime time1 = LocalTime.parse(times.get(middle - 1), formatter);
+            LocalTime time2 = LocalTime.parse(times.get(middle), formatter);
+            long seconds = (time1.toSecondOfDay() + time2.toSecondOfDay()) / 2;
+            return LocalTime.ofSecondOfDay(seconds).toString();
+        }
+    }
+
+    public String getMedianStartTime(int userId) throws SQLException {
+        List<String> startTimes = new ArrayList<>();
+        String query = "SELECT Start_Time FROM ScreenTimeData WHERE UserID = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                startTimes.add(resultSet.getString("Start_Time"));
+            }
+        }
+        return calculateMedianTime(startTimes);
+    }
+
+    public String getMedianEndTime(int userId) throws SQLException {
+        List<String> endTimes = new ArrayList<>();
+        String query = "SELECT End_Time FROM ScreenTimeData WHERE UserID = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                endTimes.add(resultSet.getString("End_Time"));
+            }
+        }
+        return calculateMedianTime(endTimes);
+    }
+
     // this method returns a screen time fields object
     // it only returns the previously added object this is useful to only obtain the most current session data
     // rather than the earliest
+    @Override
     public Screen_Time_fields ReturnScreenTimeFieldsPrevious(int userId) {
 
         String query = "SELECT * FROM ScreenTimeData WHERE Userid = ? ORDER BY ScreenTimeID DESC LIMIT 1 OFFSET 1";
@@ -105,7 +181,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
         return null;
 
     }
-
+    @Override
     public void UpdateScreenTimeData(int screenTimeID, int duration, String screentitle){
         String query = "UPDATE ScreenTimeData SET Duration = ?, WindowTitle = ? WHERE ScreenTimeID = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)){
@@ -119,7 +195,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
             e.printStackTrace();
         }
     }
-
+    @Override
     public void finalizeScreenTimeData(int screenTimeID, String endTime, int Duration){
         String query = "UPDATE ScreenTimeData SET End_Time = ?, Duration = ? WHERE ScreenTimeID = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)){
@@ -133,7 +209,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
             e.printStackTrace();
         }
     }
-
+    @Override
     public int getLastInsertedID() throws SQLException {
         String query = "SELECT last_insert_rowid() AS id";
         try (PreparedStatement pstmt = connection.prepareStatement(query);
@@ -156,6 +232,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
     // this is useful for calculating averages and whatnot for just one day
     // rather than calculating averages and medians for the all the users screen time data
     // returns the last screen time data as a list of screen time fields
+    @Override
     public List<Screen_Time_fields> getallscreentimeforoneday(String currentDate, int userID) {
         List<Screen_Time_fields> screenTimeFields = new ArrayList<>();
         String query = "SELECT * FROM ScreenTimeData WHERE Date_Of_Track = ? AND Userid = ?";
@@ -194,46 +271,6 @@ public class SQliteScreen_Timedata implements IScreenTime{
 
     }
 
-    @Override
-    public int Most_Activity_Detected_Duration() throws SQLException {
-        // compare the durations of the screen tracking sessions over the past 24hrs
-
-        // initialize a variable to store the greatest duration
-        int maxDuration = -1;
-
-        // initialize a list to be used later
-        List<Screen_Time_fields> field24hr = new ArrayList<>();
-
-        // first need to extract all data from past 24hrs for current user
-        // get the current user
-        if(Session_Manager.isUserLoggedIn()) {
-            int UserID = Session_Manager.getCurrentUser().getUserid();
-
-            // get the current date
-            java.util.Date currentDate = new Date();
-            SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-            String strDate = formatDate.format(currentDate);
-
-            // create screen time data object
-            SQliteScreen_Timedata sQliteScreenTimeData = new SQliteScreen_Timedata();
-
-            // create a list of all screen time data from past 24hrs
-            field24hr = sQliteScreenTimeData.getallscreentimeforoneday(strDate, UserID);
-
-            // find the greatest duration
-            // iterate through the list
-            for(Screen_Time_fields screentimeRecord : field24hr){
-                if(screentimeRecord.getDuration() > maxDuration) {
-                    maxDuration = screentimeRecord.getDuration();
-                }
-            }
-
-        }
-
-        return maxDuration;
-        
-        // Done
-    }
 
     @Override
     public String Most_Activity_Detected_StartTime() throws SQLException {
@@ -319,48 +356,6 @@ public class SQliteScreen_Timedata implements IScreenTime{
         }
 
         return maxEndTime;
-    }
-
-
-    @Override
-    public int Least_Activity_Detected() throws SQLException{
-        // compare the durations of the screen tracking sessions over the past 24hrs
-
-        // initialize a variable to store the Smallest duration
-        int LeastDuration = -1;
-
-        // initialize a list to be used later
-        List<Screen_Time_fields> field24hr = new ArrayList<>();
-
-        // first need to extract all data from past 24hrs for current user
-        // get the current user
-        if(Session_Manager.isUserLoggedIn()) {
-            int UserID = Session_Manager.getCurrentUser().getUserid();
-
-            // get the current date
-            java.util.Date currentDate = new Date();
-            SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-            String strDate = formatDate.format(currentDate);
-
-            // create screen time data object
-            SQliteScreen_Timedata sQliteScreenTimeData = new SQliteScreen_Timedata();
-
-            // create a list of all screen time data from past 24hrs
-            field24hr = sQliteScreenTimeData.getallscreentimeforoneday(strDate, UserID);
-
-            // find the greatest duration
-            // iterate through the list
-            for(Screen_Time_fields screentimeRecord : field24hr){
-                if(screentimeRecord.getDuration() < LeastDuration) {
-                    LeastDuration = screentimeRecord.getDuration();
-                }
-            }
-
-        }
-
-        return LeastDuration;
-
-        // Done
     }
 
     @Override

@@ -3,17 +3,34 @@ package org.screen_time_tracker.screen_time_tracker.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQliteScreen_Timedata;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_Time_fields;
+import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
+import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Recommendations_controller {
     @FXML
     private Button settingsPage;
@@ -38,12 +55,164 @@ public class Recommendations_controller {
     private Button Logoutbtn;
 
 
-    private Label start_time;
+    @FXML
+    private Label starttime;
 
     @FXML
-    public void initialize() {
-        imgview.setTranslateY(-70);
+    private Label Recommendationbreaktext;
 
+    @FXML
+    private Label RecommendedEnd;
+
+    @FXML
+    private Label MostActivityText;
+
+    @FXML
+    private Label LeastActivityText;
+
+    @FXML
+    private Label medianMostActivity;
+
+    @FXML
+    private Label Median_Least_activity;
+
+    @FXML
+    private Label median_End_time;
+
+    @FXML
+    private Label Median_start_time;
+
+
+    public void appendStartTIme() throws SQLException {
+        User currentUser = Session_Manager.getCurrentUser();
+
+        if(currentUser != null){
+            SQliteScreen_Timedata sQliteScreenTimeData = new SQliteScreen_Timedata();
+
+            Screen_Time_fields screenTimeFields = sQliteScreenTimeData.ReturnScreenTimeFields(currentUser.getUserid());
+
+            if(screenTimeFields != null){
+                String currentText = starttime.getText();
+                starttime.setText(currentText + "\n" + screenTimeFields.getStart_time());
+            }
+
+        }
+
+    }
+
+    public void updateMedianTimes() throws SQLException {
+        SQliteScreen_Timedata data = new SQliteScreen_Timedata();
+        int userId = Session_Manager.getCurrentUser().getUserid();
+
+        String medianStart = data.getMedianStartTime(userId);
+        String medianEnd = data.getMedianEndTime(userId);
+
+        Median_start_time.setText("Your median start time: " + medianStart);
+        median_End_time.setText("Your median end time: " + medianEnd);
+    }
+
+
+    public void appendEndTIme() throws SQLException {
+        User currentUser = Session_Manager.getCurrentUser();
+
+        if(currentUser != null){
+            SQliteScreen_Timedata sQliteScreenTimeData = new SQliteScreen_Timedata();
+
+            Screen_Time_fields screenTimeFields = sQliteScreenTimeData.ReturnScreenTimeFields(currentUser.getUserid());
+
+            if(screenTimeFields != null){
+                String currentText = RecommendedEnd.getText();
+
+                // Start time
+                String StartTimeString = screenTimeFields.getStart_time();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+                LocalTime starttime = LocalTime.parse(StartTimeString, formatter);
+
+                // add 4 hours to the start time
+                LocalTime RecommendedEndTIme = starttime.plus(6, ChronoUnit.HOURS);
+                String RecommendedEndTimeString = RecommendedEndTIme.format(formatter);
+
+                RecommendedEnd.setText(currentText + "\n" + RecommendedEndTimeString);
+            }
+
+        }
+
+    }
+
+    public void appendRecommendedBreakTIme() throws SQLException {
+        User currentUser = Session_Manager.getCurrentUser();
+
+        if(currentUser != null){
+            SQliteScreen_Timedata sQliteScreenTimeData = new SQliteScreen_Timedata();
+
+            Screen_Time_fields screenTimeFields = sQliteScreenTimeData.ReturnScreenTimeFields(currentUser.getUserid());
+
+            if(screenTimeFields != null){
+                String currentText = Recommendationbreaktext.getText();
+
+                // Start time
+                String StartTimeString = screenTimeFields.getStart_time();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+                LocalTime starttime = LocalTime.parse(StartTimeString, formatter);
+
+                // add 4 hours to the start time
+                LocalTime RecommendedbreakTIme = starttime.plus(3, ChronoUnit.HOURS);
+                String RecommendedbreakTimeString = RecommendedbreakTIme.format(formatter);
+
+                Recommendationbreaktext.setText(currentText + "\n" + RecommendedbreakTimeString);
+            }
+
+        }
+
+    }
+
+    public void appendMostActivity() throws SQLException {
+        User currentUser = Session_Manager.getCurrentUser();
+
+        if(currentUser != null){
+            SQliteScreen_Timedata sQliteScreenTimeData = new SQliteScreen_Timedata();
+
+            Screen_Time_fields screenTimeFields = sQliteScreenTimeData.ReturnScreenTimeFields(currentUser.getUserid());
+
+            if(screenTimeFields != null){
+                String currentText = MostActivityText.getText();
+                String MaxStartTime = sQliteScreenTimeData.Most_Activity_Detected_StartTime();
+                String MaxEndTime = sQliteScreenTimeData.Most_Activity_Detected_EndTime();
+                MostActivityText.setText(currentText + "\n" + MaxStartTime + " - " + MaxEndTime);
+            }
+
+        }
+
+    }
+
+    public void appendLeastActivity() throws SQLException {
+        User currentUser = Session_Manager.getCurrentUser();
+
+        if(currentUser != null){
+            SQliteScreen_Timedata sQliteScreenTimeData = new SQliteScreen_Timedata();
+
+            Screen_Time_fields screenTimeFields = sQliteScreenTimeData.ReturnScreenTimeFields(currentUser.getUserid());
+
+            if(screenTimeFields != null){
+                String currentText = LeastActivityText.getText();
+                String smallestStartTime = sQliteScreenTimeData.Least_Activity_Detected_StartTime();
+                String smallestEndTime = sQliteScreenTimeData.Least_Activity_Detected_EndTime();
+                LeastActivityText.setText(currentText + "\n" + smallestStartTime + " - " + smallestEndTime);
+            }
+
+        }
+
+    }
+
+    @FXML
+    public void initialize() throws SQLException {
+        imgview.setTranslateY(-70);
+        appendStartTIme();
+        appendLeastActivity();
+        appendMostActivity();
+        appendRecommendedBreakTIme();
+        appendEndTIme();
+        updateMedianTimes();
         // This will move the logo 10 pixels up
         //start_time.setText("Your Start Time: "+getStartTime());;
     }
