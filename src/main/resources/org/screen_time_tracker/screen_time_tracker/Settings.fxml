@@ -48,6 +48,14 @@
                         <font>
                             <Font name="System Bold" size="14.0" />
                         </font></Button>
+                    <Button fx:id="Contactbtn" onAction="#OnContactBtnClick" styleClass="nav-button" text="Contact">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="Logoutbtn" onAction="#OnLogoutBtnClick" styleClass="nav-button" text="Logout">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
                 </VBox>
             </left>
 

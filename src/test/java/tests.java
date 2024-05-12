@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.*;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
+import org.screen_time_tracker.screen_time_tracker.Model.SqliteConnection;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.sql.*;
@@ -34,6 +35,12 @@ class tests {
         boolean actual = dao.IsPasswordCorrect("Password.1!");
         assertTrue(actual, "The password validation failed.");
 
+    }
+
+    @Test
+    public void TestDBconnection(){
+        Connection conn = SqliteConnection.getInstance();
+        assertEquals(true, conn != null);
     }
 
     @Test

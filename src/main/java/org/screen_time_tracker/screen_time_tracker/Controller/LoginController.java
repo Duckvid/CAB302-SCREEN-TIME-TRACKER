@@ -8,12 +8,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQliteScreen_Timedata;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_Time_fields;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_time_tracking_feature;
+import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class LoginController {
     @FXML
@@ -33,6 +40,79 @@ public class LoginController {
     @FXML
     private Button forgotPasswordbtn;
 
+    /* This is a function which is responsible for actually controlling how frequently the screen time data is collected */
+    private void startBackgroundWindowInfo(int UserId) {
+        Thread screenTimethread = new Thread(() -> {
+            Screen_time_tracking_feature widowinfo = new Screen_time_tracking_feature();
+            //SQLiteUserDAO dao = new SQLiteUserDAO();
+            SQliteScreen_Timedata screenTimeData;
+            try {
+                screenTimeData = new SQliteScreen_Timedata();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            // start the session and begin to record start time
+            String Start_Time = widowinfo.CurrentDateTime();
+
+            // get the current Date
+            java.util.Date currentDate = new Date();
+            SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+            String strDate = formatDate.format(currentDate);
+
+
+            // get the current user somehow
+            if(Session_Manager.isUserLoggedIn()){
+                int UserID = Session_Manager.getCurrentUser().getUserid();
+                screenTimeData.InsertScreenTimeData(Start_Time, strDate, UserID, "initial");
+            }
+
+            int Screen_Time_ID = 0;
+            try {
+                Screen_Time_ID = screenTimeData.getLastInsertedID();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            long sessionStart = 0;
+            try {
+                sessionStart = System.currentTimeMillis();
+                while (!Thread.interrupted()) {
+                    Map<String, Long> windowTimes = widowinfo.getWindowTimeMap();
+                    long sessionEnd = System.currentTimeMillis(); // Update Session end time on each cycle
+                    int duration = (int) ((sessionEnd - sessionStart) / 1000); // duration in seconds
+                    String currentwindow = widowinfo.getActiveWindowTitle();
+
+                    // update the db with the current duration
+                    screenTimeData.UpdateScreenTimeData(Screen_Time_ID, duration, currentwindow);
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException e) {
+                long sessionEnd = System.currentTimeMillis();
+                int finalDuration = (int) ((sessionEnd - sessionStart) / 1000);
+                String endTime = widowinfo.CurrentDateTime();
+
+                // update end time and finalize duration
+                screenTimeData.finalizeScreenTimeData(Screen_Time_ID, endTime, finalDuration);
+
+                Thread.currentThread().interrupt();
+
+            }
+
+        });
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            screenTimethread.interrupt();
+            try{
+                screenTimethread.join();
+            }
+            catch(InterruptedException e){
+                Thread.currentThread().interrupt();
+            }
+        }));
+
+        screenTimethread.start();
+    }
 
 
     @FXML
@@ -90,33 +170,6 @@ public class LoginController {
         String password = PasswordField.getText();
         SQLiteUserDAO dao = new SQLiteUserDAO();
 
-        /*// this is some simple input validation to ensure that the input fields cannot be null
-        // This will output a simple alert type popup to notify users to fix their input
-        if(email.isEmpty() || password.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Validation Error");
-            alert.setHeaderText("Input validation Error");
-            alert.setContentText("Please enter all fields None of the fields can be empty");
-            alert.showAndWait();
-        }
-
-        // this condition validates to make sure the password is correct and contains the neccessary characters
-        else if(!dao.IsPasswordCorrect(password)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Validation Error");
-            alert.setHeaderText("Input validation Error");
-            alert.setContentText("Please make sure that your password contains 8 character, 1 special character, 1 number and 1 capitcal letter.");
-            alert.showAndWait();
-        }
-
-        else if(!dao.IsEmailCorrect(email)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Validation Error");
-            alert.setHeaderText("Input validation Error");
-            alert.setContentText("Please make sure that your email is in the correct form.");
-            alert.showAndWait();
-        }*/
-
         if((!dao.IsEmailCorrect(email) || !dao.IsPasswordCorrect(password) || email.isEmpty() || password.isEmpty())){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validation Error");
@@ -130,6 +183,11 @@ public class LoginController {
             User user = dao.Login(email, password);
 
             if(dao.UserExists(user)){
+
+                Session_Manager.setCurrentUser(user);
+
+                startBackgroundWindowInfo(user.getUserid());
+
                 // user is found, navigate to home page once implmented but for now go to currentsession page
                 Stage stage = (Stage) Loginbtn.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));

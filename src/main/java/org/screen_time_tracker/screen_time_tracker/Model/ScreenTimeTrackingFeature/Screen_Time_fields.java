@@ -9,18 +9,39 @@ public class Screen_Time_fields {
     public String Start_time;
 
     private String End_time;
-
-
-
     private int Duration;
+    private int ScreenTimeID;
     private String RecommendedBreak;
 
     private String MostActivityDetected;
 
     private String LeastActivityDetected;
+    private String DateOfTrack;
 
-    public Screen_Time_fields(){
 
+    public Screen_Time_fields(int screenTimeID, String start_time, String end_time, int duration, String dateOfTrack){
+        ScreenTimeID = screenTimeID;
+        Start_time = start_time;
+        End_time = end_time;
+        Duration = duration;
+        DateOfTrack = dateOfTrack;
+    }
+
+    public String getDateOfTrack() {
+        return DateOfTrack;
+    }
+
+    public void setDateOfTrack(String dateOfTrack) {
+        DateOfTrack = dateOfTrack;
+    }
+
+
+    public int getScreenTimeID() {
+        return ScreenTimeID;
+    }
+
+    public void setScreenTimeID(int screenTimeID) {
+        ScreenTimeID = screenTimeID;
     }
 
     public int getDuration() {

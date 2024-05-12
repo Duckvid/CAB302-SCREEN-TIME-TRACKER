@@ -49,6 +49,14 @@
                         <font>
                             <Font name="System Bold" size="14.0" />
                         </font></Button>
+                   <Button fx:id="Contactbtn" onAction="#OnContactBtnClick" styleClass="nav-button" text="Contact">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
+                    <Button fx:id="Logoutbtn" onAction="#OnLogoutBtnClick" styleClass="nav-button" text="Logout">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font></Button>
                 </VBox>
             </left>
 
@@ -57,7 +65,7 @@
         <HBox prefHeight="200.0" prefWidth="1000.0" styleClass="innerbox" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
             <BorderPane prefHeight="200.0" prefWidth="800.0" styleClass="border-top">
                 <center>
-                    <Label fx:id="welcomeLabel" alignment="CENTER" prefHeight="74.0" prefWidth="722.0" text="Good to see you [User name goes here]!" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                    <Label alignment="CENTER" prefHeight="74.0" prefWidth="722.0" text="Good to see you [User name goes here]!" textAlignment="CENTER" BorderPane.alignment="CENTER">
                         <font>
                             <Font name="System Bold" size="51.0" />
                         </font></Label>
@@ -78,64 +86,64 @@
             </children>
         </HBox>
 
-        <BorderPane layoutX="641.0" layoutY="234.0" prefHeight="283.0" prefWidth="341.0" styleClass="insights">
-            <bottom>
-                <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
-                    <children>
-                        <Button fx:id="insightbtn" onAction="#OnInsightBtnClick"  mnemonicParsing="false" text="Take a look -&gt;" textFill="#0b7dbd" underline="true" styleClass="takelookbtn" alignment="CENTER" />
-                    </children>
-                </HBox>
-            </bottom>
-            <top>
-                <HBox prefHeight="200.0" prefWidth="300.0" alignment="CENTER">
-                    <children>
-                        <Label prefHeight="42.0" prefWidth="161.0" text="Insights">
-                            <font>
-                                <Font size="36.0" />
-                            </font>
-                        </Label>
-                    </children></HBox>
-            </top>
-            <center>
-                <HBox prefHeight="200.0" prefWidth="300.0" alignment="CENTER">
-                    <children>
-                        <Label prefHeight="85.0" prefWidth="343.0" text="See graphs and in depth insights on your analysed data" wrapText="true">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </HBox>
-            </center></BorderPane>
+      <BorderPane layoutX="641.0" layoutY="234.0" prefHeight="283.0" prefWidth="341.0" styleClass="insights">
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Button fx:id="insightbtn" onAction="#OnInsightBtnClick"  mnemonicParsing="false" text="Take a look -&gt;" textFill="#0b7dbd" underline="true" styleClass="takelookbtn" alignment="CENTER" />
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Label prefHeight="42.0" prefWidth="161.0" text="Insights">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+               </children></HBox>
+         </top>
+         <center>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Label prefHeight="85.0" prefWidth="343.0" text="See graphs and in depth insights on your analysed data" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </center></BorderPane>
 
         <BorderPane layoutX="641.0" layoutY="570.0" prefHeight="272.0" prefWidth="341.0" styleClass="Recommendations">
-            <bottom>
-                <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
-                    <children>
-                        <Button fx:id="recommendationsbtn"  onAction="#OnRecommendationsbtnClick" mnemonicParsing="false" text="Take a look -&gt;" textAlignment="CENTER" textFill="#0b7dbd" underline="true"  styleClass="takelookbtn" alignment="CENTER"/>
-                    </children>
-                </HBox>
-            </bottom>
-            <top>
-                <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
-                    <children>
-                        <Label text="Recommendations">
-                            <font>
-                                <Font size="36.0" />
-                            </font></Label>
-                    </children></HBox>
-            </top>
-            <center>
-                <HBox prefHeight="159.0" prefWidth="323.0" alignment="CENTER">
-                    <children>
-                        <Label text="See what we recommend you on what to do based off your infomation" wrapText="true">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </HBox>
-            </center></BorderPane>
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Button fx:id="recommendationsbtn"  onAction="#OnRecommendationsbtnClick" mnemonicParsing="false" text="Take a look -&gt;" textAlignment="CENTER" textFill="#0b7dbd" underline="true"  styleClass="takelookbtn" alignment="CENTER"/>
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <Label text="Recommendations">
+                     <font>
+                        <Font size="36.0" />
+                     </font></Label>
+               </children></HBox>
+         </top>
+         <center>
+            <HBox prefHeight="159.0" prefWidth="323.0" alignment="CENTER">
+               <children>
+                  <Label text="See what we recommend you on what to do based off your infomation" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </center></BorderPane>
 
 
     </AnchorPane>

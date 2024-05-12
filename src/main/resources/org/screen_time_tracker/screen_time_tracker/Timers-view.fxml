@@ -22,7 +22,8 @@
                                styleClass="logo">
                         <Image url="@images/temp_logo.png"/>
                     </ImageView>
-                    <Button fx:id="Homebtn" onAction="#OnHomebtnClick" styleClass="nav-button" text="Home">
+                    <Button fx:id="homeBtn" onAction="#OnHomebtnClick" styleClass="homeBtn" text="Home" >
+
                         <font>
                             <Font name="System Bold" size="14.0"/>
                         </font>
@@ -82,58 +83,57 @@
                 </center>
             </BorderPane>
         </HBox>
+        <!-- Add Recommended Timers Section -->
+        <BorderPane layoutX="610.0" layoutY="220.0" prefHeight="645.0" prefWidth="370.0" styleClass="border-radius">
+            <top>
+                <VBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+                    <children>
+                        <Label textAlignment="CENTER" prefHeight="42.0" prefWidth="250.0" text="Add Recommended">
+                            <font>
+                                <Font size="25.0"/>
+                            </font>
+                        </Label>
+                        <Label textAlignment="CENTER" prefHeight="42.0" prefWidth="250.0" text="Timers / Alarms:">
+                            <font>
+                                <Font size="25.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+            </top>
+            <center>
+                <VBox prefHeight="645.0" prefWidth="335.0" BorderPane.alignment="CENTER">
+                    <Label fx:id="Recommendationbreaktext" styleClass="info-text" text="Recommended Break times:" />
+                    <Label fx:id="RecommendedEnd" styleClass="info-text" text="Recommended End:" />
+                    <Label styleClass="info-text" text="Recommended Complete difficult task time:" />
 
-        <VBox prefHeight="724.0" prefWidth="700.0" alignment="CENTER" spacing="20"
-              AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+                </VBox>
+            </center>
+        </BorderPane>
 
-            <!-- Add Recommended Timers Section -->
-            <BorderPane layoutX="571.0" layoutY="287.0" prefHeight="645.0" prefWidth="400.0" styleClass="border-radius">
-                <top>
-                    <VBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
-                        <children>
-                            <Label prefHeight="42.0" prefWidth="161.0" text="Add Recommended">
-                                <font>
-                                    <Font size="15.0"/>
-                                </font>
-                            </Label>
-                            <Label prefHeight="42.0" prefWidth="161.0" text="Timers:">
-                                <font>
-                                    <Font size="15.0"/>
-                                </font>
-                            </Label>
-                        </children>
-                    </VBox>
-                </top>
-                <center>
-                    <VBox prefHeight="645.0" prefWidth="335.0" BorderPane.alignment="CENTER">
-                        <Label styleClass="info-text" text="Recommended Break times:"/>
-                        <Label styleClass="info-text" text="Recommended End:"/>
-                        <Label styleClass="info-text" text="Recommended Complete difficult task time:"/>
-                    </VBox>
-                </center>
-            </BorderPane>
+        <!-- Your Timers Section -->
+        <BorderPane layoutX="219.0" layoutY="220.0" prefHeight="645.0" prefWidth="370.0" styleClass="border-radius">
+            <top>
+                <VBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+                    <Label textAlignment="CENTER" prefHeight="42.0" prefWidth="161.0" text="Your Timers:" fx:id="yourTimersLabel">
+                        <font>
+                            <Font size="25.0"/>
+                        </font>
+                    </Label>
+                    <HBox alignment="CENTER" spacing="10"> <!-- Add spacing between buttons -->
+                        <Button text="Add Timer +" styleClass="add-timer-button" onAction="#showAddTimerPopup"/>
+                        <Button text="Add Alarm +" styleClass="add-timer-button" onAction="#showAddAlarmPopup"/>
 
-            <!-- Your Timers Section -->
-            <BorderPane layoutX="219.0" layoutY="287.0" prefHeight="645.0" prefWidth="320.0" styleClass="border-radius">
-                <top>
-                    <VBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
-                        <children>
-                            <Label prefHeight="42.0" prefWidth="161.0" text="Your Timers:" fx:id="yourTimersLabel">
-                                <font>
-                                    <Font size="15.0"/>
-                                </font>
-                            </Label>
-                        </children>
-                    </VBox>
-                </top>
-                <center>
-                    <VBox fx:id="yourTimersBox" prefHeight="645.0" prefWidth="335.0" alignment="CENTER">
-                        <children>
-                            <Button text="Add Timer +" styleClass="add-timer-button" onAction="#showAddTimerPopup"/>
-                        </children>
-                    </VBox>
-                </center>
-            </BorderPane>
-        </VBox>
+                    </HBox>
+                </VBox>
+            </top>
+            <center>
+                <VBox fx:id="yourTimersBox" prefHeight="645.0" prefWidth="335.0" alignment="CENTER">
+
+                    <!-- Timers will appear here -->
+                </VBox>
+            </center>
+        </BorderPane>
+
     </AnchorPane>
 </VBox>

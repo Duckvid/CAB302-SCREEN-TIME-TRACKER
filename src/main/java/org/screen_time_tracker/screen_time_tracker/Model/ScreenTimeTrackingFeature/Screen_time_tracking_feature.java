@@ -3,19 +3,60 @@ package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeat
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.User32;
+import javafx.util.Pair;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Screen_time_tracking_feature {
+public class Screen_time_tracking_feature implements IScreenTimeTracking {
+
+    private boolean ISwindows;
+
+    private boolean isMac;
+
+    public Screen_time_tracking_feature(){
+        String OSname = System.getProperty("os.name").toLowerCase();
+        ISwindows = OSname.contains("win");
+        isMac = OSname.contains("mac");
+    }
     private Map<String, Long> windowTimeMap = new HashMap<>();
 
     private Map<String, Long> lastActiveTimeMap = new HashMap<>();
     private String LastActiveWindowTitle;
     private Long LastTimeChecked = System.currentTimeMillis();
 
-    
+
+    @Override
+    public String getActiveWindowTitle(){
+        if(isMac){
+            try{
+                String[] cmd = {"osascript", "-e", "tell application \"System Events\" to get the name of the first process whose frontmost is true"};
+                Process p = Runtime.getRuntime().exec(cmd);
+                BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                return input.readLine();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            final User32 user32 = User32.INSTANCE;
+            HWND hwnd = user32.GetForegroundWindow();
+
+            if(hwnd != null){
+                char[] windowtext = new char[512];
+                user32.GetWindowText(hwnd, windowtext, 512);
+                return Native.toString(windowtext).trim();
+            }
+
+        }
+        return null;
+    }
+
     // method to retrieve the current date and time using the Calendar class
+
+    @Override
     public String CurrentDateTime(){
         String NewTimeString = null;
 
@@ -33,32 +74,31 @@ public class Screen_time_tracking_feature {
         return NewTimeString;
     }
 
-    // this method is responsible for tracking the users screen time accross the different windows.
     // it will keep track of what window is currently in use, as well as how long that window is being used for
+    @Override
     public Map<String, Long> getWindowTimeMap(){
-        final User32 user32 = User32.INSTANCE;
-        HWND hwnd = user32.GetForegroundWindow();
-        char[] windowtext = new char[512];
-        user32.GetWindowText(hwnd, windowtext, 512);
-        String currentWindowTitle = Native.toString(windowtext).trim();
+        String currentWindowTitle = getActiveWindowTitle();
         long currentTime = System.currentTimeMillis();
-        
-        if(!currentWindowTitle.isEmpty()){
-            if(LastActiveWindowTitle == null || LastActiveWindowTitle.equals(currentWindowTitle)) {
-                updateWindowTime(currentWindowTitle, currentTime - LastTimeChecked);
-                }
 
-            else{
-                updateWindowTime(LastActiveWindowTitle, currentTime - LastTimeChecked);
+        if(currentWindowTitle != null && !currentWindowTitle.isEmpty()){
+            if(LastActiveWindowTitle == null || LastActiveWindowTitle.equals(currentWindowTitle)) {
+                if(LastActiveWindowTitle != null){
+                    updateWindowTime(LastActiveWindowTitle, currentTime - LastTimeChecked);
+                }
                 LastActiveWindowTitle = currentWindowTitle;
             }
 
-                LastTimeChecked = currentTime;
+            else{
+                updateWindowTime(LastActiveWindowTitle, currentTime - LastTimeChecked);
             }
-            return new HashMap<>(windowTimeMap);
-        }
 
-    private void updateWindowTime(String windowTitle, long timeSpent) {
+            LastTimeChecked = currentTime;
+        }
+        return new HashMap<>(windowTimeMap);
+    }
+
+    @Override
+    public void updateWindowTime(String windowTitle, long timeSpent) {
         Long totalSpent = windowTimeMap.getOrDefault(windowTitle, 0L) + timeSpent;
         windowTimeMap.put(windowTitle, totalSpent);
         lastActiveTimeMap.put(windowTitle, timeSpent); // track the last active time
