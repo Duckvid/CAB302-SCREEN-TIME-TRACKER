@@ -2,6 +2,10 @@ package org.screen_time_tracker.screen_time_tracker.Model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+/**
+ * This class is responsible for establishing a connection with the database
+ */
 public class SqliteConnection {
 
 
@@ -11,6 +15,11 @@ public class SqliteConnection {
 
     // This is establishing a connection to the database and creating an instance of this connection
     // If there is no database by that name it will create a new one
+
+    /**
+     * This is establishing a connection to the database and creating an instance of this connection
+     * If there is no database by that name it will create a new one
+     */
     private SqliteConnection(){
         String url = "jdbc:sqlite:ScreenTimeTracker.db";
         try {
@@ -20,6 +29,10 @@ public class SqliteConnection {
         }
     }
 
+    /**
+     *
+     * @return The instance of the current connection
+     */
     public static Connection getInstance() {
         if (instance == null) {
             new SqliteConnection();

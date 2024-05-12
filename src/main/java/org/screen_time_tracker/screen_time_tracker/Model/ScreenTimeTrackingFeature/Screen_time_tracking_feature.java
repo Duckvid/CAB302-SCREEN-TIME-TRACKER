@@ -10,12 +10,18 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * This class is responsible for tracking screen time data, currently active windows and current date
+ */
 public class Screen_time_tracking_feature implements IScreenTimeTracking {
 
     private boolean ISwindows;
 
     private boolean isMac;
 
+    /**
+     * Constructor for the screen time trackng feature class
+     */
     public Screen_time_tracking_feature(){
         String OSname = System.getProperty("os.name").toLowerCase();
         ISwindows = OSname.contains("win");

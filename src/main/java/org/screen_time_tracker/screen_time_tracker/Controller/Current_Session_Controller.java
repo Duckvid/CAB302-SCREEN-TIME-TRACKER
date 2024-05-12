@@ -32,6 +32,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Manages current session activities, including tracking and displaying user activity.
+ */
 public class Current_Session_Controller {
 
     @FXML
@@ -77,6 +80,10 @@ public class Current_Session_Controller {
     private HBox barChartContainer;
 
 
+    /**
+     * called to append the current session data to the bar chart to reflect and visualize current session data
+     * @throws SQLException if an SQL error occurs during data retrieval
+     */
     private void PopulateBarChart() throws SQLException {
         SQliteScreen_Timedata sQliteScreenTimedata = new SQliteScreen_Timedata();
         StackedBarChart<String, Number> chart = new StackedBarChart<>(new CategoryAxis(), new NumberAxis());
@@ -113,7 +120,12 @@ public class Current_Session_Controller {
     }
 
 
-
+    /**
+     * Called to append the start time of the current session to the UI.
+     * This method retrieves the start time from the session data and updates the UI accordingly.
+     *
+     * @throws SQLException if an SQL error occurs during data retrieval
+     */
     public void appendStartTIme() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
 
@@ -131,6 +143,12 @@ public class Current_Session_Controller {
 
     }
 
+    /**
+     * Called to append the end time of the current session to the UI.
+     * This method retrieves the end time from the session data and updates the UI accordingly.
+     *
+     * @throws SQLException if an SQL error occurs during data retrieval
+     */
     public void appendEndTIme() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
 
@@ -157,6 +175,13 @@ public class Current_Session_Controller {
         }
 
     }
+
+    /**
+     * Called to append the recommended break time of the current session to the UI.
+     * This method retrieves the break time by applying a mathematical procedure to the start time from the session data and updates the UI accordingly.
+     *
+     * @throws SQLException if an SQL error occurs during data retrieval
+     */
 
     public void appendRecommendedBreakTIme() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
@@ -185,6 +210,13 @@ public class Current_Session_Controller {
 
     }
 
+    /**
+     * Called to append the most activity duration of the current session to the UI.
+     * This method retrieves the most activity duration from the session data and updates the UI accordingly.
+     *
+     * @throws SQLException if an SQL error occurs during data retrieval
+     */
+
     public void appendMostActivity() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
 
@@ -204,6 +236,13 @@ public class Current_Session_Controller {
 
     }
 
+    /**
+     * Called to append the least activity of the current session to the UI.
+     * This method retrieves the least duration from the session data and updates the UI accordingly.
+     *
+     * @throws SQLException if an SQL error occurs during data retrieval
+     */
+
     public void appendLeastActivity() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
 
@@ -222,6 +261,13 @@ public class Current_Session_Controller {
         }
 
     }
+
+    /**
+     * Called to append the Comparison text fields of the current session to the UI.
+     * This method retrieves the current session and previous session durations from the session data and updates the UI accordingly.
+     *
+     * @throws SQLException if an SQL error occurs during data retrieval
+     */
 
     public void appendComparison() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
@@ -264,6 +310,13 @@ public class Current_Session_Controller {
 
     }
 
+    /**
+     * Initializes the controller. This method sets up necessary state and UI components
+     * for the current session view.
+     *
+     * @throws SQLException if an SQL error occurs during initialization
+     */
+
     @FXML
     public void initialize() throws SQLException {
         imgview.setTranslateY(-70); // This will move the logo 10 pixels up
@@ -281,6 +334,12 @@ public class Current_Session_Controller {
 
     }
 
+    /**
+     * Handles user logout events. This method is called when the logout button is clicked
+     * and is responsible for logging out the user and transitioning to the login screen.
+     *
+     * @throws IOException if an I/O error occurs when loading the login view
+     */
     @FXML
     protected void OnLogoutBtnClick() throws IOException{
         SQLiteUserDAO sqLiteUserDAO = new SQLiteUserDAO();
@@ -293,6 +352,13 @@ public class Current_Session_Controller {
         stage.setScene(scene);
 
     }
+
+    /**
+     * Handles navigation to the home page events. This method is called when the Home button is clicked
+     * and is responsible for navigation the user to the home page
+     * @throws IOException if an I/O error occurs when loading the Home page view
+     */
+    @FXML
     public void OnHomebtnClick() throws IOException {
         Stage stage = (Stage) Homebtn.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
@@ -301,6 +367,12 @@ public class Current_Session_Controller {
         stage.setResizable(false);
         stage.setScene(scene);
     }
+
+    /**
+     * Handles navigation to the home page events. This method is called when the Home button is clicked
+     * and is responsible for navigation the user to the home page
+     * @throws IOException if an I/O error occurs when loading the settings page view
+     */
     @FXML
     protected void OnSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsPage.getScene().getWindow();
@@ -311,7 +383,12 @@ public class Current_Session_Controller {
         stage.setScene(scene);
     }
 
-
+    /**
+     * Handles navigation to the recommendation page events. This method is called when the recommendation button is clicked
+     * and is responsible for navigation the user to the recommendation page
+     * @throws IOException if an I/O error occurs when loading the Recommendations page view
+     */
+    @FXML
     public void OnRecommendationsPageClick() throws IOException {
         Stage stage = (Stage) Recommendationspage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Recommendations-view.fxml"));
@@ -321,6 +398,12 @@ public class Current_Session_Controller {
         stage.setScene(scene);
     }
 
+    /**
+     * Handles navigation to the Timers page events. This method is called when the Timers button is clicked
+     * and is responsible for navigation of the user to the Timeers page
+     * @throws IOException if an I/O error occurs when loading the Timers page view
+     */
+    @FXML
     public void OnTimersButtonClick() throws IOException {
         Stage stage = (Stage) TimersPage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Timers-view.fxml"));
@@ -330,6 +413,12 @@ public class Current_Session_Controller {
         stage.setScene(scene);
     }
 
+    /**
+     * Handles navigation to the current session page events. This method is called when the current session button is clicked
+     * and is responsible for navigation of the user to the current session page
+     * @throws IOException if an I/O error occurs when loading the current session page view
+     */
+    @FXML
     public void OnCurrentSessionBtnClick() throws IOException {
         Stage stage = (Stage) CurrentSessionPage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("current_Session-view.fxml"));
@@ -340,6 +429,12 @@ public class Current_Session_Controller {
 
     }
 
+    /**
+     * Handles navigation to the contact page events. This method is called when the contact button is clicked
+     * and is responsible for navigation of the user to the contacts page
+     * @throws IOException if an I/O error occurs when loading the Contact page view
+     */
+    @FXML
     public void OnContactBtnClick() throws IOException {
         Stage stage = (Stage) Contactbtn.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Contact-view.fxml"));

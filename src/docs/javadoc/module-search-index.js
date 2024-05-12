@@ -1,0 +1,1 @@
+moduleSearchIndex = [{"l":"org.screen_time_tracker.screen_time_tracker"}];updateSearchResults();
