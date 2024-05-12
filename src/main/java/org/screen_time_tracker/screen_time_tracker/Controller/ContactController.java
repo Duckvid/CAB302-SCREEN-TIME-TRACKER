@@ -4,7 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
@@ -35,6 +37,12 @@ public class ContactController {
 
     @FXML
     private Button Logoutbtn;
+
+    @FXML
+    private TextField DescriptionField;
+
+    @FXML
+    private Button SendMessagebtn;
 
 
     @FXML
@@ -109,5 +117,21 @@ public class ContactController {
         scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Contact_style.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
+    }
+
+    @FXML
+    private void HandleDescriptionAction(ActionEvent event) throws IOException {
+        String description = DescriptionField.getText();
+        boolean filled = !description.isEmpty();
+        SendMessagebtn.setDisable(!filled);
+    }
+
+    public void OnSendMessagebtnClick() throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Message Received!");
+        alert.setHeaderText("Your message has been sent!");
+        alert.setContentText("Thank you for contacting us!");
+        alert.showAndWait();
+        DescriptionField.setText("");
     }
 }
