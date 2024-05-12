@@ -10,16 +10,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages Timers session activities, including enabling notifications and setting timers for how long a user should be active on a screen .
+ */
 public class SQLiteUserDAO implements IUsersDetails {
 
 
     private Connection connection;
 
+    /**
+     *
+     * @param connection used to establish a connection with the database
+     */
     public SQLiteUserDAO(Connection connection){
         this.connection = connection;
         createUsers_And_Screen_Time_Data_Table();
     }
 
+    /**
+     * Used later for  tests to create a mock database
+     */
     public SQLiteUserDAO(){
         this(SqliteConnection.getInstance());
     }
@@ -212,6 +222,14 @@ public class SQLiteUserDAO implements IUsersDetails {
     }
 
     // Simplify the login check
+
+
+    /**
+     *
+     * @param email of the current user to check if they are logged in
+     * @param password  of the current user to check if they are logged in
+     * @return true if the user is currently logged in
+     */
     public boolean IsUserLoggedIn(String email, String password){
         String query = "SELECT IsLoggedIn FROM Users WHERE email = ? AND password = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {

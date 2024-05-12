@@ -1,0 +1,6 @@
+module:org.screen_time_tracker.screen_time_tracker
+org.screen_time_tracker.screen_time_tracker
+org.screen_time_tracker.screen_time_tracker.Controller
+org.screen_time_tracker.screen_time_tracker.Model
+org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature
+org.screen_time_tracker.screen_time_tracker.Model.User
