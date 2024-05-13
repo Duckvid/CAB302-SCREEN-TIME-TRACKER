@@ -15,6 +15,9 @@ import java.sql.DriverManager;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
+import static java.lang.Math.random;
 
 public class Recommendations_controller {
     @FXML
@@ -44,6 +47,21 @@ public class Recommendations_controller {
 
     @FXML
     private Label medianendtimes;
+
+    @FXML
+    private Label mostactivitydetected;
+
+    @FXML
+    private Label leastactivitydetected;
+
+    @FXML
+    private Label medianactivitydetected;
+
+    @FXML
+    private Label breaktimess;
+
+    @FXML
+    private Label recommendend;
     @FXML
     public void initialize() {
         imgview.setTranslateY(-70);
@@ -52,6 +70,11 @@ public class Recommendations_controller {
         start_time.setText("Your Start Time: "+getStartTime());;
         medianstarttimes.setText("Your median start time: "+getmedianStartTime());
         medianendtimes.setText("Your median end time: "+ getmedianEndTime());
+        mostactivitydetected.setText("Most Activity Detected: "+'\n'+MostActivitydetected() );
+        leastactivitydetected.setText("Least Activity Detected: "+'\n'+LeastActivitydetected());
+        medianactivitydetected.setText("Median activity detected: "+'\n'+getmedianStartTime()+'-'+getmedianEndTime());
+        breaktimess.setText("Recommended Break times: "+ breaktime());
+        recommendend.setText("Recommend End times: "+ recommendendtime());
     }
 
     public void OnHomebtnClick() throws IOException {
@@ -183,5 +206,81 @@ public class Recommendations_controller {
         }
         return median_end_time;
 }
+      public String MostActivitydetected(){
+          String starttime = null;
+          String endtime=null;
+          try {
+              Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
+              Statement statement = connection.createStatement();
+              String query = "SELECT Start_Time, End_Time FROM ScreenTimeData WHERE Duration = (SELECT MAX(Duration) FROM ScreenTimeData)";
+              ResultSet resultSet = statement.executeQuery(query);
+              while (resultSet.next()) {
 
+                  starttime = resultSet.getString("Start_Time");
+                   endtime = resultSet.getString("End_Time");
+
+              }
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          return starttime+'-'+endtime;
+      }
+    public String LeastActivitydetected(){
+        String starttime = null;
+        String endtime=null;
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
+            Statement statement = connection.createStatement();
+            String query = "SELECT Start_Time, End_Time FROM ScreenTimeData WHERE Duration = (SELECT MIN(Duration) FROM ScreenTimeData)";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+
+                starttime = resultSet.getString("Start_Time");
+                endtime = resultSet.getString("End_Time");
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return starttime+'-'+endtime;
+    }
+    public String breaktime() {
+        ArrayList<String> Breaktimes = new ArrayList<String>();
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
+            Statement statement = connection.createStatement();
+            String query = "SELECT Start_Time, End_Time FROM ScreenTimeData ";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+
+                Breaktimes.add(resultSet.getString("Start_Time"));
+                Breaktimes.add(resultSet.getString("End_Time"));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String breaktime= Breaktimes.get((int) random()*Breaktimes.size());
+       return breaktime;
+    }
+    public String recommendendtime() {
+        ArrayList<String> endtimes = new ArrayList<String>();
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
+            Statement statement = connection.createStatement();
+            String query = "SELECT End_Time FROM ScreenTimeData ";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+
+                endtimes.add(resultSet.getString("End_Time"));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String endtimess= endtimes.get((int) random()*endtimes.size());
+        return endtimess;
+    }
 }
+
+
