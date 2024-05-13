@@ -1,9 +1,5 @@
 package org.screen_time_tracker.screen_time_tracker.Model.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  *
  */

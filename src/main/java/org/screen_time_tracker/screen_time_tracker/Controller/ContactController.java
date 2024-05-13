@@ -183,9 +183,7 @@ public class ContactController {
      */
     @FXML
     private void HandleDescriptionAction(ActionEvent event) throws IOException {
-        String description = DescriptionArea.getText();
-        boolean filled = !description.isEmpty();
-        SendMessagebtn.setDisable(!filled);
+        SendMessagebtn.setDisable(DescriptionArea.getLength() <= 5);
     }
 
     /**

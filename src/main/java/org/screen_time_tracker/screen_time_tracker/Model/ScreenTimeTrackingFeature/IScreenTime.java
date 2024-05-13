@@ -1,5 +1,4 @@
 package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
-import org.screen_time_tracker.screen_time_tracker.Model.User.IUsersDetails;
 
 import java.sql.SQLException;
 import java.util.List;
