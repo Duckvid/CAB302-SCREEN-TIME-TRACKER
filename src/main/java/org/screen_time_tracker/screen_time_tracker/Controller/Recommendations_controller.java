@@ -79,7 +79,7 @@ public class Recommendations_controller {
         medianactivitydetected.setText("Median activity detected: "+'\n'+getmedianStartTime()+'-'+getmedianEndTime());
         breaktimess.setText("Recommended Break times: "+ breaktime());
         recommendend.setText("Recommend End times: "+ recommendendtime());
-        recommendations.setText("Recommended Complete difficult task time: Try to do the task in the morning"+'\n'+ "and take a break in the afternoon,then try to finish it in the evening" +'\n'+ "and go to bed early ");
+        recommendations.setText("Recommended Complete difficult task time: Try to " +'\n'+"do the task in the morning"+'\n'+ "and take a break in the afternoon,then try to finish it in the evening" +'\n'+ "and go to bed early ");
     }
 
     public void OnHomebtnClick() throws IOException {
