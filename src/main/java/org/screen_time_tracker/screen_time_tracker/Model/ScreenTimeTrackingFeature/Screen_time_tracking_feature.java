@@ -3,7 +3,6 @@ package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeat
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.User32;
-import javafx.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

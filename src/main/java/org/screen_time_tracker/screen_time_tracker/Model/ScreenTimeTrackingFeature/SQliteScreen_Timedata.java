@@ -1,10 +1,8 @@
 package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
 
 
-import javafx.scene.chart.XYChart;
 import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -138,7 +136,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
         if (times.size() % 2 == 1) {
             return times.get(middle);
         } else {
-            // Assuming time format is HH:mm and we need to average two times
+            // Assume the time format is HH:mm and we need to average two times
             LocalTime time1 = LocalTime.parse(times.get(middle - 1), DateTimeFormatter.ofPattern("HH:mm"));
             LocalTime time2 = LocalTime.parse(times.get(middle), DateTimeFormatter.ofPattern("HH:mm"));
             long seconds = (time1.toSecondOfDay() + time2.toSecondOfDay()) / 2;
