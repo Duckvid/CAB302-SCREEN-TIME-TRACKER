@@ -183,7 +183,5 @@ public class Recommendations_controller {
         }
         return median_end_time;
 }
-      public String MostActivitydetected(){
 
-      }
 }
