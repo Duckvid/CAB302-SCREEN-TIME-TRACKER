@@ -73,10 +73,10 @@
             <top>
                 <VBox prefHeight="491.0" prefWidth="335.0" BorderPane.alignment="CENTER">
                     <HBox alignment="CENTER" spacing="20">
-                        <TextField fx:id="DescriptionField" prefHeight="451.0" prefWidth="750" promptText="Need help? Tell us here!" styleClass="input-field">
+                        <TextArea fx:id="DescriptionArea" prefHeight="451.0" prefWidth="750" promptText="Need help? Tell us here!" styleClass="input-field">
                             <font>
                                 <Font size="16.0" />
-                            </font></TextField>
+                            </font></TextArea>
                     </HBox>
                     <HBox alignment="CENTER" spacing="20">
                         <Button fx:id="SendMessagebtn" onAction="#OnSendMessagebtnClick" text="Send">

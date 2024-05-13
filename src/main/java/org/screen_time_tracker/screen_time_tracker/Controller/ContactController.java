@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -44,7 +45,7 @@ public class ContactController {
     private Button Logoutbtn;
 
     @FXML
-    private TextField DescriptionField;
+    private TextArea DescriptionArea;
 
     @FXML
     private Button SendMessagebtn;
@@ -183,7 +184,7 @@ public class ContactController {
      */
     @FXML
     private void HandleDescriptionAction(ActionEvent event) throws IOException {
-        String description = DescriptionField.getText();
+        String description = DescriptionArea.getText();
         boolean filled = !description.isEmpty();
         SendMessagebtn.setDisable(!filled);
     }
@@ -200,6 +201,6 @@ public class ContactController {
         alert.setHeaderText("Your message has been sent!");
         alert.setContentText("Thank you for contacting us!");
         alert.showAndWait();
-        DescriptionField.setText("");
+        DescriptionArea.setText("");
     }
 }
