@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
@@ -184,9 +183,7 @@ public class ContactController {
      */
     @FXML
     private void HandleDescriptionAction(ActionEvent event) throws IOException {
-        String description = DescriptionArea.getText();
-        boolean filled = !description.isEmpty();
-        SendMessagebtn.setDisable(!filled);
+        SendMessagebtn.setDisable(DescriptionArea.getLength() <= 5);
     }
 
     /**

@@ -11,7 +11,6 @@ import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * Controller for managing application settings.

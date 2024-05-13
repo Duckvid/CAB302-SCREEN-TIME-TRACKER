@@ -1,7 +1,5 @@
 package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
 
-import java.util.List;
-
 /**
  * Represents various screen time tracking fields and related attributes used within the application.
  * This class is crucial for managing and storing session details such as start time, end time, duration, and activity levels.

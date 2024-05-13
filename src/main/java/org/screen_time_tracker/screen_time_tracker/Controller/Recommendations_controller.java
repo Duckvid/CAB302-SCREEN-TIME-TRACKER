@@ -3,14 +3,9 @@ package org.screen_time_tracker.screen_time_tracker.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.StackedBarChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
@@ -20,16 +15,10 @@ import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Manages Recommendation session activities, including presenting data and providing detailed insights and suggestions surrounding users screen time data.
