@@ -175,6 +175,12 @@ public class ContactController {
         stage.setScene(scene);
     }
 
+    /**
+     * A test method that attempts to only allow the button to be activated when certain parameters
+     * are met.
+     * @param event when the specified task is achieved
+     * @throws IOException if an I/O error occurs when loading the response
+     */
     @FXML
     private void HandleDescriptionAction(ActionEvent event) throws IOException {
         String description = DescriptionField.getText();
@@ -182,6 +188,12 @@ public class ContactController {
         SendMessagebtn.setDisable(!filled);
     }
 
+    /**
+     * Handles the delivery of the messages. This method is called when the send button is clicked
+     * and is responsible for delivering a message for the user
+     * @throws IOException if an I/O error occurs when loading the response
+     */
+    @FXML
     public void OnSendMessagebtnClick() throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Message Received!");
