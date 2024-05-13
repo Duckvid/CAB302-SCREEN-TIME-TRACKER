@@ -40,9 +40,6 @@ public class Home_Controller {
     private Button insightbtn;
 
     @FXML
-    private Button recommendationsbtn;
-
-    @FXML
     private Button Homebtn;
 
     @FXML

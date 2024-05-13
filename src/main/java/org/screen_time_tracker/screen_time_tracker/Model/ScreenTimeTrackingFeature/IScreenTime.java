@@ -13,14 +13,14 @@ public interface IScreenTime {
     /**
      *
      * @return This method returns the start time in simple string Date format which correlates to the users most activity detected for the current day
-     * @throws SQLException if there a database access error
+     * @throws SQLException if there's a database access error
      */
     public String Most_Activity_Detected_StartTime() throws SQLException;
 
     /**
      *
      * @return This method returns the end time in simple string Date format which correlates to the users most activity detected for the current day
-     * @throws SQLException if there a database access error
+     * @throws SQLException if there's a database access error
      */
 
     public String Most_Activity_Detected_EndTime() throws SQLException;
@@ -29,7 +29,7 @@ public interface IScreenTime {
     /**
      *
      * @return This method returns the start time in simple string Date format which correlates to the users least activity detected for the current day
-     * @throws SQLException if there a database access error
+     * @throws SQLException if there's a database access error
      */
     public String Least_Activity_Detected_StartTime() throws SQLException;
 
@@ -117,7 +117,7 @@ public interface IScreenTime {
      *
      * @return This method simply returns the last inserted screen_time_ID to be used later in conjunction with another methdo
 <<<<<<< HEAD
-     * @throws SQLException if there a database access error
+     * @throws SQLException if there's a database access error
 =======
      * @throws SQLException
 >>>>>>> TimerPage
