@@ -1,23 +1,44 @@
 package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
 
-import java.util.List;
-
-// this class just houses some fields and methods that I think will be useful for implemting features in the other pages
-// particularly the recommendations page, current Session page and the home page
+/**
+ * Represents various screen time tracking fields and related attributes used within the application.
+ * This class is crucial for managing and storing session details such as start time, end time, duration, and activity levels.
+ */
 public class Screen_Time_fields {
-
+    /** The start time of a screen time session in a standard time format. */
     public String Start_time;
 
+    /** The end time of a screen time session in a standard time format. */
     private String End_time;
+
+
+    /** The duration of a screen time session in minutes. */
     private int Duration;
+
+    /** The unique identifier for the screen time session. */
     private int ScreenTimeID;
+
+    /** A recommended break time based on the duration of the session. */
     private String RecommendedBreak;
 
+    /** The detected time with the most activity during the session. */
     private String MostActivityDetected;
 
+    /** The detected time with the least activity during the session. */
     private String LeastActivityDetected;
+
+    /** The tracking date of the session. */
     private String DateOfTrack;
 
+    /**
+     * Constructs a new instance of Screen_Time_fields with specified parameters.
+     *
+     * @param screenTimeID The unique ID of the screen time.
+     * @param start_time The starting time of the screen usage.
+     * @param end_time The ending time of the screen usage.
+     * @param duration The total duration of screen usage.
+     * @param dateOfTrack The date when the screen time was tracked.
+     */
 
     public Screen_Time_fields(int screenTimeID, String start_time, String end_time, int duration, String dateOfTrack){
         ScreenTimeID = screenTimeID;
@@ -25,6 +46,7 @@ public class Screen_Time_fields {
         End_time = end_time;
         Duration = duration;
         DateOfTrack = dateOfTrack;
+
     }
 
     public String getDateOfTrack() {
@@ -42,56 +64,22 @@ public class Screen_Time_fields {
 
     public void setScreenTimeID(int screenTimeID) {
         ScreenTimeID = screenTimeID;
-    }
 
+    }
+    /** @return the session's duration. */
     public int getDuration() {
         return Duration;
     }
 
-    public void setDuration(int duration) {
-        Duration = duration;
-    }
-
-
+    /** @return the session's start time. */
     public String getStart_time() {
         return Start_time;
     }
-
-    public void setStart_time(String start_time) {
-        Start_time = start_time;
-    }
-
+    /** @return the session's end time. */
     public String getEnd_time() {
         return End_time;
     }
 
-    public void setEnd_time(String end_time) {
-        End_time = end_time;
-    }
-
-    public String getRecommendedBreak() {
-        return RecommendedBreak;
-    }
-
-    public void setRecommendedBreak(String recommendedBreak) {
-        RecommendedBreak = recommendedBreak;
-    }
-
-    public String getMostActivityDetected() {
-        return MostActivityDetected;
-    }
-
-    public void setMostActivityDetected(String mostActivityDetected) {
-        MostActivityDetected = mostActivityDetected;
-    }
-
-    public String getLeastActivityDetected() {
-        return LeastActivityDetected;
-    }
-
-    public void setLeastActivityDetected(String leastActivityDetected) {
-        LeastActivityDetected = leastActivityDetected;
-    }
 
 
 

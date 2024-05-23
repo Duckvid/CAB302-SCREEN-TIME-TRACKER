@@ -2,7 +2,6 @@ package org.screen_time_tracker.screen_time_tracker.Controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
+import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -31,9 +32,63 @@ import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeatu
 import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_Time_fields;
 import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
+import javafx.event.ActionEvent;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 
 
+/**
+ * Manages Timers session activities, including enabling notifications and setting timers for how long a user should be active on a screen .
+ */
 public class Timers_Controller {
+    @FXML
+    public void addBreakAlarm(ActionEvent actionEvent){
+        // Get the current time
+        LocalTime currentTime = LocalTime.now();
+
+        // Calculate the time 4 hours ahead
+        LocalTime alarmTime = currentTime.plusHours(3);
+
+        // Format the alarm time
+        String alarmTimeString = alarmTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+
+        // Add the alarm to your timers
+        addAlarmToYourTimers(alarmTime);
+
+        // Show confirmation message
+        showAlert("Break Alarm Set", "The break alarm is set for " + alarmTimeString);
+    }
+    @FXML
+    public void addEndAlarm(ActionEvent actionEvent){
+        // Get the current time
+        LocalTime currentTime = LocalTime.now();
+
+        // Calculate the time 6 hours ahead
+        LocalTime alarmTime = currentTime.plusHours(6);
+
+        // Format the alarm time
+        String alarmTimeString = alarmTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+
+        // Add the alarm to your timers
+        addAlarmToYourTimers(alarmTime);
+
+        // Show confirmation message
+        showAlert("End Alarm Set", "The end alarm is set for " + alarmTimeString);
+    }
+
+    public void addAlarmToYourTimers(LocalTime alarmTime){
+        // Calculate the seconds until the alarm
+        long secondsToAlarm = LocalTime.now().until(alarmTime, ChronoUnit.SECONDS);
+
+        // Create a TimerBox for the alarm
+        TimerBox timerBox = new TimerBox(secondsToAlarm, false);
+
+        // Add the new TimerBox to the VBox
+        yourTimersBox.getChildren().add(timerBox);
+    }
 
     @FXML
     private Button settingsPage;
@@ -48,7 +103,7 @@ public class Timers_Controller {
     private Button CurrentSessionPage;
 
     @FXML
-    private Button Homebtn;
+    private Button homeBtn;
 
     @FXML
     private Button Contactbtn;
@@ -57,6 +112,106 @@ public class Timers_Controller {
     private ImageView imgview;
 
     @FXML
+
+    private Button Logoutbtn;
+
+    /**
+     * Initializes the controller. This method sets up necessary state and UI components
+     * for the current session view.
+
+     */
+    @FXML
+    private void showAddAlarmPopup(){
+        // Add Alarm
+        Label alarmLabel = new Label("Alarm Label");
+        yourTimersList.add(alarmLabel);
+
+        Dialog<String[]> dialog = new Dialog<>();
+        dialog.setTitle("Set Alarm");
+
+        // Set the button types
+        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+        // Create and configure the ChoiceBox elements
+        ChoiceBox<String> hourChoiceBox = new ChoiceBox<>();
+        hourChoiceBox.getItems().addAll(getTimeString(24));
+        hourChoiceBox.setValue("0");
+
+        ChoiceBox<String> minuteChoiceBox = new ChoiceBox<>();
+        minuteChoiceBox.getItems().addAll(getTimeString(60));
+        minuteChoiceBox.setValue("0");
+
+        // Create the VBox and add the ChoiceBox elements to it
+        VBox vbox = new VBox();
+        vbox.setSpacing(10);
+        vbox.getChildren().addAll(
+                new Label("Set Alarm Time:"),
+                new Label("Hours:"), hourChoiceBox,
+                new Label("Minutes:"), minuteChoiceBox
+        );
+
+        // Set the content of the dialog pane
+        dialog.getDialogPane().setContent(vbox);
+
+        // Request focus on the hour ChoiceBox by default
+        hourChoiceBox.requestFocus();
+
+        // Convert the result to a timer name when the save button is clicked
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == saveButtonType) {
+                int hours = Integer.parseInt(hourChoiceBox.getValue());
+                int minutes = Integer.parseInt(minuteChoiceBox.getValue());
+                return new String[]{String.valueOf(hours), String.valueOf(minutes)};
+            }
+            return null;
+        });
+
+        // Show the dialog and wait for the user's response
+        dialog.showAndWait().ifPresent(time -> addAlarmTime(time));
+    }
+
+    private String[] getTimeString(int max){
+        String[] timeStrings = new String[max];
+        for (int i = 0; i < max; i++) {
+            timeStrings[i] = String.valueOf(i);
+        }
+        return timeStrings;
+    }
+
+    private void addAlarmTime(String[] time){
+        int hours = Integer.parseInt(time[0]);
+        int minutes = Integer.parseInt(time[1]);
+
+        // Get the current time
+        LocalTime currentTime = LocalTime.now();
+
+        // Calculate the difference between the alarm time and the current time
+        long secondsToAlarm = (hours - currentTime.getHour()) * 3600 +
+                (minutes - currentTime.getMinute()) * 60 -
+                currentTime.getSecond();
+
+        // If the calculated difference is negative, add 24 hours to it
+        if (secondsToAlarm < 0) {
+            secondsToAlarm += 24 * 3600;
+        }
+
+        // Format the alarm time
+        String alarmTime = String.format("%02d:%02d", hours, minutes);
+
+        // Create a new TimerBox for the alarm
+        TimerBox timerBox = new TimerBox(secondsToAlarm, false);
+
+        // Add the new TimerBox to the VBox
+        yourTimersBox.getChildren().add(timerBox);
+
+        // Check if the timer has reached 0
+        if (secondsToAlarm == 0) {
+            // Show notification
+            timerBox.showAlert("Your alarm went off!", "Your alarm with time " + alarmTime + " went off!");
+        }
+    }
+
     private VBox addTimerPopup;
 
     @FXML
@@ -78,6 +233,9 @@ public class Timers_Controller {
     private Timeline timeline;
     private long durationLeftInSeconds;
 
+
+
+
     private class TimerBox extends VBox {
         private Timeline timerTimeline;
         private long durationLeftInSeconds;
@@ -87,6 +245,8 @@ public class Timers_Controller {
 
         public TimerBox(long seconds, boolean isTimer) {
             this.isTimer = isTimer;
+            this.isPaused = false;
+
             // Convert seconds to hours, minutes, and seconds
             int h = (int) (seconds / 3600);
             int m = (int) ((seconds % 3600) / 60);
@@ -94,11 +254,15 @@ public class Timers_Controller {
 
             String duration = String.format("%02d:%02d:%02d", h, m, s);
 
-            timerLabel = new Label((isTimer ? "Timer: " : "Alarm: ") + duration);
+            timerLabel = new Label((isTimer ? "Timer: " : "Alarm: "));
             timerLabel.getStyleClass().add("timer-label");
 
-            Button editButton = new Button("Edit");
-            editButton.setOnAction(e -> editTimer());
+            Button primaryButton = new Button(isTimer ? "Pause" : "Edit");
+            if (isTimer) {
+                primaryButton.setOnAction(e -> pauseTimer());
+            } else {
+                primaryButton.setOnAction(e -> editTimer());
+            }
 
             Button deleteButton = new Button("Delete");
             deleteButton.setOnAction(e -> deleteTimer(this));
@@ -107,7 +271,7 @@ public class Timers_Controller {
             timerTopBox.getStyleClass().add("timer-box-top");
             timerTopBox.setPrefHeight(50);
 
-            HBox timerBottomBox = new HBox(editButton, deleteButton);
+            HBox timerBottomBox = new HBox(primaryButton, deleteButton);
             timerBottomBox.getStyleClass().add("timer-box-bottom");
             timerBottomBox.setPrefHeight(50);
 
@@ -230,7 +394,6 @@ public class Timers_Controller {
             alert.showAndWait();
         }
 
-
         private void updateAlarmLabel(String alarmTime) {
             timerLabel.setText("Alarm: " + alarmTime);
         }
@@ -253,59 +416,6 @@ public class Timers_Controller {
     }
 
 
-
-
-
-    @FXML
-    private void showAddAlarmPopup() {
-        // Add Alarm
-        Label alarmLabel = new Label("Alarm Label");
-        yourTimersList.add(alarmLabel);
-
-        Dialog<String[]> dialog = new Dialog<>();
-        dialog.setTitle("Set Alarm");
-
-        // Set the button types
-        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
-
-        // Create and configure the ChoiceBox elements
-        ChoiceBox<String> hourChoiceBox = new ChoiceBox<>();
-        hourChoiceBox.getItems().addAll(getTimeString(24));
-        hourChoiceBox.setValue("0");
-
-        ChoiceBox<String> minuteChoiceBox = new ChoiceBox<>();
-        minuteChoiceBox.getItems().addAll(getTimeString(60));
-        minuteChoiceBox.setValue("0");
-
-        // Create the VBox and add the ChoiceBox elements to it
-        VBox vbox = new VBox();
-        vbox.setSpacing(10);
-        vbox.getChildren().addAll(
-                new Label("Set Alarm Time:"),
-                new Label("Hours:"), hourChoiceBox,
-                new Label("Minutes:"), minuteChoiceBox
-        );
-
-        // Set the content of the dialog pane
-        dialog.getDialogPane().setContent(vbox);
-
-        // Request focus on the hour ChoiceBox by default
-        hourChoiceBox.requestFocus();
-
-        // Convert the result to a timer name when the save button is clicked
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == saveButtonType) {
-                int hours = Integer.parseInt(hourChoiceBox.getValue());
-                int minutes = Integer.parseInt(minuteChoiceBox.getValue());
-                return new String[]{String.valueOf(hours), String.valueOf(minutes)};
-            }
-            return null;
-        });
-
-        // Show the dialog and wait for the user's response
-        dialog.showAndWait().ifPresent(data -> addAlarmToYourTimers(data));
-    }
 
     @FXML
     private void editTimer(TimerBox timerBox) {
@@ -480,6 +590,39 @@ public class Timers_Controller {
 
     @FXML
     private Label RecommendedEnd;
+    @FXML
+    private Button addBreakAlarmBtn;
+
+    @FXML
+    private Button addEndAlarmBtn;
+
+    // This method will be called when the "Add Alarm +" button for break time is clicked
+    @FXML
+    public void addBreakAlarm() {
+        String breakTime = Recommendationbreaktext.getText();
+        if (breakTime != null && !breakTime.isEmpty()) {
+            showAlert("Alarm Set", "Break time alarm set for: " + breakTime);
+        }
+    }
+
+    // This method will be called when the "Add Alarm +" button for end time is clicked
+    @FXML
+    private void addEndAlarm() {
+        String endTime = RecommendedEnd.getText();
+        if (endTime != null && !endTime.isEmpty()) {
+            showAlert("Alarm Set", "End time alarm set for: " + endTime);
+        }
+    }
+
+    // Utility method to show an alert dialog
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     public void appendEndTIme() throws SQLException {
         User currentUser = Session_Manager.getCurrentUser();
@@ -536,14 +679,6 @@ public class Timers_Controller {
 
 
 
-    private String[] getTimeString(int limit) {
-        String[] timeString = new String[limit];
-        for (int i = 0; i < limit; i++) {
-            timeString[i] = String.valueOf(i);
-        }
-        return timeString;
-    }
-
     @FXML
     private void pauseTimer(TimerBox timerBox) {
         if (timerBox != null) {
@@ -575,15 +710,44 @@ public class Timers_Controller {
 
     }
 
+    /**
+     * Handles user logout events. This method is called when the logout button is clicked
+     * and is responsible for logging out the user and transitioning to the login screen.
+     *
+     * @throws IOException if an I/O error occurs when loading the login view
+     */
+    @FXML
+    protected void OnLogoutBtnClick() throws IOException{
+        SQLiteUserDAO sqLiteUserDAO = new SQLiteUserDAO();
+        sqLiteUserDAO.Logout();
+        Stage stage = (Stage) Logoutbtn.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Login-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Login_Styles.css").toExternalForm());
+        stage.setResizable(false);
+        stage.setScene(scene);
+
+    }
+
+    /**
+     * Handles navigation to the home page events. This method is called when the Home button is clicked
+     * and is responsible for navigation the user to the home page
+     * @throws IOException if an I/O error occurs when loading the Home page view
+     */
+    @FXML
     public void OnHomebtnClick() throws IOException {
-        Stage stage = (Stage) Homebtn.getScene().getWindow();
+        Stage stage = (Stage) homeBtn.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
     }
-
+    /**
+     * Handles navigation to the home page events. This method is called when the Home button is clicked
+     * and is responsible for navigation the user to the home page
+     * @throws IOException if an I/O error occurs when loading the settings page view
+     */
     @FXML
     protected void OnSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsPage.getScene().getWindow();
@@ -594,6 +758,13 @@ public class Timers_Controller {
         stage.setScene(scene);
     }
 
+    /**
+     * Handles navigation to the recommendation page events. This method is called when the recommendation button is clicked
+     * and is responsible for navigation the user to the recommendation page
+     * @throws IOException if an I/O error occurs when loading the Recommendations page view
+     */
+    @FXML
+
     public void OnRecommendationsPageClick() throws IOException {
         Stage stage = (Stage) Recommendationspage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Recommendations-view.fxml"));
@@ -603,6 +774,12 @@ public class Timers_Controller {
         stage.setScene(scene);
     }
 
+    /**
+     * Handles navigation to the Timers page events. This method is called when the Timers button is clicked
+     * and is responsible for navigation of the user to the Timeers page
+     * @throws IOException if an I/O error occurs when loading the Timers page view
+     */
+    @FXML
     public void OnTimersButtonClick() throws IOException {
         Stage stage = (Stage) TimersPage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Timers-view.fxml"));
@@ -612,6 +789,12 @@ public class Timers_Controller {
         stage.setScene(scene);
     }
 
+    /**
+     * Handles navigation to the current session page events. This method is called when the current session button is clicked
+     * and is responsible for navigation of the user to the current session page
+     * @throws IOException if an I/O error occurs when loading the current session page view
+     */
+    @FXML
     public void OnCurrentSessionBtnClick() throws IOException {
         Stage stage = (Stage) CurrentSessionPage.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("current_Session-view.fxml"));
@@ -621,6 +804,12 @@ public class Timers_Controller {
         stage.setScene(scene);
     }
 
+    /**
+     * Handles navigation to the contact page events. This method is called when the contact button is clicked
+     * and is responsible for navigation of the user to the contacts page
+     * @throws IOException if an I/O error occurs when loading the Contact page view
+     */
+    @FXML
     public void OnContactBtnClick() throws IOException {
         Stage stage = (Stage) Contactbtn.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Contact-view.fxml"));
@@ -630,6 +819,4 @@ public class Timers_Controller {
         stage.setScene(scene);
     }
 
-    public void HandleLoginAction(ActionEvent actionEvent) {
-    }
 }

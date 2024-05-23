@@ -14,34 +14,60 @@ import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 import java.io.IOException;
 
+/**
+ * Manages Registration activities, sending users data to the db for persistency and navigation to the login view.
+ */
 public class MainController {
+    @FXML
 
-        @FXML
-        private TextField NameField;
+    private TextField NameField;
 
-        @FXML
-        private TextField EmailField;
+    @FXML
 
-        @FXML
-        private TextField PasswordField;
-
-        @FXML
-        private TextField PhoneField;
-
-        @FXML
-        private Button signupbtn;
-
-        @FXML
-        private Button Login;
+    private TextField EmailField;
 
         @FXML
         private Button Facebook;
 
+
          @FXML private Button Google;
 
-         @FXML private Button backbtn;
 
-         @FXML private CheckBox checkbtn;
+    @FXML
+
+    private TextField PasswordField;
+
+
+    @FXML
+
+    private TextField PhoneField;
+
+
+    @FXML
+
+    private Button signupbtn;
+
+
+    @FXML
+
+    private Button Login;
+
+
+
+    @FXML
+    private Button backbtn;
+
+
+    @FXML
+    private CheckBox checkbtn;
+
+
+    /**
+     * Handles checkbox actions to enable or disable functionality based on user agreement.
+     */
+
+
+
     public void onAgreeCheckBoxClick() {
         boolean accepted = checkbtn.isSelected();
         signupbtn.setDisable(!accepted);
@@ -115,6 +141,11 @@ public class MainController {
 
             }
         }
+    /**
+     * Handles user login upon button click.
+     *
+     * @throws IOException if login process encounters I/O errors.
+     */
 
         @FXML
         protected void OnLoginButtonClick() throws IOException{
@@ -125,6 +156,13 @@ public class MainController {
             stage.setResizable(false);
             stage.setScene(scene);
         }
+
+        /**
+         * Initiates login through Facebook.
+         *
+         * @throws IOException if the Facebook login process encounters I/O errors.
+         */
+
         @FXML
         protected void OnFacebookButton() throws IOException{
             Stage stage = (Stage) Facebook.getScene().getWindow();
@@ -134,6 +172,14 @@ public class MainController {
             stage.setResizable(false);
             stage.setScene(scene);
         }
+
+
+    /**
+     * Initiates login through Google.
+     *
+     * @throws IOException if the Google login process encounters I/O errors.
+     */
+
         @FXML
         protected void OnGoogleButton() throws IOException{
             Stage stage = (Stage) Google.getScene().getWindow();
@@ -143,6 +189,14 @@ public class MainController {
             stage.setResizable(false);
             stage.setScene(scene);
         }
+
+
+    /**
+     * Processes the back navigation within the application.
+     *
+     * @throws IOException if navigation fails due to I/O errors.
+     */
+
         @FXML
         protected void OnBack() throws IOException{
             Stage stage = (Stage) backbtn.getScene().getWindow();

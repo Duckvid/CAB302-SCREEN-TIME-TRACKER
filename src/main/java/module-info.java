@@ -1,9 +1,18 @@
+/**
+ * This module defines the structure and dependencies for the Screen Time Tracker application.
+ * It includes necessary JavaFX components for the user interface, JNA for native access,
+ * and JDBC for database interactions. This module configuration ensures that all parts
+ * of the application are properly exposed and available to the JavaFX runtime, as well
+ * as to the testing frameworks used.
+ */
+
 module org.screen_time_tracker.screen_time_tracker {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.sun.jna;
     requires com.sun.jna.platform;
     requires java.sql;
+    requires java.desktop;
 
 
     opens org.screen_time_tracker.screen_time_tracker to javafx.fxml;

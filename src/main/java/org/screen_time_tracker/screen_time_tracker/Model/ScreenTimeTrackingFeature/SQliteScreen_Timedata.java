@@ -1,10 +1,8 @@
 package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
 
 
-import javafx.scene.chart.XYChart;
 import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,8 +11,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Date;
 
+
+/**
+ * This class handles dtabase operations related to screen time data
+ * Implementing methods defined in the IScreenTime interface
+ */
+
+
 public class SQliteScreen_Timedata implements IScreenTime{
     private final Connection connection = DriverManager.getConnection("jdbc:sqlite:ScreenTimeTracker.db");
+
 
     public SQliteScreen_Timedata() throws SQLException {
 
@@ -24,6 +30,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
     // this is a method to insert screen time data to the screen timetable
 
     // it stores data for only the user logged in which is useful for later methods
+
     @Override
     public void InsertScreenTimeData(String startTime, String Date, int UserID, String windowTitle){
         String query = "INSERT INTO ScreenTimeData (Start_Time, End_Time, Duration, Date_Of_Track, Userid, WindowTitle) VALUES (?, '', 0, ?, ?, ?)";
@@ -64,6 +71,14 @@ public class SQliteScreen_Timedata implements IScreenTime{
         }
         return durationsByHour;
     }
+
+
+    /**
+     * Converts a 12-hour formatted time string to 24-hour format.
+     *
+     * @param twelveHourTime The time string in 12-hour format (e.g., "02:00 PM").
+     * @return The converted time string in 24-hour format (e.g., "14:00").
+     */
 
     public static String convertTo24HourFormat(String twelveHourTime) {
         // Define the 12-hour format
@@ -109,23 +124,33 @@ public class SQliteScreen_Timedata implements IScreenTime{
 
     }
 
+    /**
+     * Calculates the median time from a list of time strings.
+     *
+     * @param times A list of time strings.
+     * @return The median time as a string.
+     */
     public String calculateMedianTime(List<String> times) {
-        // Sort times to find the median
         Collections.sort(times);
         int middle = times.size() / 2;
-
-        // Formatter that matches your time format including AM/PM
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
-
         if (times.size() % 2 == 1) {
-            return LocalTime.parse(times.get(middle), formatter).toString();
+            return times.get(middle);
         } else {
-            LocalTime time1 = LocalTime.parse(times.get(middle - 1), formatter);
-            LocalTime time2 = LocalTime.parse(times.get(middle), formatter);
+            // Assume the time format is HH:mm and we need to average two times
+            LocalTime time1 = LocalTime.parse(times.get(middle - 1), DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime time2 = LocalTime.parse(times.get(middle), DateTimeFormatter.ofPattern("HH:mm"));
             long seconds = (time1.toSecondOfDay() + time2.toSecondOfDay()) / 2;
             return LocalTime.ofSecondOfDay(seconds).toString();
         }
     }
+
+    /**
+     * Retrieves the median start time for a specific user.
+     *
+     * @param userId The user ID for which to retrieve the median start time.
+     * @return The median start time as a string.
+     * @throws SQLException if a database access error occurs.
+     */
 
     public String getMedianStartTime(int userId) throws SQLException {
         List<String> startTimes = new ArrayList<>();
@@ -139,6 +164,15 @@ public class SQliteScreen_Timedata implements IScreenTime{
         }
         return calculateMedianTime(startTimes);
     }
+
+
+    /**
+     * Retrieves the median end time for a specific user.
+     *
+     * @param userId The user ID for which to retrieve the median end time.
+     * @return The median end time as a string.
+     * @throws SQLException if a database access error occurs.
+     */
 
     public String getMedianEndTime(int userId) throws SQLException {
         List<String> endTimes = new ArrayList<>();
@@ -260,16 +294,7 @@ public class SQliteScreen_Timedata implements IScreenTime{
         return screenTimeFields;
 
     }
-    
-    @Override
-    public void Calculate_Median_Start_time() {
 
-    }
-
-    @Override
-    public void Calculate_Median_End_time() {
-
-    }
 
 
     @Override

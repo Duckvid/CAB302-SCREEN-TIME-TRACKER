@@ -73,7 +73,7 @@
         </HBox>
 
 
-        <HBox layoutX="219.0" layoutY="234.0" prefHeight="724.0" prefWidth="399.0" styleClass="barchartContainer" alignment="CENTER">
+        <HBox fx:id="barChartContainer" layoutX="219.0" layoutY="234.0" prefHeight="724.0" prefWidth="399.0" styleClass="barchartContainer" alignment="CENTER">
             <children>
                 <StackedBarChart prefHeight="698.0" prefWidth="374.0">
                     <xAxis>
@@ -120,7 +120,7 @@
          <bottom>
             <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
                <children>
-                  <Button fx:id="recommendationsbtn"  onAction="#OnRecommendationsbtnClick" mnemonicParsing="false" text="Take a look -&gt;" textAlignment="CENTER" textFill="#0b7dbd" underline="true"  styleClass="takelookbtn" alignment="CENTER"/>
+                  <Button fx:id="recommendationsbtn"  onAction="#OnRecommendationsPageClick" mnemonicParsing="false" text="Take a look -&gt;" textAlignment="CENTER" textFill="#0b7dbd" underline="true"  styleClass="takelookbtn" alignment="CENTER"/>
                </children>
             </HBox>
          </bottom>

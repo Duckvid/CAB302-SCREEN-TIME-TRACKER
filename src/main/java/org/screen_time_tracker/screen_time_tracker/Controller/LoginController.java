@@ -8,11 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQliteScreen_Timedata;
-import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_Time_fields;
 import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_time_tracking_feature;
 import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
@@ -22,6 +20,9 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Manages Login page activities, signing in to an account using persistent data and navigation to the home page
+ */
 public class LoginController {
     @FXML
     private Button Signup;
@@ -114,6 +115,12 @@ public class LoginController {
         screenTimethread.start();
     }
 
+    /**
+     * Handles the event triggered by clicking the 'Forgot Password' button.
+     * This method will prompt the user to enter their email or phone number to recover their password.
+     *
+     * @throws IOException if an I/O error occurs when handling the click event.
+     */
 
     @FXML
     protected void OnForgotPasswordbtnClick() throws IOException{
@@ -153,7 +160,12 @@ public class LoginController {
         });
     }
 
-
+    /**
+     * Handles the event triggered by clicking the 'Sign Up' button.
+     * This method navigates the user to the sign-up view.
+     *
+     * @throws IOException if an I/O error occurs when handling the click event.
+     */
     @FXML
     protected void OnSignupButtonClick() throws IOException {
         Stage stage = (Stage) Signup.getScene().getWindow();

@@ -12,6 +12,7 @@ public class AddTimerPopupController {
         return timerNameField.getText();
     }
 
+    @FXML
     public void saveTimer() {
         String timerName = getTimerName();
         // Save the timer here

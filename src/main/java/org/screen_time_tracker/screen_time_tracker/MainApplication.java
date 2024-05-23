@@ -6,11 +6,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+/**
+ * Main application class that launches the user interface for the screen time tracker.
+ */
 public class MainApplication extends Application {
+
+    /**
+     * The width of the main application window
+     */
     public static final int WIDTH = 1000;
+
+    /**
+     *  The Height of the main application window
+     */
     public static final int HEIGHT = 1000;
 
+    /**
+     * The Title of the main application window
+     */
     public static final String TITLE = "Screen Time Tracker";
     @Override
     public void start(Stage stage) throws IOException {
@@ -22,7 +35,11 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * Main method to launch the application.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         launch();
     }

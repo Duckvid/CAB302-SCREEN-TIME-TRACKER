@@ -3,137 +3,88 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Timers_Style.css"
-      xmlns="http://javafx.com/javafx/17.0.2-ea"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.Timers_Controller">
-    <AnchorPane prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Timers_Style.css"
-                xmlns="http://javafx.com/javafx/17.0.2-ea"
-                xmlns:fx="http://javafx.com/fxml/1">
-
-        <BorderPane prefHeight="1000.0" prefWidth="200.0" styleClass="border-left"
-                    AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+<VBox prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles/Timers_Style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.screen_time_tracker.screen_time_tracker.Controller.Timers_Controller">
+    <AnchorPane prefHeight="1000.0" prefWidth="1000.0">
+        <BorderPane prefHeight="1000.0" prefWidth="200.0" styleClass="border-left">
             <left>
                 <VBox spacing="10" styleClass="nav-bar">
-                    <ImageView fx:id="imgview" fitHeight="100" fitWidth="200" preserveRatio="true"
-                               styleClass="logo">
-                        <Image url="@images/temp_logo.png"/>
+                    <ImageView fx:id="imgview" fitHeight="100" fitWidth="200" preserveRatio="true" styleClass="logo">
+                        <Image url="@images/temp_logo.png" />
                     </ImageView>
-                    <Button fx:id="homeBtn" onAction="#OnHomebtnClick" styleClass="homeBtn" text="Home" >
-
-                        <font>
-                            <Font name="System Bold" size="14.0"/>
-                        </font>
-                    </Button>
-                    <Button fx:id="CurrentSessionPage" onAction="#OnCurrentSessionBtnClick" styleClass="nav-button"
-                            text="Current Session">
-                        <font>
-                            <Font name="System Bold" size="14.0"/>
-                        </font>
-                    </Button>
-                    <Button styleClass="nav-button" text="Old Sessions">
-                        <font>
-                            <Font name="System Bold" size="14.0"/>
-                        </font>
-                    </Button>
-                    <Button fx:id="Recommendationspage" onAction="#OnRecommendationsPageClick"
-                            styleClass="nav-button" text="Recommended">
-                        <font>
-                            <Font name="System Bold" size="14.0"/>
-                        </font>
-                    </Button>
-                    <Button styleClass="nav-button" text="Goals">
-                        <font>
-                            <Font name="System Bold" size="14.0"/>
-                        </font>
-                    </Button>
-                    <Button fx:id="TimersPage" onAction="#OnTimersButtonClick" styleClass="nav-button" text="Timers">
-                        <font>
-                            <Font name="System Bold" size="14.0"/>
-                        </font>
-                    </Button>
-                    <Button styleClass="nav-button" text="Your Data">
-                        <font>
-                            <Font name="System Bold" size="14.0"/>
-                        </font>
-                    </Button>
-                    <Button fx:id="settingsPage" onAction="#OnSettingsButtonClick" styleClass="nav-button"
-                            text="Settings">
-                        <font>
-                            <Font name="System Bold" size="14.0"/>
-                        </font>
-                    </Button>
+                    <Button fx:id="homeBtn" onAction="#OnHomebtnClick" styleClass="nav-button" text="Home" />
+                    <Button fx:id="CurrentSessionPage" onAction="#OnCurrentSessionBtnClick" styleClass="nav-button" text="Current Session" />
+                    <Button styleClass="nav-button" text="Old Sessions" />
+                    <Button fx:id="Recommendationspage" onAction="#OnRecommendationsPageClick" styleClass="nav-button" text="Recommended" />
+                    <Button styleClass="nav-button" text="Goals" />
+                    <Button fx:id="TimersPage" onAction="#OnTimersButtonClick" styleClass="nav-button" text="Timers" />
+                    <Button styleClass="nav-button" text="Your Data" />
+                    <Button fx:id="settingsPage" onAction="#OnSettingsButtonClick" styleClass="nav-button" text="Settings" />
+                    <Button fx:id="Contactbtn" onAction="#OnContactBtnClick" styleClass="nav-button" text="Contact" />
+                    <Button fx:id="Logoutbtn" onAction="#OnLogoutBtnClick" styleClass="nav-button" text="Logout" />
                 </VBox>
             </left>
         </BorderPane>
 
-        <HBox prefHeight="200.0" prefWidth="1000.0" styleClass="innerbox" AnchorPane.leftAnchor="200"
-              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+        <HBox prefHeight="200.0" prefWidth="1000.0" styleClass="innerbox" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
             <BorderPane prefHeight="200.0" prefWidth="800.0" styleClass="border-top">
                 <center>
-                    <Label alignment="CENTER" prefHeight="74.0" prefWidth="502.0" text="Timers"
-                           textAlignment="CENTER" BorderPane.alignment="CENTER">
+                    <Label alignment="CENTER" prefHeight="74.0" prefWidth="502.0" text="Timers" textAlignment="CENTER" BorderPane.alignment="CENTER">
                         <font>
-                            <Font name="System Bold" size="51.0"/>
+                            <Font name="System Bold" size="51.0" />
                         </font>
                     </Label>
                 </center>
             </BorderPane>
         </HBox>
-        <!-- Add Recommended Timers Section -->
+
         <BorderPane layoutX="610.0" layoutY="220.0" prefHeight="645.0" prefWidth="370.0" styleClass="border-radius">
             <top>
-                <VBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
-                    <children>
-                        <Label textAlignment="CENTER" prefHeight="42.0" prefWidth="250.0" text="Add Recommended">
-                            <font>
-                                <Font size="25.0"/>
-                            </font>
-                        </Label>
-                        <Label textAlignment="CENTER" prefHeight="42.0" prefWidth="250.0" text="Timers / Alarms:">
-                            <font>
-                                <Font size="25.0"/>
-                            </font>
-                        </Label>
-                    </children>
+                <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Label textAlignment="CENTER" prefHeight="42.0" prefWidth="250.0" text="Add Recommended">
+                        <font>
+                            <Font size="25.0"/>
+                        </font>
+                    </Label>
+                    <Label textAlignment="CENTER" prefHeight="42.0" prefWidth="250.0" text="Timers / Alarms:">
+                        <font>
+                            <Font size="25.0"/>
+                        </font>
+                    </Label>
                 </VBox>
             </top>
             <center>
-                <VBox prefHeight="645.0" prefWidth="335.0" BorderPane.alignment="CENTER">
+                <VBox prefHeight="645.0" prefWidth="335.0">
                     <Label fx:id="Recommendationbreaktext" styleClass="info-text" text="Recommended Break times:" />
+                    <VBox alignment="CENTER">
+                        <Button fx:id="addBreakAlarmBtn" onAction="#addBreakAlarm" styleClass="add-recom-button" text="Add Break Alarm +" />
+                    </VBox>
                     <Label fx:id="RecommendedEnd" styleClass="info-text" text="Recommended End:" />
-                    <Label styleClass="info-text" text="Recommended Complete difficult task time:" />
-
+                    <VBox alignment="CENTER">
+                        <Button fx:id="addEndAlarmBtn" onAction="#addEndAlarm" styleClass="add-recom-button" text="Add End Alarm +" />
+                    </VBox>
                 </VBox>
             </center>
         </BorderPane>
 
-        <!-- Your Timers Section -->
         <BorderPane layoutX="219.0" layoutY="220.0" prefHeight="645.0" prefWidth="370.0" styleClass="border-radius">
             <top>
-                <VBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+                <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                     <Label textAlignment="CENTER" prefHeight="42.0" prefWidth="161.0" text="Your Timers:" fx:id="yourTimersLabel">
                         <font>
                             <Font size="25.0"/>
                         </font>
                     </Label>
-                    <HBox alignment="CENTER" spacing="10"> <!-- Add spacing between buttons -->
-                        <Button text="Add Timer +" styleClass="add-timer-button" onAction="#showAddTimerPopup"/>
-                        <Button text="Add Alarm +" styleClass="add-timer-button" onAction="#showAddAlarmPopup"/>
-
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button onAction="#showAddTimerPopup" styleClass="add-timer-button" text="Add Timer +" />
+                        <Button onAction="#showAddAlarmPopup" styleClass="add-timer-button" text="Add Alarm +" />
                     </HBox>
                 </VBox>
             </top>
             <center>
-                <VBox fx:id="yourTimersBox" prefHeight="645.0" prefWidth="335.0" alignment="CENTER">
-
-                    <!-- Timers will appear here -->
-                </VBox>
+                <VBox fx:id="yourTimersBox" alignment="CENTER" prefHeight="645.0" prefWidth="335.0" />
             </center>
         </BorderPane>
-
     </AnchorPane>
 </VBox>

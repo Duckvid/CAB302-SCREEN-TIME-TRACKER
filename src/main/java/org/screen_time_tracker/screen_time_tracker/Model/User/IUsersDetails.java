@@ -25,11 +25,13 @@ public interface IUsersDetails {
      * Allows the user to sign in to their existing account using their details
      * @param email: The email used to sign in
      * @param password: The password used to sign in
+     * @return the User object if login is successful; null otherwise
      */
     public User Login(String email, String password);
 
     /**
      * returns all the users contained within the users table
+     * @return a list of User objects
      */
 
     public List<User> getAllUsers();
@@ -40,6 +42,7 @@ public interface IUsersDetails {
      * contains 1 special character
      * contains 1 captical
      * contains at least one number
+     * @return true if the password meets the security requirements, false otherwise
      * @param Password: The password to be verified
      */
     public boolean IsPasswordCorrect(String Password);
@@ -47,14 +50,15 @@ public interface IUsersDetails {
     /**
      * This method verify the users email making sure it contains a @ symbol a .com/.au or similar to verify the details are valid
      * @param email: The email to be verified
+     * @return true if the email format is correct, false otherwise
      */
     public boolean IsEmailCorrect(String email);
 
 
     /**
      *
-     * @param user
-     * @returns true if the user exists in the db
+     * @param user of the current session
+     * @return true if the user exists in the db
      */
     public boolean UserExists(User user);
 
@@ -70,7 +74,11 @@ public interface IUsersDetails {
 
     /**
      *
+<<<<<<< HEAD
+     * @param name of the current user
+=======
      * @param name
+>>>>>>> TimerPage
      * @return This method returns true if the provided name is valid as according to the requirements in the code
      */
 
@@ -78,7 +86,11 @@ public interface IUsersDetails {
 
     /**
      *
+<<<<<<< HEAD
+     * @param Phonenumber of the current user
+=======
      * @param Phonenumber
+>>>>>>> TimerPage
      * @return return This method returns true if the provided phonenumber is valid as according to the requirements in the code
      */
 

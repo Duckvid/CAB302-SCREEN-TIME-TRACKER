@@ -8,6 +8,6 @@
       xmlns:fx="http://javafx.com/fxml/1">
     <Label text="Add Timer" styleClass="popup-title"/>
     <TextField fx:id="timerNameField" promptText="Enter Timer Name"/>
-    <Button text="Save" styleClass="popup-button" onAction="#saveTimer"/>
-    <Button text="Cancel" styleClass="popup-button" onAction="#hideAddTimerPopup"/>
+    <!--<Button text="Save" styleClass="popup-button" onAction="#saveTimer"/> -->
+   <!-- <Button text="Cancel" styleClass="popup-button" onAction="#hideAddTimerPopup"/> -->
 </VBox>
