@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -58,54 +57,105 @@
                         </font></Button>
                 </VBox>
             </left>
-
         </BorderPane>
 
         <HBox prefHeight="200.0" prefWidth="1000.0" styleClass="innerbox" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
             <BorderPane prefHeight="200.0" prefWidth="800.0" styleClass="border-top">
                 <center>
-                    <Label alignment="CENTER" prefHeight="74.0" prefWidth="502.0" text="Settings" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                    <Label  alignment="CENTER" prefHeight="74.0" prefWidth="502.0" text="Settings" textAlignment="CENTER" BorderPane.alignment="CENTER">
                         <font>
                             <Font name="System Bold" size="51.0" />
                         </font></Label>
-                </center></BorderPane>
+                </center>
+            </BorderPane>
         </HBox>
 
         <HBox alignment="TOP_CENTER" layoutX="219.0" layoutY="261.0" prefHeight="637.0" prefWidth="275.0" styleClass="barchartContainer">
             <BorderPane prefHeight="637.0" prefWidth="276.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
-            <center>
+                <center>
                     <VBox fx:id="navigation" alignment="TOP_CENTER" fillWidth="true" prefHeight="632.0" prefWidth="216.0" spacing="10" styleClass="body-bar" BorderPane.alignment="CENTER">
                         <!-- Navigation Buttons -->
                         <Button fx:id="btnAccountInfo" onAction="#handleAccountInfo" prefHeight="87.0" prefWidth="209.0" styleClass="body-button" text="Account info">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Button>
+                            <font>
+                                <Font size="18.0" />
+                            </font></Button>
                         <Button fx:id="btnSecurity" onAction="#handleSecurity" styleClass="body-button" text="Security">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Button>
+                            <font>
+                                <Font size="18.0" />
+                            </font></Button>
                         <Button fx:id="btnNotifications" onAction="#handleNotifications" styleClass="body-button" text="Notifications">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Button>
+                            <font>
+                                <Font size="18.0" />
+                            </font></Button>
                         <Button fx:id="btnPermissions" onAction="#handlePermissions" styleClass="body-button" text="Permissions">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Button>
+                            <font>
+                                <Font size="18.0" />
+                            </font></Button>
                         <Button fx:id="btnAppearance" onAction="#handleAppearance" styleClass="body-button" text="Appearance">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Button>
+                            <font>
+                                <Font size="18.0" />
+                            </font></Button>
                     </VBox>
-            </center>
+                </center>
             </BorderPane>
         </HBox>
 
+        <HBox alignment="TOP_CENTER" layoutX="530.0" layoutY="261.0" prefHeight="637.0" prefWidth="435.0" styleClass="barchartContainer">
+            <BorderPane  styleClass="border-radius">
+                <top>
+                    <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <Label fx:id="settingsTitleLabel" textAlignment="CENTER" prefHeight="42.0" prefWidth="250.0" text="">
+                            <font>
+                                <Font size="25.0"/>
+                            </font>
+                        </Label>
+                    </VBox>
+                </top>
+                <center>
+                    <StackPane>
+                        <VBox fx:id="notificationsContainer" alignment="TOP_LEFT" spacing="10" styleClass="checkbox-container" visible="false">
+                            <Label fx:id="checkboxLabel" styleClass="info-text" text="Notifications:"/>
+                            <CheckBox fx:id="chkMuteAll" text="Mute All Notifications" />
+                            <CheckBox fx:id="chkDesktopNotifications" text="Enable Desktop Notifications" selected="true"/>
+                            <CheckBox fx:id="chkTaskbarFlash" text="Enable Taskbar Flash" />
+                            <CheckBox fx:id="chkSoundNotification" text="Enable Sound Notification" selected="true"/>
+                            <CheckBox fx:id="chkPushNotifications" text="Enable Push Notifications" />
+                        </VBox>
+                        <VBox fx:id="appearanceContainer" alignment="TOP_LEFT" spacing="10" styleClass="checkbox-container" visible="false">
+                            <Label fx:id="colourModeLabel" styleClass="info-text" text="Colour Mode:"/>
+                            <CheckBox fx:id="chkDarkMode" text="Dark mode" />
+                            <CheckBox fx:id="chkColourBlindMode" text="Colour blind Mode" />
+                            <CheckBox fx:id="chkBlueIce" text="Blue Ice" selected="true"/>
+                            <CheckBox fx:id="chkCottonCandyPink" text="Cotton Candy Pink" />
+                            <CheckBox fx:id="chkBlackStone" text="Black Stone" />
+                            <Label fx:id="changeTextLabel" styleClass="info-text" text="Change Text:"/>
+                            <CheckBox fx:id="chkDyslexiaFriendlyFont" text="Dyslexia friendly font" />
+                            <CheckBox fx:id="chkLargeText" text="Large text" />
+                            <CheckBox fx:id="chkRegularText" text="Regular text" selected="true"/>
+                            <CheckBox fx:id="chkSmallText" text="Small text" />
+                        </VBox>
+                        <!-- Account Info section -->
+                        <VBox fx:id="accountInfoContainer" spacing="10" visible="false">
+                            <!-- Other settings components... -->
+                            <VBox>
+                                <Label styleClass="info-text" text="Name:"/>
+                                <Label fx:id="nameLabel"/>
+                            </VBox>
+                            <VBox>
+                                <Label styleClass="info-text" text="Email:"/>
+                                <Label fx:id="emailLabel"/>
+                            </VBox>
+                            <VBox>
+                                <Label styleClass="info-text" text="Password:"/>
+                                <Label fx:id="passwordLabel"/>
+                            </VBox>
+                            <!-- Other settings components... -->
+                        </VBox>
 
+
+                    </StackPane>
+                </center>
+            </BorderPane>
+        </HBox>
     </AnchorPane>
-
-
-
-
-
 </VBox>
