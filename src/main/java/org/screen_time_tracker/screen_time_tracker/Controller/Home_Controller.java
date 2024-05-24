@@ -24,6 +24,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
+import org.screen_time_tracker.screen_time_tracker.Model.User.User;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Manages Home page including navigation throughout the application.
@@ -43,9 +50,6 @@ public class Home_Controller {
     private Button insightbtn;
 
     @FXML
-    private Button recommendationsbtn;
-
-    @FXML
     private Button Homebtn;
 
     @FXML
@@ -58,11 +62,15 @@ public class Home_Controller {
     @FXML
     private ImageView imgview;
 
+
     @FXML
     private Label Greeting;
 
     @FXML
     private HBox barChartContainer;
+
+    @FXML
+    private Label greetingLabel;
 
 
     /**
@@ -120,6 +128,7 @@ public class Home_Controller {
         }
 
     }
+
     /**
      * Initializes the controller. This method is automatically called
      * after the FXML fields have been populated and is used to set up the initial
@@ -132,6 +141,12 @@ public class Home_Controller {
         imgview.setTranslateY(-70); // This will move the logo 10 pixels up
         PopulateBarChart();
         Greeting();
+        PopulateBarChart();
+        User currentUser = Session_Manager.getCurrentUser();
+        if (currentUser != null) {
+            // Set the greeting label with the user's name
+            greetingLabel.setText("Good to see you, " + currentUser.getName() + "!");
+        }
     }
 
     /**
@@ -254,4 +269,5 @@ public class Home_Controller {
         stage.setResizable(false);
         stage.setScene(scene);
     }
+
 }

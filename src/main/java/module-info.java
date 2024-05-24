@@ -12,6 +12,7 @@ module org.screen_time_tracker.screen_time_tracker {
     requires com.sun.jna;
     requires com.sun.jna.platform;
     requires java.sql;
+    requires java.desktop;
 
 
     opens org.screen_time_tracker.screen_time_tracker to javafx.fxml;

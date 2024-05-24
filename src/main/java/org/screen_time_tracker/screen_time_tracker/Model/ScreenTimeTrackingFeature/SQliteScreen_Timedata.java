@@ -1,10 +1,8 @@
 package org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature;
 
 
-import javafx.scene.chart.XYChart;
 import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

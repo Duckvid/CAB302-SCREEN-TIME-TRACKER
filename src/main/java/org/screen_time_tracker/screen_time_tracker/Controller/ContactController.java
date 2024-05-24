@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
@@ -44,7 +44,7 @@ public class ContactController {
     private Button Logoutbtn;
 
     @FXML
-    private TextField DescriptionField;
+    private TextArea DescriptionArea;
 
     @FXML
     private Button SendMessagebtn;
@@ -175,19 +175,29 @@ public class ContactController {
         stage.setScene(scene);
     }
 
+    /**
+     * A test method that attempts to only allow the button to be activated when certain parameters
+     * are met.
+     * @param event when the specified task is achieved
+     * @throws IOException if an I/O error occurs when loading the response
+     */
     @FXML
     private void HandleDescriptionAction(ActionEvent event) throws IOException {
-        String description = DescriptionField.getText();
-        boolean filled = !description.isEmpty();
-        SendMessagebtn.setDisable(!filled);
+        SendMessagebtn.setDisable(DescriptionArea.getLength() <= 5);
     }
 
+    /**
+     * Handles the delivery of the messages. This method is called when the send button is clicked
+     * and is responsible for delivering a message for the user
+     * @throws IOException if an I/O error occurs when loading the response
+     */
+    @FXML
     public void OnSendMessagebtnClick() throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Message Received!");
         alert.setHeaderText("Your message has been sent!");
         alert.setContentText("Thank you for contacting us!");
         alert.showAndWait();
-        DescriptionField.setText("");
+        DescriptionArea.setText("");
     }
 }
