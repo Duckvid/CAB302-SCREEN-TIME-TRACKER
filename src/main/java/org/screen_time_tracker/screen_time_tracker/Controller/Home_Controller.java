@@ -117,6 +117,7 @@ public class Home_Controller {
      */
     @FXML
     public void initialize() throws SQLException {
+        PopulateBarChart();
         User currentUser = Session_Manager.getCurrentUser();
         if (currentUser != null) {
             // Set the greeting label with the user's name
