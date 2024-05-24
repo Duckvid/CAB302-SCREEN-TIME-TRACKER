@@ -73,11 +73,6 @@ public class Recommendations_controller {
     @FXML
     private Label LeastActivityText;
 
-    @FXML
-    private Label medianMostActivity;
-
-    @FXML
-    private Label Median_Least_activity;
 
     @FXML
     private Label median_End_time;

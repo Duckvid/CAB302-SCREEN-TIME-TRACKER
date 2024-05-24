@@ -18,6 +18,9 @@ import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -42,6 +45,8 @@ public class LoginController {
 
     @FXML
     private Button forgotPasswordbtn;
+
+    private Connection connection;
 
     /* This is a function which is responsible for actually controlling how frequently the screen time data is collected */
     private void startBackgroundWindowInfo(int UserId) {
@@ -141,7 +146,7 @@ public class LoginController {
         TextField textField = new TextField();
         textField.setPromptText("Email/Phone number");
 
-        vbox.getChildren().add(new Label("Please enter your email or phone number:"));
+        vbox.getChildren().add(new Label("Please enter your email:"));
         vbox.getChildren().add(textField);
 
         dialog.getDialogPane().setContent(vbox);
@@ -158,7 +163,47 @@ public class LoginController {
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(emailOrPhone -> {
-            // handle the retrieval of the password here
+            SQLiteUserDAO sqLiteUserDAO = new SQLiteUserDAO();
+            User currentUser = sqLiteUserDAO.ForgotPassword(emailOrPhone);
+
+            if (currentUser != null) {
+                // New dialog for password input
+                Dialog<String> passwordDialog = new Dialog<>();
+                passwordDialog.setTitle("New Password");
+
+                ButtonType passwordSubmitButtonType = new ButtonType("Submit", ButtonBar.ButtonData.OK_DONE);
+                passwordDialog.getDialogPane().getButtonTypes().addAll(passwordSubmitButtonType, ButtonType.CANCEL);
+
+                VBox passwordVbox = new VBox();
+                passwordVbox.setSpacing(10);
+
+                PasswordField passwordField = new PasswordField();
+                passwordField.setPromptText("New Password");
+
+                passwordVbox.getChildren().add(new Label("Enter new password:"));
+                passwordVbox.getChildren().add(passwordField);
+
+                passwordDialog.getDialogPane().setContent(passwordVbox);
+
+                Platform.runLater(passwordField::requestFocus);
+
+                passwordDialog.setResultConverter(passwordDialogButton -> {
+                    if (passwordDialogButton == passwordSubmitButtonType) {
+                        return passwordField.getText();
+                    }
+                    return null;
+                });
+
+                Optional<String> passwordResult = passwordDialog.showAndWait();
+
+                passwordResult.ifPresent(newPassword -> {
+                    // Here you would update the user's password in your database
+                    currentUser.setPassword(newPassword);
+                    // Optional: Show confirmation dialog or perform other actions
+                });
+            } else {
+                // Optionally handle cases where the user is not found
+            }
         });
     }
 
