@@ -45,9 +45,10 @@
             </BorderPane>
         </HBox>
 
-        <BorderPane layoutX="610.0" layoutY="220.0" prefHeight="645.0" prefWidth="370.0" styleClass="border-radius">
+     <BorderPane layoutX="610.0" layoutY="220.0" prefHeight="645.0" prefWidth="370.0" styleClass="border-radius">
             <top>
                 <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+
 
                     <Label prefHeight="42.0" prefWidth="250.0" text="Add Recommended Timers / Alarms:" textAlignment="CENTER" />
 
@@ -61,7 +62,6 @@
                             <Font size="25.0"/>
                         </font>
                     </Label>
-
                 </VBox>
             </top>
             <center>
@@ -85,8 +85,6 @@
         <BorderPane layoutX="219.0" layoutY="220.0" prefHeight="645.0" prefWidth="370.0" styleClass="border-radius">
             <top>
                 <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-
-
                     <Label textAlignment="CENTER" prefHeight="42.0" prefWidth="161.0" text="Your Timers:" fx:id="yourTimersLabel">
                         <font>
                             <Font size="25.0"/>
@@ -104,4 +102,7 @@
             </center>
         </BorderPane>
     </AnchorPane>
+
 </VBox>
+
+

@@ -12,7 +12,7 @@ public interface IScreenTime {
     /**
      *
      * @return This method returns the start time in simple string Date format which correlates to the users most activity detected for the current day
-     * @throws SQLException if there a database access error
+     * @throws SQLException if there's a database access error
      */
     public String Most_Activity_Detected_StartTime() throws SQLException;
 
@@ -75,7 +75,6 @@ public interface IScreenTime {
 
     /**
      *
-<<<<<<< HEAD
      * @param screenTimeID The ID of the current screen time session
      * @param duration The duration of the current screen time session
      * @param screentitle The title of the currently active window
@@ -95,7 +94,8 @@ public interface IScreenTime {
     /**
      *
      * @return This method simply returns the last inserted screen_time_ID to be used later in conjunction with another methdo
-     * @throws SQLException if there a database access error
+     * @throws SQLException if there's a database access error
+
      */
     public int getLastInsertedID() throws SQLException;
 

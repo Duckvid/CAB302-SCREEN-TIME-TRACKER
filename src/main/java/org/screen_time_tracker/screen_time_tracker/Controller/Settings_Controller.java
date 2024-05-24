@@ -19,7 +19,6 @@ import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * Controller for managing application settings.
