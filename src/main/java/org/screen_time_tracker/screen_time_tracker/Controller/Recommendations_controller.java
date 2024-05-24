@@ -10,10 +10,16 @@ import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQliteScreen_Timedata;
+import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.Screen_Time_fields;
+import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.*;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,8 +72,24 @@ public class Recommendations_controller {
 
     @FXML
     private Label recommendations;
+
     @FXML
-    public void initialize() {
+
+    private Label Median_start_time;
+
+
+
+
+
+    /**
+     * Initializes the controller. This method sets up necessary state and UI components
+     * for the current session view.
+     *
+     * @throws SQLException if an SQL error occurs during initialization
+     */
+
+    @FXML
+    public void initialize() throws SQLException{
         imgview.setTranslateY(-70);
 
         // This will move the logo 10 pixels up
@@ -82,15 +104,12 @@ public class Recommendations_controller {
         recommendations.setText("Recommended Complete difficult task time: Try to " +'\n'+"do the task in the morning"+'\n'+ "and take a break in the afternoon,then try to finish it in the evening" +'\n'+ "and go to bed early ");
     }
 
-    public void OnHomebtnClick() throws IOException {
-        Stage stage = (Stage) Homebtn.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
-        stage.setResizable(false);
-        stage.setScene(scene);
-    }
-
+    /**
+     * Handles user logout events. This method is called when the logout button is clicked
+     * and is responsible for logging out the user and transitioning to the login screen.
+     *
+     * @throws IOException if an I/O error occurs when loading the login view
+     */
     @FXML
     protected void OnSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsPage.getScene().getWindow();
@@ -102,6 +121,7 @@ public class Recommendations_controller {
     }
     @FXML
     private Button Logoutbtn;
+
     @FXML
     protected void OnLogoutBtnClick() throws IOException{
         SQLiteUserDAO sqLiteUserDAO = new SQLiteUserDAO();
@@ -114,6 +134,30 @@ public class Recommendations_controller {
         stage.setScene(scene);
 
     }
+
+    /**
+     * Handles navigation to the home page events. This method is called when the Home button is clicked
+     * and is responsible for navigation the user to the home page
+     * @throws IOException if an I/O error occurs when loading the Home page view
+     */
+    @FXML
+    public void OnHomebtnClick() throws IOException {
+        Stage stage = (Stage) Homebtn.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
+        stage.setResizable(false);
+        stage.setScene(scene);
+    }
+
+
+
+    /**
+     * Handles navigation to the recommendation page events. This method is called when the recommendation button is clicked
+     * and is responsible for navigation the user to the recommendation page
+     * @throws IOException if an I/O error occurs when loading the Recommendations page view
+     */
+    @FXML
 
     public void OnRecommendationsPageClick() throws IOException {
         Stage stage = (Stage) Recommendationspage.getScene().getWindow();

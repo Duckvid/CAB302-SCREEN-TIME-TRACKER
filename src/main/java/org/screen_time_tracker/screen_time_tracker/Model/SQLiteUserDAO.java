@@ -213,6 +213,41 @@ public class SQLiteUserDAO implements IUsersDetails {
 
     }
 
+    // locate user by email
+    public User ForgotPassword(String email) {
+        String query = "SELECT * FROM Users where email = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setString(1, email);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            if(resultSet.next()){
+                // user found with matching credentials
+                int userID = resultSet.getInt("Userid");
+                String Name = resultSet.getString("Name");
+                String Phone = resultSet.getString("phone");
+                String userEmail = resultSet.getString("email");
+                String userPassword = resultSet.getString("password");
+                User user = new User(Name, userEmail, userPassword, Phone);
+                user.setUserid(userID);
+
+
+                String updateQuery = "UPDATE Users SET IsLoggedIn = 1 WHERE Userid = ?";
+
+                // update login status
+                try(PreparedStatement updatepstmt = connection.prepareStatement(updateQuery)){
+                    updatepstmt.setInt(1, userID);
+                    updatepstmt.executeUpdate();
+                }
+                return user;
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
 
     // a method to check if the user is currently logged in or not
     @Override

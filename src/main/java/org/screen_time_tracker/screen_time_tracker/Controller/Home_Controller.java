@@ -8,12 +8,15 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
 import org.screen_time_tracker.screen_time_tracker.Model.ScreenTimeTrackingFeature.SQliteScreen_Timedata;
+import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
+import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,6 +24,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
+import org.screen_time_tracker.screen_time_tracker.Model.User.User;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Manages Home page including navigation throughout the application.
@@ -54,7 +64,13 @@ public class Home_Controller {
 
 
     @FXML
+    private Label Greeting;
+
+    @FXML
     private HBox barChartContainer;
+
+    @FXML
+    private Label greetingLabel;
 
 
     /**
@@ -96,6 +112,22 @@ public class Home_Controller {
         barChartContainer.getChildren().add(chart);
     }
 
+    /**
+     * A simple method that will alter the label on the home page to greet the user when they log in
+     * @throws SQLException if a data obtainment error occurs
+     */
+    @FXML
+    public void Greeting() throws SQLException {
+        if(Session_Manager.isUserLoggedIn()){
+            User currentuser = Session_Manager.getCurrentUser();
+
+            String UsersName = currentuser.getName();
+
+            Greeting.setText("Good to see you " + UsersName + "!");
+
+        }
+
+    }
 
     /**
      * Initializes the controller. This method is automatically called
@@ -108,6 +140,13 @@ public class Home_Controller {
 
         imgview.setTranslateY(-70); // This will move the logo 10 pixels up
         PopulateBarChart();
+        Greeting();
+        PopulateBarChart();
+        User currentUser = Session_Manager.getCurrentUser();
+        if (currentUser != null) {
+            // Set the greeting label with the user's name
+            greetingLabel.setText("Good to see you, " + currentUser.getName() + "!");
+        }
     }
 
     /**
@@ -230,4 +269,5 @@ public class Home_Controller {
         stage.setResizable(false);
         stage.setScene(scene);
     }
+
 }

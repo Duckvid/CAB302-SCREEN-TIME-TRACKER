@@ -16,6 +16,9 @@ import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
 import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -40,6 +43,8 @@ public class LoginController {
 
     @FXML
     private Button forgotPasswordbtn;
+
+    private Connection connection;
 
     /* This is a function which is responsible for actually controlling how frequently the screen time data is collected */
     private void startBackgroundWindowInfo(int UserId) {
@@ -139,7 +144,7 @@ public class LoginController {
         TextField textField = new TextField();
         textField.setPromptText("Email/Phone number");
 
-        vbox.getChildren().add(new Label("Please enter your email or phone number:"));
+        vbox.getChildren().add(new Label("Please enter your email:"));
         vbox.getChildren().add(textField);
 
         dialog.getDialogPane().setContent(vbox);
@@ -156,7 +161,47 @@ public class LoginController {
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(emailOrPhone -> {
-            // handle the retrieval of the password here
+            SQLiteUserDAO sqLiteUserDAO = new SQLiteUserDAO();
+            User currentUser = sqLiteUserDAO.ForgotPassword(emailOrPhone);
+
+            if (currentUser != null) {
+                // New dialog for password input
+                Dialog<String> passwordDialog = new Dialog<>();
+                passwordDialog.setTitle("New Password");
+
+                ButtonType passwordSubmitButtonType = new ButtonType("Submit", ButtonBar.ButtonData.OK_DONE);
+                passwordDialog.getDialogPane().getButtonTypes().addAll(passwordSubmitButtonType, ButtonType.CANCEL);
+
+                VBox passwordVbox = new VBox();
+                passwordVbox.setSpacing(10);
+
+                PasswordField passwordField = new PasswordField();
+                passwordField.setPromptText("New Password");
+
+                passwordVbox.getChildren().add(new Label("Enter new password:"));
+                passwordVbox.getChildren().add(passwordField);
+
+                passwordDialog.getDialogPane().setContent(passwordVbox);
+
+                Platform.runLater(passwordField::requestFocus);
+
+                passwordDialog.setResultConverter(passwordDialogButton -> {
+                    if (passwordDialogButton == passwordSubmitButtonType) {
+                        return passwordField.getText();
+                    }
+                    return null;
+                });
+
+                Optional<String> passwordResult = passwordDialog.showAndWait();
+
+                passwordResult.ifPresent(newPassword -> {
+                    // Here you would update the user's password in your database
+                    currentUser.setPassword(newPassword);
+                    // Optional: Show confirmation dialog or perform other actions
+                });
+            } else {
+                // Optionally handle cases where the user is not found
+            }
         });
     }
 
@@ -177,52 +222,47 @@ public class LoginController {
     }
 
     @FXML
-    private void HandleLoginAction(ActionEvent event) throws IOException{
+    private void HandleLoginAction(ActionEvent event) throws IOException {
         String email = EmailField.getText();
         String password = PasswordField.getText();
         SQLiteUserDAO dao = new SQLiteUserDAO();
 
-        if((!dao.IsEmailCorrect(email) || !dao.IsPasswordCorrect(password) || email.isEmpty() || password.isEmpty())){
+        if ((!dao.IsEmailCorrect(email) || !dao.IsPasswordCorrect(password) || email.isEmpty() || password.isEmpty())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validation Error");
             alert.setHeaderText("Input validation Error");
-            alert.setContentText("Please make sure that your email and password is in the correct form and exists.");
+            alert.setContentText("Please make sure that your email and password are in the correct form and exist.");
             alert.showAndWait();
-        }
-        else {
-
+        } else {
             dao = new SQLiteUserDAO();
             User user = dao.Login(email, password);
 
-            if(dao.UserExists(user)){
-
+            if (dao.UserExists(user)) {
+                // Set the current user in the session
                 Session_Manager.setCurrentUser(user);
+
+                // Retrieve and display user information in the Account Info section
+                // You may need to access the Settings_Controller or other appropriate controller to update the UI
+                // Example: settingsController.setCurrentUser(user);
 
                 startBackgroundWindowInfo(user.getUserid());
 
-                // user is found, navigate to home page once implmented but for now go to currentsession page
+                // Navigate to the home page
                 Stage stage = (Stage) Loginbtn.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
                 scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/Home_style.css").toExternalForm());
                 stage.setResizable(false);
                 stage.setScene(scene);
-            }
-
-            else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Validation Error");
                 alert.setHeaderText("Input validation Error");
-                alert.setContentText("User does not exist with those credentials try again.");
+                alert.setContentText("User does not exist with those credentials. Please try again.");
                 alert.showAndWait();
-
             }
-
-
-
         }
-
-
     }
+
 
 }

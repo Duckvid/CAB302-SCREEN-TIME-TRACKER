@@ -5,10 +5,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.screen_time_tracker.screen_time_tracker.MainApplication;
 import org.screen_time_tracker.screen_time_tracker.Model.SQLiteUserDAO;
+import java.io.IOException;
+import javafx.scene.layout.VBox;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import org.screen_time_tracker.screen_time_tracker.Model.User.Session_Manager;
+import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
 
@@ -41,9 +49,11 @@ public class Settings_Controller {
     @FXML
     private Button Recommendationspage;
 
-    @FXML Button TimersPage;
+    @FXML
+    private Button TimersPage;
 
-    @FXML Button CurrentSessionPage;
+    @FXML
+    private Button CurrentSessionPage;
 
     @FXML
     private Button Homebtn;
@@ -62,9 +72,43 @@ public class Settings_Controller {
      * for the current session view.
      */
     @FXML
-    public void initialize() {
-        imgview.setTranslateY(-70); // This will move the logo 10 pixels up
+    private Label settingsTitleLabel;
+
+    @FXML
+    private VBox notificationsContainer;
+
+    @FXML
+    private VBox appearanceContainer;
+
+    @FXML
+    private VBox accountInfoContainer;
+
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private Label emailLabel;
+
+    @FXML
+    private Label phoneNumberLabel;
+
+    @FXML
+    private Label passwordLabel;
+
+    @FXML
+    public void initialize() throws IOException {
+        // Other initialization code...
+        // Fetch the current user from the session manager
+        User currentUser = Session_Manager.getCurrentUser();
+        if (currentUser != null) {
+            // Populate the UI fields with the user's information
+            nameLabel.setText(currentUser.getName());
+            emailLabel.setText(currentUser.getEmail());
+            passwordLabel.setText("******"); // You might want to avoid displaying the password directly
+        }
     }
+
+
 
     /**
      * Handles user logout events. This method is called when the logout button is clicked
@@ -153,9 +197,7 @@ public class Settings_Controller {
         scene.getStylesheets().add(getClass().getResource("/org/screen_time_tracker/screen_time_tracker/styles/current_Session_style.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
-
     }
-
     /**
      * Handles navigation to the contact page events. This method is called when the contact button is clicked
      * and is responsible for navigation of the user to the contacts page
@@ -177,8 +219,10 @@ public class Settings_Controller {
      * @param actionEvent The event triggered by clicking the Account Info button.
      * @throws IOException if an error occurs during navigation.
      */
-    public void handleAccountInfo(ActionEvent actionEvent) throws IOException  {
-        Onclickofanybtn(btnAccountInfo);
+    public void handleAccountInfo(ActionEvent actionEvent) throws IOException {
+        setActiveButton(btnAccountInfo, "Account info");
+        showChecklist(accountInfoContainer);
+
     }
 
     /**
@@ -188,8 +232,10 @@ public class Settings_Controller {
      * @throws IOException if an error occurs during navigation.
      */
     public void handleSecurity(ActionEvent actionEvent) throws IOException {
-        Onclickofanybtn(btnSecurity);
+        setActiveButton(btnSecurity, "Security");
+        hideAllChecklists();
     }
+
 
     /**
      * Handles the action to manage notification settings.
@@ -197,8 +243,11 @@ public class Settings_Controller {
      * @param actionEvent The event triggered by clicking the Notifications button.
      * @throws IOException if an error occurs during navigation.
      */
-    public void handleNotifications(ActionEvent actionEvent) throws IOException  {
-        Onclickofanybtn(btnNotifications);
+
+    public void handleNotifications(ActionEvent actionEvent) throws IOException {
+        setActiveButton(btnNotifications, "Notifications");
+        showChecklist(notificationsContainer);
+
     }
 
     /**
@@ -209,7 +258,8 @@ public class Settings_Controller {
      */
 
     public void handlePermissions(ActionEvent actionEvent) throws IOException {
-        Onclickofanybtn(btnPermissions);
+        setActiveButton(btnPermissions, "Permissions");
+        hideAllChecklists();
     }
 
     /**
@@ -219,7 +269,8 @@ public class Settings_Controller {
      * @throws IOException if an error occurs during navigation.
      */
     public void handleAppearance(ActionEvent actionEvent) throws IOException {
-        Onclickofanybtn(btnAppearance);
+        setActiveButton(btnAppearance, "Appearance");
+        showChecklist(appearanceContainer);
     }
 
     /**
@@ -228,14 +279,30 @@ public class Settings_Controller {
      * @param button The button that was clicked.
      * @throws IOException if an error occurs when applying the style.
      */
+
     @FXML
-    protected void Onclickofanybtn(Button button) throws IOException{
-        if(activeButton != null){
+    protected void setActiveButton(Button button, String title) {
+        if (button == null) {
+            System.err.println("Button is null, cannot set active button.");
+            return;
+        }
+        if (activeButton != null) {
             activeButton.getStyleClass().remove("button-active");
         }
         button.getStyleClass().add("button-active");
         activeButton = button;
+        settingsTitleLabel.setText(title);
     }
 
+    private void showChecklist(VBox checklistContainer) {
+        hideAllChecklists();
+        checklistContainer.setVisible(true);
+    }
+
+    private void hideAllChecklists() {
+        accountInfoContainer.setVisible(false);
+        notificationsContainer.setVisible(false);
+        appearanceContainer.setVisible(false);
+    }
 
 }
