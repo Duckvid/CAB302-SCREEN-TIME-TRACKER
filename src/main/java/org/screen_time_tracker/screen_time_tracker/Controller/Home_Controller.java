@@ -31,6 +31,7 @@ import org.screen_time_tracker.screen_time_tracker.Model.User.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 /**
  * Manages Home page including navigation throughout the application.
@@ -77,40 +78,49 @@ public class Home_Controller {
      * called to append the current session data to the bar chart to reflect and visualize current session data
      * @throws SQLException if an SQL error occurs during data retrieval
      */
+    private static Map<String, XYChart.Series<String, Number>> accumulatedSeriesMap = new HashMap<>();
+
     private void PopulateBarChart() throws SQLException {
         SQliteScreen_Timedata sQliteScreenTimedata = new SQliteScreen_Timedata();
-        StackedBarChart<String, Number> chart = new StackedBarChart<>(new CategoryAxis(), new NumberAxis());
-
         java.util.Date currentDate = new Date();
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = formatDate.format(currentDate);
 
-        // Initialize the seriesMap to store series by window titles
-        Map<String, XYChart.Series<String, Number>> seriesMap = new HashMap<>();
-
-        // Fetch data grouped by hours and window titles
+        // Fetch only new data if possible or all data and filter it
         Map<String, Map<String, Integer>> timeMap = sQliteScreenTimedata.FetchWindowDurations(strDate);
 
-        // Prepare data for the chart
-        for (Map.Entry<String, Map<String, Integer>> hourEntry : timeMap.entrySet()) {
+        // Merge new data with existing data in accumulatedSeriesMap
+        mergeData(timeMap);
+
+        // Rebuild chart only if necessary (e.g., first load or if there's new data)
+        if (barChartContainer.getChildren().isEmpty() || !timeMap.isEmpty()) {
+            StackedBarChart<String, Number> chart = new StackedBarChart<>(new CategoryAxis(), new NumberAxis());
+            chart.getData().addAll(accumulatedSeriesMap.values());
+            barChartContainer.getChildren().setAll(chart); // Replace old chart with new one
+        }
+    }
+
+    private void mergeData(Map<String, Map<String, Integer>> newTimeMap) {
+        for (Map.Entry<String, Map<String, Integer>> hourEntry : newTimeMap.entrySet()) {
             String hour = hourEntry.getKey();
             Map<String, Integer> windowDurations = hourEntry.getValue();
             for (Map.Entry<String, Integer> durationEntry : windowDurations.entrySet()) {
                 String windowTitle = durationEntry.getKey();
                 Integer duration = durationEntry.getValue();
-
-                // Create or retrieve the series for this window title
-                XYChart.Series<String, Number> series = seriesMap.computeIfAbsent(windowTitle, k -> new XYChart.Series<>());
-                series.setName(windowTitle); // Set the name of series to window title for legend
-                series.getData().add(new XYChart.Data<>(hour, duration));
+                XYChart.Series<String, Number> series = accumulatedSeriesMap.computeIfAbsent(windowTitle, k -> new XYChart.Series<>());
+                series.setName(windowTitle);
+                // Update or add new data point
+                Optional<XYChart.Data<String, Number>> existingData = series.getData().stream()
+                        .filter(d -> d.getXValue().equals(hour)).findFirst();
+                if (existingData.isPresent()) {
+                    existingData.get().setYValue(existingData.get().getYValue().intValue() + duration);
+                } else {
+                    series.getData().add(new XYChart.Data<>(hour, duration));
+                }
             }
         }
-
-        // Add all series to the chart
-        chart.getData().addAll(seriesMap.values());
-        barChartContainer.getChildren().clear();
-        barChartContainer.getChildren().add(chart);
     }
+
 
     /**
      * A simple method that will alter the label on the home page to greet the user when they log in
